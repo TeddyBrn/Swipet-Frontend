@@ -1,31 +1,17 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-const SettingsScreen = ({ navigation }) => {
+const FiltersScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
         
 
-      <Text style={styles.title}>Paramètres</Text>
-      <View style={styles.logoContainer}>
-        
-        
-      </View>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Profil Animal</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Profil</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Historique</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Moyen De Paiement</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Avis</Text>
-      </TouchableOpacity>
+      <Text style={styles.title}>Filtres</Text>
+
+      
+        <Text style={styles.text}>Choisissez vos préférences</Text>
+      
+
 
     </View>
   );
@@ -44,41 +30,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
   },
-  logoContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
 
-    
-  },
-  logoImage: {
-    width: 40,
-    height: 40,
-    //  position: 'absolute',
-    marginLeft: 290,
-    marginTop: 0,
-    borderColor: 'red',
-    borderWidth: 1,
-    
-  },
-  button: {
-    width: '80%',
-    padding: 15,
-    borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 5,
-    marginBottom: 15,
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 16,
+  text: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginTop: 20,
   },
 
 });
 
-export default SettingsScreen;
+export default FiltersScreen;
 
 
-/*
-    <Image source={require('../assets/logo.jpg')} style={styles.logoImage} />
-*/
