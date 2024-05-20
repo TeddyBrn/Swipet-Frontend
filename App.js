@@ -20,7 +20,7 @@ import Connection from './screens/ConnectionScreen';
 import SwipeScreen from './screens/SwipeScreen';
 import FavoriteScreen from "./screens/FavoriteScreen";
 import BurgerScreen from "./screens/BurgerScreen";
-
+import ProfilUtilisateur from "./screens/ProfilUtilisateur"
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -60,6 +60,7 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Connection" component={Connection} />
+          <Stack.Screen name="ProfilUtilisateur" component={ProfilUtilisateur} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
         </Stack.Navigator>
       </NavigationContainer>

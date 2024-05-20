@@ -14,8 +14,16 @@ import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
 export default function HomeScreen({ navigation }) {
   const [loginButtonStyle, setLoginButtonStyle] = useState({
-  
   });
+  const [signUpButtonStyle, setSignUpButtonStyle] = useState({
+  });
+
+  const handleSignUpPressIn = () => {
+    setSignUpButtonStyle((prevStyle) => ({
+      backgroundColor: prevStyle.borderColor,
+      borderColor: prevStyle.backgroundColor,
+    }));
+  };
 
   const handleLoginPressIn = () => {
     setLoginButtonStyle((prevStyle) => ({
@@ -32,7 +40,10 @@ export default function HomeScreen({ navigation }) {
         <Image source={require('../assets/logo.jpg')} style={styles.logo} />
       </View>
       <Text style={styles.title}>Bienvenue sur Swipet</Text>
-      <TouchableOpacity style={styles.signupButton} activeOpacity={0.8}>
+      <TouchableOpacity style={[styles.signupButton, signUpButtonStyle]} 
+      activeOpacity={0.8} 
+      onPressIn={handleSignUpPressIn} 
+      onPress={() => navigation.navigate("ProfilUtilisateur")}>
         <Text style={styles.signupButtonText}>Inscription</Text>
       </TouchableOpacity>
       <TouchableOpacity
