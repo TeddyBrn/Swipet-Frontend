@@ -18,10 +18,10 @@ const store = configureStore({
 import HomeScreen from './screens/HomeScreen';
 import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from "./screens/SignUpScreen"
+import FilterScreen from "./screens/FilterScreen";
 import SwipeScreen from './screens/SwipeScreen';
 import MessageScreen from "./screens/MessageScreen";
-import SettingsScreen from './screens/SettingsScreen';
-import BurgerScreen from "./screens/BurgerScreen";
+import SettingsScreen from "./screens/SettingsScreen"
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -55,7 +55,7 @@ const TabNavigator = () => {
         },
         headerShown: false
       })}>
-      <Tab.Screen name="Filtre" component={BurgerScreen} />
+      <Tab.Screen name="Filtre" component={FilterScreen} />
       <Tab.Screen name="SwipeScreen" component={SwipeScreen} />
       <Tab.Screen name="Message" component={MessageScreen} />
 
