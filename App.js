@@ -16,6 +16,7 @@ const store = configureStore({
 });
 
 import HomeScreen from "./screens/HomeScreen";
+import Connection from './screens/ConnectionScreen';
 import FavoriteScreen from "./screens/FavoriteScreen";
 import BurgerScreen from "./screens/BurgerScreen";
 
@@ -51,8 +52,9 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: true }}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Connection" component={Connection} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
         </Stack.Navigator>
       </NavigationContainer>
