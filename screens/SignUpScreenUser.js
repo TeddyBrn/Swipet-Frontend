@@ -103,9 +103,9 @@ export default function ConnectionScreen({ navigation }) {
                     autoCapitalize="none"
                 />
                 <TouchableOpacity style={styles.signupButton} activeOpacity={0.8}
-                    onPress={() => navigation.navigate("")}
+                    onPress={() => navigation.navigate("SignUpAnimal")}
                 >
-                    <Text style={styles.connexionButtonText}>Connexion</Text>
+                    <Text style={styles.connexionButtonText}>Confirmer</Text>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>

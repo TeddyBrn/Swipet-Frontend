@@ -17,7 +17,8 @@ const store = configureStore({
 
 import HomeScreen from './screens/HomeScreen';
 import SignInScreen from './screens/SignInScreen';
-import SignUpScreen from "./screens/SignUpScreen"
+import SignUpScreenUser from "./screens/SignUpScreenUser"
+import SignUpScreenAnimal from "./screens/SignUpScreenAnimal"
 import FilterScreen from "./screens/FilterScreen";
 import SwipeScreen from './screens/SwipeScreen';
 import MessageScreen from "./screens/MessageScreen";
@@ -70,7 +71,8 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="SignIn" component={SignInScreen} />
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreenUser} />
+          <Stack.Screen name="SignUpAnimal" component={SignUpScreenAnimal} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
           <Stack.Screen name="Settings" component={SettingsScreen} />
         </Stack.Navigator>
