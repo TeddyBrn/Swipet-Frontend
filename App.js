@@ -9,26 +9,27 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import favorite from './reducers/favorite';
+import users from './reducers/users';
 
 const store = configureStore({
-  reducer: { favorite }
+  reducer: { users }
 });
 
 import HomeScreen from './screens/HomeScreen';
 import SignInScreen from './screens/SignInScreen';
-import SignUpScreen from "./screens/SignUpScreen"
-import FilterScreen from "./screens/FilterScreen";
+import SignUpScreen from './screens/SignUpScreen';
+import FilterScreen from './screens/FilterScreen';
 import SwipeScreen from './screens/SwipeScreen';
-import MessageScreen from "./screens/MessageScreen";
-import SettingsScreen from "./screens/SettingsScreen"
+import MessageScreen from './screens/MessageScreen';
+import SettingsScreen from './screens/SettingsScreen';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      initialRouteName="SwipeScreen"
+      initialRouteName="Swipe"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           let iconName = '';
@@ -37,7 +38,7 @@ const TabNavigator = () => {
             iconName = 'filter';
           } else if (route.name === 'Message') {
             iconName = 'mail';
-          } else if (route.name === 'SwipeScreen') {
+          } else if (route.name === 'Swipe') {
             iconName = 'home';
           }
 
@@ -56,9 +57,8 @@ const TabNavigator = () => {
         headerShown: false
       })}>
       <Tab.Screen name="Filtre" component={FilterScreen} />
-      <Tab.Screen name="SwipeScreen" component={SwipeScreen} />
+      <Tab.Screen name="Swipe" component={SwipeScreen} />
       <Tab.Screen name="Message" component={MessageScreen} />
-
     </Tab.Navigator>
   );
 };
