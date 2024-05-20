@@ -23,6 +23,19 @@ export default function ConnectionScreen({ navigation }) {
     const [checkbox2, setCheckbox2] = useState('');
     const [city, setCity] = useState('');
 
+    const handleConnexion = () => {
+        fetch('http://192.168.233.47:8081/profils/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, firstname, email, password, profil: checkbox1, city }),
+    }).then(response => response.json())
+      .then(data => {
+         data.result && dispatch(login({ token: data.token, email }));
+      });
+      navigation.navigate("profilAnimalScreen")
+
+    };
+
     const handleBackPress = () => {
         navigation.goBack();
     };
@@ -103,7 +116,7 @@ export default function ConnectionScreen({ navigation }) {
                     autoCapitalize="none"
                 />
                 <TouchableOpacity style={styles.signupButton} activeOpacity={0.8}
-                    onPress={() => navigation.navigate("")}
+                    onPress={handleBackPress} {() => navigation.navigate("")}
                 >
                     <Text style={styles.connexionButtonText}>Connexion</Text>
                 </TouchableOpacity>
