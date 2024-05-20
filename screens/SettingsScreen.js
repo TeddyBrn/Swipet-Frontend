@@ -4,13 +4,14 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 const SettingsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
+        
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Image source={require('../assets/back.jpg')} style={styles.backButtonImage} />
       </TouchableOpacity>
       <Text style={styles.title}>Paramètres</Text>
       <View style={styles.logoContainer}>
         
-        <Image source={require('../assets/logo.jpg')} style={styles.logoImage} />
+        
       </View>
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Profil Animal</Text>
@@ -44,6 +45,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 50,
   },
+
   backButton: {
     position: 'absolute',
     top: 50,
@@ -62,13 +64,19 @@ const styles = StyleSheet.create({
   logoContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
+
+    
   },
   logoImage: {
     width: 40,
     height: 40,
-    position: 'absolute',
-    marginLeft: 150,
+    //  position: 'absolute',
+    marginLeft: 290,
+    marginTop: 0,
+    borderColor: 'red',
+    borderWidth: 1,
+    
   },
   button: {
     width: '80%',
@@ -110,3 +118,8 @@ const styles = StyleSheet.create({
 });
 
 export default SettingsScreen;
+
+
+/*
+    <Image source={require('../assets/logo.jpg')} style={styles.logoImage} />
+*/
