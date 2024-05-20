@@ -17,6 +17,7 @@ const store = configureStore({
 
 import HomeScreen from "./screens/HomeScreen";
 import Connection from './screens/ConnectionScreen';
+import SwipeScreen from './screens/SwipeScreen';
 import FavoriteScreen from "./screens/FavoriteScreen";
 import BurgerScreen from "./screens/BurgerScreen";
 
@@ -30,20 +31,24 @@ const TabNavigator = () => {
         tabBarIcon: ({ color, size }) => {
           let iconName = "";
 
-          if (route.name === "Burger") {
-            iconName = "fast-food";
-          } else if (route.name === "Favorite") {
-            iconName = "star";
+          if (route.name === "Filtre") {
+            iconName = "filter";
+          } else if (route.name === "Message") {
+            iconName = "mail";
+          } else if (route.name === "SwipeScreen") {
+            iconName = "home";
           }
 
           return <Ionicons name={iconName} size={30} color={color} />;
         },
-        tabBarActiveTintColor: "#ffc048",
+        tabBarActiveTintColor: "blue",
         tabBarInactiveTintColor: "#1e272e",
         headerShown: false
       })}>
-      <Tab.Screen name="Burger" component={BurgerScreen} />
-      <Tab.Screen name="Favorite" component={FavoriteScreen} />
+      <Tab.Screen name="Filtre" component={BurgerScreen} />
+      <Tab.Screen name="SwipeScreen" component={SwipeScreen} />
+      <Tab.Screen name="Message" component={FavoriteScreen} />
+      
     </Tab.Navigator>
   );
 };
