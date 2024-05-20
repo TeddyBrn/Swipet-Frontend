@@ -47,10 +47,10 @@ export default function ConnectionScreen({ navigation }) {
           secureTextEntry
         />
         <TouchableOpacity
-          style={styles.signupButton}
+          style={styles.signInButton}
           activeOpacity={0.8}
           onPress={() => navigation.navigate('TabNavigator')}>
-          <Text style={styles.connexionButtonText}>Connexion</Text>
+          <Text style={styles.buttonText}>Connexion</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -86,30 +86,33 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: '80%',
     justifyContent: 'space-around',
-    alignItems: 'center'
+    alignItems: 'center',
+
   },
   input: {
-    borderRadius: 20,
+    borderRadius: 15,
     width: '100%',
     padding: 10,
     marginVertical: 10,
     marginBottom: 30,
-    borderWidth: 2
+    borderWidth: 2,
+    paddingLeft: 20
+
     // fontFamily: 'Montserrat',
   },
-  signupButton: {
+  signInButton: {
     backgroundColor: '#8FD14F',
     paddingVertical: 10,
     paddingHorizontal: 50,
-    borderRadius: 20,
+    borderRadius: 15,
     marginTop: 10,
     marginTop: 50,
     borderWidth: 2,
     borderColor: '#73A246'
   },
-  connexionButtonText: {
+  buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: 'bold'
   }
 });

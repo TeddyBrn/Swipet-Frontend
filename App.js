@@ -17,11 +17,12 @@ const store = configureStore({
 
 import HomeScreen from './screens/HomeScreen';
 import SignInScreen from './screens/SignInScreen';
-import SwipeScreen from './screens/SwipeScreen';
-import SettingsScreen from './screens/SettingsScreen';
-import MessageScreen from "./screens/MessageScreen";
+import SignUpScreenUser from "./screens/SignUpScreenUser"
+import SignUpScreenAnimal from "./screens/SignUpScreenAnimal"
 import FilterScreen from "./screens/FilterScreen";
-import SignUpScreen from "./screens/SignUpScreen"
+import SwipeScreen from './screens/SwipeScreen';
+import MessageScreen from "./screens/MessageScreen";
+import SettingsScreen from "./screens/SettingsScreen"
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -33,9 +34,9 @@ const TabNavigator = () => {
         tabBarIcon: ({ color, size }) => {
           let iconName = '';
 
-          if (route.name === 'Filtre') {
+          if (route.name === 'Filtres') {
             iconName = 'filter';
-          } else if (route.name === 'Message') {
+          } else if (route.name === 'Messages') {
             iconName = 'mail';
           } else if (route.name === 'SwipeScreen') {
             iconName = 'home';
@@ -55,9 +56,9 @@ const TabNavigator = () => {
         },
         headerShown: false
       })}>
-      <Tab.Screen name="Filtre" component={FilterScreen} />
+      <Tab.Screen name="Filtres" component={FilterScreen} />
       <Tab.Screen name="SwipeScreen" component={SwipeScreen} />
-      <Tab.Screen name="Message" component={MessageScreen} />
+      <Tab.Screen name="Messages" component={MessageScreen} />
 
     </Tab.Navigator>
   );
@@ -70,7 +71,8 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="SignIn" component={SignInScreen} />
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreenUser} />
+          <Stack.Screen name="SignUpAnimal" component={SignUpScreenAnimal} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
           <Stack.Screen name="Settings" component={SettingsScreen} />
         </Stack.Navigator>
