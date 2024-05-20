@@ -19,7 +19,7 @@ import HomeScreen from "./screens/HomeScreen";
 import Connection from './screens/ConnectionScreen';
 import SwipeScreen from './screens/SwipeScreen';
 import SettingsScreen from './screens/SettingsScreen';
-import FavoriteScreen from "./screens/FavoriteScreen";
+import MessageScreen from "./screens/MessageScreen";
 import BurgerScreen from "./screens/BurgerScreen";
 import SignIn from "./screens/SignIn"
 const Stack = createNativeStackNavigator();
@@ -60,7 +60,7 @@ const TabNavigator = () => {
       })}>
       <Tab.Screen name="Filtre" component={BurgerScreen} />
       <Tab.Screen name="SwipeScreen" component={SwipeScreen} />
-      <Tab.Screen name="Message" component={FavoriteScreen} />
+      <Tab.Screen name="Message" component={MessageScreen} />
 
     </Tab.Navigator>
   );
