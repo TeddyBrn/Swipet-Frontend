@@ -18,6 +18,7 @@ const store = configureStore({
 import HomeScreen from "./screens/HomeScreen";
 import Connection from './screens/ConnectionScreen';
 import SwipeScreen from './screens/SwipeScreen';
+import SettingsScreen from './screens/SettingsScreen';
 import FavoriteScreen from "./screens/FavoriteScreen";
 import BurgerScreen from "./screens/BurgerScreen";
 
@@ -27,6 +28,7 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   return (
     <Tab.Navigator
+      initialRouteName="SwipeScreen"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           let iconName = "";
@@ -41,17 +43,33 @@ const TabNavigator = () => {
 
           return <Ionicons name={iconName} size={30} color={color} />;
         },
-        tabBarActiveTintColor: "blue",
-        tabBarInactiveTintColor: "#1e272e",
-        headerShown: false
+        tabBarActiveTintColor: "#3497CE",
+        tabBarInactiveTintColor: "#222222",
+        tabBarStyle: {
+          backgroundColor:'#A7A7A7',
+          shadowColor: 'black',  // couleur de l'ombre
+          shadowOffset: { width: 0, height: 2 },  // décalage de l'ombre
+          shadowOpacity: 0.50,
+          shadowRadius: 5.46,
+          elevation: 9,
+         
+        },
+        headerShown: false,
+
+
       })}>
       <Tab.Screen name="Filtre" component={BurgerScreen} />
       <Tab.Screen name="SwipeScreen" component={SwipeScreen} />
       <Tab.Screen name="Message" component={FavoriteScreen} />
-      
+
     </Tab.Navigator>
   );
 };
+
+
+
+
+
 
 export default function App() {
   return (
@@ -61,6 +79,7 @@ export default function App() {
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Connection" component={Connection} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
+          <Stack.Screen name="Settings" component={SettingsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

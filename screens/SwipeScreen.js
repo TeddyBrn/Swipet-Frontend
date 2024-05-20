@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
-export default function ProfileCard() {
+export default function ProfileCard({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Image source={require('../assets/logo.jpg')} style={styles.logo} />
                 <Text style={styles.headerText}>SWIPET</Text>
                 <TouchableOpacity style={styles.iconButton}>
-                    <Image source={require('../assets/bell.png')} style={styles.icon} />
+                    <Image source={require('../assets/bell.png')} style={styles.bellIcon} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.iconButton}>
+                <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate("Settings")}>
                     <Image source={require('../assets/settings.png')} style={styles.icon} />
                 </TouchableOpacity>
             </View>
@@ -21,7 +21,7 @@ export default function ProfileCard() {
                         <Image key={i} source={require('../assets/star.png')} style={styles.star} />
                     ))}
                 </View>
-                <Text style={styles.profileName}>Celestine, 26 ans</Text>
+                <Text style={styles.profileName}>Ryad, 26 ans</Text>
                 <Text style={styles.bioLabel}>Bio</Text>
                 <Text style={styles.bioText}>
                     J'aime les animaux pour leur faire des gros calinous et des poutous baveux ainsi que les emmener en balades, non je rigole je veux juste de la moula 🐝.
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#ffffff',
-        padding: 10,
+        marginTop: 45,
     },
     header: {
         flexDirection: 'row',
@@ -68,27 +68,35 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
     },
+    bellIcon: {
+        width: 45,
+        height: 24,
+        marginLeft: 140
+    },
     profileContainer: {
         flex: 1,
         alignItems: 'center',
         backgroundColor: '#f5f5f5',
         borderRadius: 10,
-        padding: 10,
+        paddingTop: 40,
     },
     profileImage: {
-        width: '100%',
-        height: 200,
+        width: '90%',
+        height: 380,
         borderRadius: 10,
-        marginBottom: 10,
+        borderColor: 'black',
+        borderWidth: 1,
+        resizeMode: 'contain'
     },
     ratingContainer: {
         flexDirection: 'row',
         marginVertical: 5,
     },
     star: {
-        width: 20,
-        height: 20,
+        width: 30,
+        height: 30,
         marginHorizontal: 2,
+        
     },
     profileName: {
         fontSize: 20,
@@ -104,6 +112,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         textAlign: 'center',
         marginBottom: 10,
+        width: '90%',
     },
     actionButtons: {
         flexDirection: 'row',
@@ -129,7 +138,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#ffffff',
     },
-   
+
 });
 
 /*
@@ -152,4 +161,8 @@ import SwipeScreen from './screens/SwipeScreen';
 
 ...
 ou  <Tab.Screen name="SwipeScreen" component={SwipeScreen} />
+
+
+
+
 */
