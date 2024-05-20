@@ -39,7 +39,8 @@ export default function ConnectionScreen({ navigation }) {
                     style={styles.input}
                     onChangeText={(value) => setEmail(value)}
                     value={email}
-                    placeholder="Email"
+                    placeholder="E-mail"
+                    placeholderTextColor="grey"
                     keyboardType="email-address"
                     autoCapitalize="none"
                 />
@@ -48,6 +49,7 @@ export default function ConnectionScreen({ navigation }) {
                     onChangeText={(value) => setPassword(value)}
                     value={password}
                     placeholder="Password"
+                    placeholderTextColor="grey"
                     secureTextEntry
                 />
                 <TouchableOpacity style={styles.signupButton} activeOpacity={0.8}
@@ -79,11 +81,11 @@ const styles = StyleSheet.create({
     },
     logoContainer: {
         alignItems: 'center',
-        marginBottom: 20,
+        marginBottom: 70,
     },
     logo: {
-        width: 200,
-        height: 200,
+        width: 280,
+        height: 280,
         resizeMode: 'contain',
     },
     inputContainer: {
@@ -97,17 +99,26 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: 10,
         marginVertical: 10,
+        marginBottom: 30,
+        borderWidth: 2,
+        fontFamily: 'Montserrat',
+        
     },
     signupButton: {
-        backgroundColor: '#007BFF',
+        backgroundColor: '#8FD14F',
         paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingHorizontal: 50,
         borderRadius: 20,
         marginTop: 10,
+        marginTop: 50,
+        borderWidth: 2,
+        borderColor: '#73A246'
+        
     },
     connexionButtonText: {
         color: '#fff',
         fontSize: 16,
+        fontWeight: 'bold',
     },
 });
 
