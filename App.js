@@ -19,9 +19,9 @@ import HomeScreen from './screens/HomeScreen';
 import SignInScreen from './screens/SignInScreen';
 import SwipeScreen from './screens/SwipeScreen';
 import SettingsScreen from './screens/SettingsScreen';
-import FavoriteScreen from './screens/FavoriteScreen';
-import BurgerScreen from './screens/BurgerScreen';
-import SignUpScreen from './screens/SignUpScreen';
+import MessageScreen from "./screens/MessageScreen";
+import BurgerScreen from "./screens/BurgerScreen";
+import SignUpScreen from "./screens/SignIn"
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -57,7 +57,8 @@ const TabNavigator = () => {
       })}>
       <Tab.Screen name="Filtre" component={BurgerScreen} />
       <Tab.Screen name="SwipeScreen" component={SwipeScreen} />
-      <Tab.Screen name="Message" component={FavoriteScreen} />
+      <Tab.Screen name="Message" component={MessageScreen} />
+
     </Tab.Navigator>
   );
 };

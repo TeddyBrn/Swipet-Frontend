@@ -14,10 +14,10 @@ import { useSelector } from 'react-redux';
 import Burger from "../components/Burger";
 
 
-export default function FavoriteScreen({navigation, props}) {
+export default function MessageScreen({navigation}) {
   const burgers = useSelector((state) => state.favorite.value);
 
-  let favorite = <Text style={styles.text}>No Favorite Burger !</Text>;
+  let favorite = <Text style={styles.text}>Vous n'avez pas encore de matchs !</Text>;
   if (burgers.length > 0) {
     favorite = burgers.map((data, i) => {
       return <Burger key={i} {...data} isFavorite inFavorite />;
