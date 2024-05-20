@@ -24,7 +24,7 @@ export default function ProfileCard({ navigation }) {
                 <Text style={styles.profileName}>Ryad, 26 ans</Text>
                 <Text style={styles.bioLabel}>Bio</Text>
                 <Text style={styles.bioText}>
-                    J'aime les animaux pour leur faire des gros calinous et des poutous baveux ainsi que les emmener en balades, non je rigole je veux juste de la moula 🐝.
+                    J'aime les animaux pour leur faire des gros calinous et des poutous baveux ainsi que les emmener en balades, non je rigole je veux juste de la moula 💵 .
                 </Text>
                 <View style={styles.actionButtons}>
                     <TouchableOpacity style={styles.dislikeButton} activeOpacity={0.7}>

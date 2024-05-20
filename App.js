@@ -33,9 +33,9 @@ const TabNavigator = () => {
         tabBarIcon: ({ color, size }) => {
           let iconName = '';
 
-          if (route.name === 'Filtre') {
+          if (route.name === 'Filtres') {
             iconName = 'filter';
-          } else if (route.name === 'Message') {
+          } else if (route.name === 'Messages') {
             iconName = 'mail';
           } else if (route.name === 'SwipeScreen') {
             iconName = 'home';
@@ -55,9 +55,9 @@ const TabNavigator = () => {
         },
         headerShown: false
       })}>
-      <Tab.Screen name="Filtre" component={FilterScreen} />
+      <Tab.Screen name="Filtres" component={FilterScreen} />
       <Tab.Screen name="SwipeScreen" component={SwipeScreen} />
-      <Tab.Screen name="Message" component={MessageScreen} />
+      <Tab.Screen name="Messages" component={MessageScreen} />
 
     </Tab.Navigator>
   );
