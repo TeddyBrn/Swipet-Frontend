@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     width: '90%',
     padding: 10,
     paddingLeft: 20,
-    borderWidth: 2,
+    borderWidth: 1.5,
     marginBottom: 30,
     fontSize: 18,
   },
