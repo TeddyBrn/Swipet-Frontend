@@ -12,7 +12,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useDispatch, useSelector } from 'react-redux';
 import { addBurger, removeBurger } from '../reducers/favorite';
-
+import { FlatList } from "react-native";
 
 export default function Burger({ recipe, navigation }) {
     const dispatch = useDispatch();
