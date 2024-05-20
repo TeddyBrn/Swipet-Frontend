@@ -43,7 +43,7 @@ export default function HomeScreen({ navigation }) {
       <TouchableOpacity style={[styles.signupButton, signUpButtonStyle]} 
       activeOpacity={0.8} 
       onPressIn={handleSignUpPressIn} 
-      onPress={() => navigation.navigate("ProfilUtilisateur")}>
+      onPress={() => navigation.navigate("SignIn")}>
         <Text style={styles.signupButtonText}>Inscription</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   loginButton: {
-    borderWidth: 1.5,
     width: '80%',
     paddingVertical: 15,
     alignItems: 'center',

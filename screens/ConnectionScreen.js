@@ -48,7 +48,7 @@ export default function ConnectionScreen({ navigation }) {
                     style={styles.input}
                     onChangeText={(value) => setPassword(value)}
                     value={password}
-                    placeholder="Password"
+                    placeholder="Mot de passe"
                     placeholderTextColor="grey"
                     secureTextEntry
                 />
@@ -95,14 +95,12 @@ const styles = StyleSheet.create({
     },
     input: {
         borderRadius: 20,
-        borderWidth: 1.5,
         width: '100%',
         padding: 10,
         marginVertical: 10,
         marginBottom: 30,
         borderWidth: 2,
         fontFamily: 'Montserrat',
-        
     },
     signupButton: {
         backgroundColor: '#8FD14F',
