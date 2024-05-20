@@ -77,7 +77,6 @@ export default function App() {
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
           <Stack.Screen name="Notifications" component={NotificationsScreen} />
           <Stack.Screen name="Settings" component={SettingsScreen} />
-          
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

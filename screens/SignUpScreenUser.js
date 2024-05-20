@@ -8,8 +8,9 @@ import {
     TextInput,
     TouchableOpacity,
     Text,
-    CheckBox
+    
 } from 'react-native';
+import Checkbox from 'expo-checkbox';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
 
@@ -79,7 +80,7 @@ export default function ConnectionScreen({ navigation }) {
                 <View style={styles.checkboxContainer}>
                 <View style={styles.checkbox}>
                 <Text style={styles.label}>Garder</Text>
-                <CheckBox
+                <Checkbox
                     value={checkbox1}
                     onValueChange={setCheckbox1}
                     style={styles.check}
@@ -87,7 +88,7 @@ export default function ConnectionScreen({ navigation }) {
                 </View>
                 <View style={styles.checkbox}>
                 <Text style={styles.label}>Faire garder</Text>
-                <CheckBox
+                <Checkbox
                     value={checkbox2}
                     onValueChange={setCheckbox2}
                     style={styles.check}
