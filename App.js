@@ -17,11 +17,11 @@ const store = configureStore({
 
 import HomeScreen from './screens/HomeScreen';
 import SignInScreen from './screens/SignInScreen';
+import SignUpScreen from "./screens/SignUpScreen"
 import SwipeScreen from './screens/SwipeScreen';
-import SettingsScreen from './screens/SettingsScreen';
 import MessageScreen from "./screens/MessageScreen";
+import SettingsScreen from './screens/SettingsScreen';
 import BurgerScreen from "./screens/BurgerScreen";
-import SignUpScreen from "./screens/SignIn"
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
