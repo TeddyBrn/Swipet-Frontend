@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         marginBottom: 20,
         borderWidth: 2,
-        fontFamily: 'Montserrat',
+        // fontFamily: 'Montserrat',
     },
     checkboxContainer : {
         display: 'flex',
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         borderWidth: 2,
-        fontFamily: 'Montserrat',
+        // fontFamily: 'Montserrat',
     },
     logo: {
         width: 85,

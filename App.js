@@ -1,27 +1,27 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { Provider } from "react-redux";
-import { configureStore } from "@reduxjs/toolkit";
-import favorite from "./reducers/favorite";
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import favorite from './reducers/favorite';
 
 const store = configureStore({
   reducer: { favorite }
 });
 
-import HomeScreen from "./screens/HomeScreen";
-import Connection from './screens/ConnectionScreen';
+import HomeScreen from './screens/HomeScreen';
+import SignInScreen from './screens/SignInScreen';
 import SwipeScreen from './screens/SwipeScreen';
 import SettingsScreen from './screens/SettingsScreen';
-import FavoriteScreen from "./screens/FavoriteScreen";
-import BurgerScreen from "./screens/BurgerScreen";
-import SignIn from "./screens/SignIn"
+import MessageScreen from "./screens/MessageScreen";
+import FilterScreen from "./screens/FilterScreen";
+import SignUpScreen from "./screens/SignUpScreen"
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -31,45 +31,37 @@ const TabNavigator = () => {
       initialRouteName="SwipeScreen"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
-          let iconName = "";
+          let iconName = '';
 
-          if (route.name === "Filtre") {
-            iconName = "filter";
-          } else if (route.name === "Message") {
-            iconName = "mail";
-          } else if (route.name === "SwipeScreen") {
-            iconName = "home";
+          if (route.name === 'Filtre') {
+            iconName = 'filter';
+          } else if (route.name === 'Message') {
+            iconName = 'mail';
+          } else if (route.name === 'SwipeScreen') {
+            iconName = 'home';
           }
 
           return <Ionicons name={iconName} size={30} color={color} />;
         },
-        tabBarActiveTintColor: "#3497CE",
-        tabBarInactiveTintColor: "#222222",
+        tabBarActiveTintColor: '#3497CE',
+        tabBarInactiveTintColor: '#222222',
         tabBarStyle: {
-          backgroundColor:'#A7A7A7',
-          shadowColor: 'black',  // couleur de l'ombre
-          shadowOffset: { width: 0, height: 2 },  // décalage de l'ombre
-          shadowOpacity: 0.50,
+          backgroundColor: '#A7A7A7',
+          shadowColor: 'black', // couleur de l'ombre
+          shadowOffset: { width: 0, height: 2 }, // décalage de l'ombre
+          shadowOpacity: 0.5,
           shadowRadius: 5.46,
-          elevation: 9,
-         
+          elevation: 9
         },
-        headerShown: false,
-
-
+        headerShown: false
       })}>
-      <Tab.Screen name="Filtre" component={BurgerScreen} />
+      <Tab.Screen name="Filtre" component={FilterScreen} />
       <Tab.Screen name="SwipeScreen" component={SwipeScreen} />
-      <Tab.Screen name="Message" component={FavoriteScreen} />
+      <Tab.Screen name="Message" component={MessageScreen} />
 
     </Tab.Navigator>
   );
 };
-
-
-
-
-
 
 export default function App() {
   return (
@@ -77,8 +69,8 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Connection" component={Connection} />
-          <Stack.Screen name="SignIn" component={SignIn} />
+          <Stack.Screen name="SignIn" component={SignInScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
           <Stack.Screen name="Settings" component={SettingsScreen} />
         </Stack.Navigator>

@@ -5,9 +5,7 @@ const SettingsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
         
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Image source={require('../assets/back.jpg')} style={styles.backButtonImage} />
-      </TouchableOpacity>
+
       <Text style={styles.title}>Paramètres</Text>
       <View style={styles.logoContainer}>
         
@@ -28,12 +26,7 @@ const SettingsScreen = ({ navigation }) => {
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Avis</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.viewProfileButton}>
-        <Text style={styles.viewProfileButtonText}>Voir Profil</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.logoutButton}>
-        <Text style={styles.logoutButtonText}>Déconnexion</Text>
-      </TouchableOpacity>
+
     </View>
   );
 };
@@ -46,16 +39,6 @@ const styles = StyleSheet.create({
     paddingTop: 50,
   },
 
-  backButton: {
-    position: 'absolute',
-    top: 50,
-    left: 20,
-  },
-  backButtonImage: {
-    width: 60,
-    height: 40,
-    resizeMode: 'contain',
-  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -90,31 +73,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
   },
-  viewProfileButton: {
-    width: '80%',
-    padding: 15,
-    backgroundColor: '#4A90E2',
-    borderRadius: 5,
-    marginBottom: 15,
-    alignItems: 'center',
-  },
-  viewProfileButtonText: {
-    fontSize: 16,
-    color: '#FFF',
-  },
-  logoutButton: {
-    width: '80%',
-    padding: 15,
-    backgroundColor: '#FF6666',
-    borderRadius: 5,
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 50,
-  },
-  logoutButtonText: {
-    fontSize: 16,
-    color: '#FFF',
-  },
+
 });
 
 export default SettingsScreen;
