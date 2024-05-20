@@ -9,10 +9,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import favorite from './reducers/favorite';
+import users from './reducers/users';
 
 const store = configureStore({
-  reducer: { favorite }
+  reducer: { users }
 });
 
 import HomeScreen from './screens/HomeScreen';
@@ -23,13 +23,14 @@ import FilterScreen from "./screens/FilterScreen";
 import SwipeScreen from './screens/SwipeScreen';
 import MessageScreen from "./screens/MessageScreen";
 import SettingsScreen from "./screens/SettingsScreen"
+import NotificationsScreen from './screens/NotificationsScreen';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      initialRouteName="SwipeScreen"
+      initialRouteName="Swipe"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           let iconName = '';
@@ -38,7 +39,7 @@ const TabNavigator = () => {
             iconName = 'filter';
           } else if (route.name === 'Messages') {
             iconName = 'mail';
-          } else if (route.name === 'SwipeScreen') {
+          } else if (route.name === 'Swipe') {
             iconName = 'home';
           }
 
@@ -74,7 +75,9 @@ export default function App() {
           <Stack.Screen name="SignUp" component={SignUpScreenUser} />
           <Stack.Screen name="SignUpAnimal" component={SignUpScreenAnimal} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
+          <Stack.Screen name="Notifications" component={NotificationsScreen} />
           <Stack.Screen name="Settings" component={SettingsScreen} />
+          
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
