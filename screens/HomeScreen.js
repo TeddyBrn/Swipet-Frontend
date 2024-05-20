@@ -14,8 +14,7 @@ import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
 export default function HomeScreen({ navigation }) {
   const [loginButtonStyle, setLoginButtonStyle] = useState({
-    backgroundColor: '#ffffff',
-    borderColor: '#1E90FF',
+  
   });
 
   const handleLoginPressIn = () => {
@@ -54,30 +53,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',//centrer sur axe principal (verticale)
     alignItems: 'center',//centrer sur axe secondaire (horizontale)
     backgroundColor: '#ffffff',
+    fontFamily: 'Montserrat',
   },
   logoContainer: {
     alignItems: 'center',//centrer sur axe secondaire (horizontale)
-    marginBottom: 20,
     // borderColor : 'red',
     // borderWidth : 2,
   },
   logo: {
-    width: 200,
-    height: 200,
+    width: 300,
+    height: 300,
     resizeMode: 'contain', //https://reactnative.dev/docs/image-style-props#resizemode
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 40,
+    marginBottom: 100, 
+    marginTop: 50,
+    
   },
   signupButton: {
-    backgroundColor: '#1E90FF', // #5BBDF4 ?
+    backgroundColor: '#5BBDF4', // #5BBDF4 ?
     width: '80%',
     paddingVertical: 15,
     alignItems: 'center',
     borderRadius: 20,
-    marginBottom: 20,
+    marginBottom: 60,
+    borderWidth: 2,
+    
   },
   signupButtonText: {
     color: 'black',
@@ -89,10 +92,15 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     alignItems: 'center',
     borderRadius: 20,
+    marginBottom: 150, 
+    borderWidth: 2,
+    backgroundColor: '#ffffff',
+    borderColor: 'black',
   },
   loginButtonText: {
     color: 'black',
     fontSize: 18,
+    
   },
 });
 
