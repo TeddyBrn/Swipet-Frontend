@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Image,
   KeyboardAvoidingView,
@@ -6,53 +6,30 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
-
-
 export default function HomeScreen({ navigation }) {
-  const [loginButtonStyle, setLoginButtonStyle] = useState({
-  });
-  const [signUpButtonStyle, setSignUpButtonStyle] = useState({
-  });
-
-  const handleSignUpPressIn = () => {
-    setSignUpButtonStyle((prevStyle) => ({
-      backgroundColor: prevStyle.borderColor,
-      borderColor: prevStyle.backgroundColor,
-    }));
-  };
-
-  const handleLoginPressIn = () => {
-    setLoginButtonStyle((prevStyle) => ({
-      backgroundColor: prevStyle.borderColor,
-      borderColor: prevStyle.backgroundColor,
-    }));
-  };
-
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
-
-
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}>
       <View style={styles.logoContainer}>
         <Image source={require('../assets/logo.jpg')} style={styles.logo} />
       </View>
       <Text style={styles.title}>Bienvenue sur Swipet</Text>
-      <TouchableOpacity style={[styles.signupButton, signUpButtonStyle]} 
-      activeOpacity={0.8} 
-      onPressIn={handleSignUpPressIn} 
-      onPress={() => navigation.navigate("SignIn")}>
-        <Text style={styles.signupButtonText}>Inscription</Text>
+      <TouchableOpacity
+        style={[styles.button]}
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('SignUp')}>
+        <Text style={styles.buttonText}>Inscription</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.loginButton, loginButtonStyle]}
+        style={[styles.button, styles.signInButton]}
         activeOpacity={0.8}
-        onPressIn={handleLoginPressIn}
-        onPress={() => navigation.navigate("Connection")}
-      >
-        <Text style={styles.loginButtonText}>Connexion</Text>
+        onPress={() => navigation.navigate('SignIn')}>
+        <Text style={styles.buttonText}>Connexion</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>
   );
@@ -61,57 +38,42 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',//centrer sur axe principal (verticale)
-    alignItems: 'center',//centrer sur axe secondaire (horizontale)
-    backgroundColor: '#ffffff',
-    fontFamily: 'Montserrat',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff'
+    // fontFamily: 'Montserrat',
   },
   logoContainer: {
-    alignItems: 'center',//centrer sur axe secondaire (horizontale)
-    // borderColor : 'red',
-    // borderWidth : 2,
+    alignItems: 'center'
   },
   logo: {
     width: 300,
     height: 300,
-    resizeMode: 'contain', //https://reactnative.dev/docs/image-style-props#resizemode
+    resizeMode: 'contain' //https://reactnative.dev/docs/image-style-props#resizemode
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 100, 
-    marginTop: 50,
-    
+    marginBottom: 100,
+    marginTop: 50
   },
-  signupButton: {
-    backgroundColor: '#5BBDF4', // #5BBDF4 ?
-    width: '80%',
+  button: {
+    backgroundColor: '#5BBDF4', 
+    width: '65%',
     paddingVertical: 15,
     alignItems: 'center',
-    borderRadius: 20,
+    borderRadius: 15,
     marginBottom: 60,
-    borderWidth: 2,
-    
+    borderWidth: 1.5
   },
-  signupButtonText: {
+  buttonText: {
     color: 'black',
-    fontSize: 18,
+    fontSize: 22,
+    fontWeight: 'bold'
   },
-  loginButton: {
-    width: '80%',
-    paddingVertical: 15,
-    alignItems: 'center',
-    borderRadius: 20,
-    marginBottom: 150, 
-    borderWidth: 2,
+  signInButton: {
     backgroundColor: '#ffffff',
-    borderColor: 'black',
-  },
-  loginButtonText: {
-    color: 'black',
-    fontSize: 18,
-    
-  },
+  }
 });
 
 /*
