@@ -6,6 +6,8 @@ import {
     StyleSheet,
     View,
     TextInput,
+    Select,
+    Option,
     TouchableOpacity,
     Text,
     CheckBox
@@ -16,12 +18,44 @@ import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
 export default function ConnectionScreen({ navigation }) {
     const [name, setName] = useState('');
-    const [year, setYear] = useState('');
+    const [age, setAge] = useState('');
     const [type, setType] = useState('');
-    const [password, setPassword] = useState('');
-    const [checkbox1, setCheckbox1] = useState('');
-    const [checkbox2, setCheckbox2] = useState('');
-    const [city, setCity] = useState('');
+    const [gender, setGender] = useState('');
+    const [bio, setBio] = useState('');
+    const [detail, setDetail] = useState('');
+  //  const [photo, setPhoto] = useState('');
+
+    const handleAddAnimal = () => {
+
+
+        fetch('http://192.168.233.47:8081/profils/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, age, animalType: type, gender, bio, detail, photo}),
+          }).then(response => response.json())
+            .then(data => {
+               data.result && dispatch(login({ token: data.token, email }));
+            });
+        setName(''); setAge(''); setType(''); setGender(''); setBio(''); setDetail(''); setPhoto('');
+
+    }
+
+    const handleConnexion = () => {
+
+
+
+        fetch('http://192.168.233.47:8081/profils/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, age, animalType: type, gender, bio, detail, photo}),
+    }).then(response => response.json())
+      .then(data => {
+         data.result && dispatch(login({ token: data.token, email }));
+      });
+      navigation.navigate("SwipeScreen")
+
+    };
+
 
     const handleBackPress = () => {
         navigation.goBack();
@@ -52,10 +86,11 @@ export default function ConnectionScreen({ navigation }) {
                 />
                 <TextInput
                     style={styles.input}
-                    onChangeText={(value) => setYear(value)}
-                    value={year}
+                    onChangeText={(value) => setAge(value)}
+                    value={age}
                     placeholder="Age"
                     placeholderTextColor="grey"
+                    keyboardType="date"
                     autoCapitalize="none"
                 />
                 <TextInput
@@ -63,37 +98,42 @@ export default function ConnectionScreen({ navigation }) {
                     onChangeText={(value) => setType(value)}
                     value={type}
                     placeholder="Type"
-                    placeholderTextColor="grey"
-                    keyboardType="email-address"
+                    placeholderTextColor="grey"    
                     autoCapitalize="none"
                 />
-                <TextInput
+                <   Select value={gender} onChange={(value) => setGender(value)} style={styles.input}>
+                    <Option value="male">Male</Option>
+                    <Option value="female">Female</Option>
+                </Select>
+                {/* <TextInput
                     style={styles.input}
-                    onChangeText={(value) => setPassword(value)}
-                    value={password}
-                    placeholder="Mot de passe"
+                    onChangeText={(value) => setGender(value)}
+                    value={gender}
                     placeholderTextColor="grey"
-                    secureTextEntry
+                    autoCapitalize="none"
+                /> */}
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={(value) => setBio(value)}
+                    value={bio}
+                    placeholderTextColor="grey"
+                    autoCapitalize="none"
                 />
-                <Text>Vous souhaitez :</Text>
-                <View style={styles.checkboxContainer}>
-                <View style={styles.checkbox}>
-                <Text style={styles.label}>Garder</Text>
-                <CheckBox
-                    value={checkbox1}
-                    onValueChange={setCheckbox1}
-                    style={styles.check}
+
+                <TouchableOpacity style={styles.signupButton} activeOpacity={0.8}
+                    onPress={handleAddAnimal}
+                >
+                    <Text style={styles.connexionButtonText}>Ajouter un animal</Text>
+                </TouchableOpacity>
+
+                 <TextInput
+                    style={styles.input}
+                    onChangeText={(value) => setDetail(value)}
+                    value={detail}
+                    placeholderTextColor="grey"
+                    autoCapitalize="none"
                 />
-                </View>
-                <View style={styles.checkbox}>
-                <Text style={styles.label}>Faire garder</Text>
-                <CheckBox
-                    value={checkbox2}
-                    onValueChange={setCheckbox2}
-                    style={styles.check}
-                />
-                </View>
-                </View>
+                
                 <TextInput
                     style={styles.input}
                     onChangeText={(value) => setCity(value)}
@@ -103,7 +143,7 @@ export default function ConnectionScreen({ navigation }) {
                     autoCapitalize="none"
                 />
                 <TouchableOpacity style={styles.signupButton} activeOpacity={0.8}
-                    onPress={() => navigation.navigate("TabNavigator")}
+                    onPress={handleConnexion}
                 >
                     <Text style={styles.connexionButtonText}>Confirmer</Text>
                 </TouchableOpacity>
@@ -150,23 +190,23 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         // fontFamily: 'Montserrat',
     },
-    checkboxContainer : {
-        display: 'flex',
-        flexDirection: 'row',
-        width: '80%',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-    },
-    checkbox: {
-        display: 'flex',
-        flexDirection: 'row',
-        width: 100,
-        height: 60,
-        borderRadius: 10,
-        padding: 10,
-        borderWidth: 2,
-        // fontFamily: 'Montserrat',
-    },
+    // checkboxContainer : {
+    //     display: 'flex',
+    //     flexDirection: 'row',
+    //     width: '80%',
+    //     justifyContent: 'space-around',
+    //     alignItems: 'center',
+    // },
+    // checkbox: {
+    //     display: 'flex',
+    //     flexDirection: 'row',
+    //     width: 100,
+    //     height: 60,
+    //     borderRadius: 10,
+    //     padding: 10,
+    //     borderWidth: 2,
+    //     // fontFamily: 'Montserrat',
+    // },
     logo: {
         width: 85,
         height: 85,

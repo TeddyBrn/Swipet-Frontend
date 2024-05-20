@@ -22,17 +22,18 @@ export default function ConnectionScreen({ navigation }) {
     const [checkbox1, setCheckbox1] = useState('');
     const [checkbox2, setCheckbox2] = useState('');
     const [city, setCity] = useState('');
+    const [age, setAge] = useState('');
 
     const handleConnexion = () => {
         fetch('http://192.168.233.47:8081/profils/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, firstname, email, password, profil: checkbox1, city }),
+      body: JSON.stringify({ firstname, lastname: name, email, password, profil: checkbox1, city }),
     }).then(response => response.json())
       .then(data => {
          data.result && dispatch(login({ token: data.token, email }));
       });
-      navigation.navigate("profilAnimalScreen")
+      navigation.navigate("SignUpScreenAnimal")
 
     };
 
@@ -69,6 +70,15 @@ export default function ConnectionScreen({ navigation }) {
                     value={firstname}
                     placeholder="Prénom"
                     placeholderTextColor="grey"
+                    autoCapitalize="none"
+                />
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(value) => setAge(value)}
+                    value={age}
+                    placeholder="Age"
+                    placeholderTextColor="grey"
+                    keyboardType="date"
                     autoCapitalize="none"
                 />
                 <TextInput
@@ -116,7 +126,7 @@ export default function ConnectionScreen({ navigation }) {
                     autoCapitalize="none"
                 />
                 <TouchableOpacity style={styles.signupButton} activeOpacity={0.8}
-                    onPress={handleBackPress} {() => navigation.navigate("")}
+                    onPress={handleConnexion} 
                 >
                     <Text style={styles.connexionButtonText}>Connexion</Text>
                 </TouchableOpacity>
