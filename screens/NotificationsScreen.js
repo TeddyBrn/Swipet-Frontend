@@ -9,6 +9,7 @@ const NotificationsScreen = ({ navigation }) => {
         <Image source={require('../assets/back.jpg')} style={styles.backButtonImage} />
       </TouchableOpacity>
       <Text style={styles.title}>Notifications</Text>
+      <Text style={styles.text}>Vous n'avez pas encore de notifications !</Text>
 
       </View>
   );
@@ -37,6 +38,12 @@ const styles = StyleSheet.create({
     height: 40,
     resizeMode: 'contain',
   },
+  text: {
+    fontSize: 26,
+    fontWeight: "600",
+    marginTop: 100,
+    color: "#502314",
+  }
 
 
 });
