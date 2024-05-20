@@ -11,10 +11,51 @@ import {
 } from 'react-native';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useDispatch } from 'react-redux';
+import { login } from '../reducers/users';
 
-export default function ConnectionScreen({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+export default function SignInScreen({ navigation }) {
+  const [signInEmail, setSignInEmail] = useState('');
+  const [emailError, setEmailError] = useState(false);
+  const [signInPassword, setSignInPassword] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const handleConnection = () => {
+    fetch("http://192.168.1.30:3000/profils/signin", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: signInEmail,
+        password: signInPassword
+      })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (EMAIL_REGEX.test(signInEmail)) {
+          if (data.result) {
+            dispatch(
+              login({
+                token: data.token,
+                email: signInEmail,
+                firstname: data.firstname,
+                lastname: data.lastname
+              })
+            );
+            navigation.navigate('TabNavigator', { screen: 'Swipe' });
+          } else {
+            setEmailError(true);
+            setPasswordError(true);
+          }
+        } else {
+          setEmailError(true);
+          setPasswordError(true);
+        }
+      });
+  };
 
   return (
     <KeyboardAvoidingView
@@ -29,19 +70,23 @@ export default function ConnectionScreen({ navigation }) {
         <Image source={require('../assets/logo.jpg')} style={styles.logo} />
       </View>
       <View style={styles.inputContainer}>
+        {emailError && <Text style={styles.error}>Invalid email address</Text>}
         <TextInput
           style={styles.input}
-          onChangeText={(value) => setEmail(value)}
-          value={email}
+          onChangeText={(value) => setSignInEmail(value)}
+          value={signInEmail}
           placeholder="E-mail"
           placeholderTextColor="grey"
           keyboardType="email-address"
+          autoComplete="email"
+          textContentType="emailAddress"
           autoCapitalize="none"
         />
+        {passwordError && <Text style={styles.error}>Invalid password</Text>}
         <TextInput
           style={styles.input}
-          onChangeText={(value) => setPassword(value)}
-          value={password}
+          onChangeText={(value) => setSignInPassword(value)}
+          value={signInPassword}
           placeholder="Mot de passe"
           placeholderTextColor="grey"
           secureTextEntry
@@ -49,7 +94,7 @@ export default function ConnectionScreen({ navigation }) {
         <TouchableOpacity
           style={styles.signInButton}
           activeOpacity={0.8}
-          onPress={() => navigation.navigate('TabNavigator')}>
+          onPress={() => handleConnection()}>
           <Text style={styles.buttonText}>Connexion</Text>
         </TouchableOpacity>
       </View>
@@ -86,8 +131,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: '80%',
     justifyContent: 'space-around',
-    alignItems: 'center',
-
+    alignItems: 'center'
   },
   input: {
     borderRadius: 15,
@@ -114,7 +158,10 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 22,
     fontWeight: 'bold'
-  }
+  },
+  error: {
+    color: 'red',
+  },
 });
 
 /*
