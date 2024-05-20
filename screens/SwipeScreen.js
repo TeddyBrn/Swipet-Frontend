@@ -7,7 +7,7 @@ export default function ProfileCard({ navigation }) {
             <View style={styles.header}>
                 <Image source={require('../assets/logo.jpg')} style={styles.logo} />
                 <Text style={styles.headerText}>SWIPET</Text>
-                <TouchableOpacity style={styles.iconButton}>
+                <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate("Notifications")} >
                     <Image source={require('../assets/bell.png')} style={styles.bellIcon} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate("Settings")}>
