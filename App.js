@@ -20,8 +20,8 @@ import SignInScreen from './screens/SignInScreen';
 import SwipeScreen from './screens/SwipeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import MessageScreen from "./screens/MessageScreen";
-import BurgerScreen from "./screens/BurgerScreen";
-import SignUpScreen from "./screens/SignIn"
+import FilterScreen from "./screens/FilterScreen";
+import SignUpScreen from "./screens/SignUpScreen"
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
