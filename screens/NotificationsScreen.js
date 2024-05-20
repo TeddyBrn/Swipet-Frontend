@@ -5,7 +5,9 @@ const NotificationsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
         
-
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Image source={require('../assets/back.jpg')} style={styles.backButtonImage} />
+      </TouchableOpacity>
       <Text style={styles.title}>Notifications</Text>
 
       </View>
@@ -25,7 +27,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
   },
-
+  backButton: {
+    position: 'absolute',
+    top: 50,
+    left: 20,
+  },
+  backButtonImage: {
+    width: 60,
+    height: 40,
+    resizeMode: 'contain',
+  },
 
 
 });
@@ -44,5 +55,7 @@ import NotificationsScreen from './screens/NotificationsScreen';
 <Stack.Screen name="Notifications" component={NotificationsScreen} />
 
 ...
+
+
 
 */

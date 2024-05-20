@@ -15,13 +15,13 @@ export default function ProfileCard({ navigation }) {
                 </TouchableOpacity>
             </View>
             <View style={styles.profileContainer}>
-                <Image source={require('../assets/profile.png')} style={styles.profileImage} />
+                <Image source={require('../assets/myprofile.jpg')} style={styles.profileImage} />
                 <View style={styles.ratingContainer}>
                     {Array(5).fill().map((_, i) => (
                         <Image key={i} source={require('../assets/star.png')} style={styles.star} />
                     ))}
                 </View>
-                <Text style={styles.profileName}>Ryad, 26 ans</Text>
+                <Text style={styles.profileName}>Sarah, 6 ans</Text>
                 <Text style={styles.bioLabel}>Bio</Text>
                 <Text style={styles.bioText}>
                     J'aime les animaux pour leur faire des gros calinous et des poutous baveux ainsi que les emmener en balades, non je rigole je veux juste de la moula 💵 .
