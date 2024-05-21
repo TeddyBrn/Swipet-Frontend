@@ -16,7 +16,7 @@ const initialState = {
   }
 };
 
-export const userSlice = createSlice({
+const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -37,8 +37,12 @@ export const userSlice = createSlice({
       state.value.token = null;
       state.value.username = null;
     }
+  ,
+  addAnimal: (state, action) => {
+    state.value.profilAnimal.push(action.payload)
+  }
   }
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout, addAnimal } = userSlice.actions;
 export default userSlice.reducer;

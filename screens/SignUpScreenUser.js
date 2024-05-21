@@ -7,24 +7,45 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Text
+  Text,
+  Button
 } from 'react-native';
 import Checkbox from 'expo-checkbox';
-const { checkBody } = require("../modules/checkbody");
-import { NavigationProp, ParamListBase } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import * as ImagePicker from 'expo-image-picker';
+import { useDispatch } from 'react-redux';
+import { login } from '../reducers/users';
 
-const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
-export default function ConnectionScreen({ navigation }) {
+export default function SignUpScreenUser({ navigation }) {
 
-    const [name, setName] = useState('');
+    const dispatch = useDispatch();
+
+    const [lastname, setLastname] = useState('');
     const [firstname, setFirstname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [checkbox1, setCheckbox1] = useState(false);
     const [checkbox2, setCheckbox2] = useState(false);
     const [city, setCity] = useState('');
-    // const [age, setAge] = useState('');
+    const [age, setAge] = useState('');
+    const [image, setImage] = useState(null);
+
+    const pickImage = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1
+      });
+  
+      console.log(result.assets[0].uri);
+  
+      if (!result.canceled) {
+        setImage(result.assets[0].uri);
+      }
+    };
 
 
 const handleCheckbox1 = ()  => {
@@ -51,49 +72,19 @@ if (checkbox2 === true && checkbox1 === false) {role = 'faire garder'};
 
 const handleConnexion = () => {
 
-        // if (
-        //     // !checkBody(req.body, [
-        //     //   "firstname",
-        //     //   "name",
-        //     //   "email",
-        //     //   "password",
-        //     //    role,
-        //     //   "city",
-        //     //   // "birthDate",
-        //     // ])
-        //   ) {
-        //     res.json({ result: false, error: "Missing or empty fields" });
-        //     return;
-        //   } else 
-          if (!EMAIL_REGEX.test(email)) {
-            res.json({ result: false, error: "Wrong email format" })
-          } else {
-            fetch('http://192.168.233.47:8081/profils/signup', {
+            fetch('http://192.168.233.47:3000/profils/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ firstname, lastname: name, email, password, role, city }),
+                body: JSON.stringify({ firstname, lastname, email, password, city, role, birthDate: age }),
             }).then(response => response.json())
             .then(data => {
+                console.log(data)
             data.result && dispatch(login({ token: data.token, email }));
-            });
             navigation.navigate("SignUpAnimal")
-          }      
+            });
+            
+        //   }      
     };
-
-
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-import { NavigationProp, ParamListBase } from '@react-navigation/native';
-
-export default function ConnectionScreen({ navigation }) {
-  const [lastName, setLastName] = useState('');
-  const [firstname, setFirstname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [checkbox1, setCheckbox1] = useState('');
-  const [checkbox2, setCheckbox2] = useState('');
-  const [city, setCity] = useState('');
 
   return (
     <SafeAreaView style={styles.container}>
@@ -113,10 +104,20 @@ export default function ConnectionScreen({ navigation }) {
           />
         </View>
         <View style={styles.inputContainer}>
+          <TouchableOpacity
+            style={styles.imagePicker}
+            activeOpacity={0.8}
+            onPress={pickImage}>
+            {image ? (
+            <Image source={{ uri: image }} style={styles.image} />
+            ) : (
+            <Ionicons name="images-outline" size={60} color="#555" />
+            )}
+          </TouchableOpacity>
           <TextInput
             style={styles.input}
-            onChangeText={(value) => setLastName(value)}
-            value={lastName}
+            onChangeText={(value) => setLastname(value)}
+            value={lastname}
             placeholder="Nom"
             placeholderTextColor="grey"
             autoCapitalize="none"
@@ -126,6 +127,14 @@ export default function ConnectionScreen({ navigation }) {
             onChangeText={(value) => setFirstname(value)}
             value={firstname}
             placeholder="Prénom"
+            placeholderTextColor="grey"
+            autoCapitalize="none"
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => setAge(value)}
+            value={age}
+            placeholder="Age"
             placeholderTextColor="grey"
             autoCapitalize="none"
           />
@@ -160,7 +169,7 @@ export default function ConnectionScreen({ navigation }) {
               <Text style={styles.label}>Garder</Text>
               <Checkbox
                 value={checkbox1}
-                onValueChange={setCheckbox1}
+                onValueChange={()=>handleCheckbox1()}
                 style={styles.check}
               />
             </View>
@@ -171,84 +180,15 @@ export default function ConnectionScreen({ navigation }) {
               </View>
               <Checkbox
                 value={checkbox2}
-                onValueChange={setCheckbox2}
+                onValueChange={()=>handleCheckbox2()}
                 style={styles.check}
               />
             </View>
-            <View style={styles.inputContainer}>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={(value) => setName(value)}
-                    value={name}
-                    placeholder="Nom"
-                    placeholderTextColor="grey"
-                    autoCapitalize="none"
-                />
-                <TextInput
-                    style={styles.input}
-                    onChangeText={(value) => setFirstname(value)}
-                    value={firstname}
-                    placeholder="Prénom"
-                    placeholderTextColor="grey"
-                    autoCapitalize="none"
-                />
-                <TextInput
-                    style={styles.input}
-                    onChangeText={(value) => setEmail(value)}
-                    value={email}
-                    placeholder="E-mail"
-                    placeholderTextColor="grey"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                />
-                <TextInput
-                    style={styles.input}
-                    onChangeText={(value) => setPassword(value)}
-                    value={password}
-                    placeholder="Mot de passe"
-                    placeholderTextColor="grey"
-                    secureTextEntry
-                />
-                <Text>Vous souhaitez :</Text>
-                <View style={styles.checkboxContainer}>
-                <View style={styles.checkbox}>
-                <Text style={styles.label}>Garder</Text>
-                <Checkbox
-                    value={checkbox1}
-                    onValueChange={()=>handleCheckbox1()}
-                    style={styles.check}
-                />
-                </View>
-                <View style={styles.checkbox}>
-                <Text style={styles.label}>Faire garder</Text>
-                <Checkbox
-                    value={checkbox2}
-                    onValueChange={()=>handleCheckbox2()}
-                    style={styles.check}
-                />
-                </View>
-                </View>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={(value) => setCity(value)}
-                    value={city}
-                    placeholder="Ville"
-                    placeholderTextColor="grey"
-                    autoCapitalize="none"
-                />
-                <TouchableOpacity style={styles.signupButton} activeOpacity={0.8}
-                    onPress={() => handleConnexion()}
-                >
-                    <Text style={styles.connexionButtonText}>Confirmer</Text>
-                </TouchableOpacity>
-            </View>
-        </KeyboardAvoidingView>
-    );
           </View>
           <TouchableOpacity
             style={styles.signUpButton}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('SignUpAnimal')}>
+            onPress={() => handleConnexion()}>
             <Text style={styles.buttonText}>Confirmer</Text>
           </TouchableOpacity>
         </View>
@@ -258,83 +198,98 @@ export default function ConnectionScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#ffffff'
-  },
-  topContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    marginBottom: 30,
-  },
-  topMid: {
-    alignItems: 'center'
-  },
-  topText: {
-    fontSize: 25,
-    fontWeight: 'bold'
-  },
-  logo: {
-    width: 85,
-    height: 85,
-    resizeMode: 'contain'
-  },
-  inputContainer: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  input: {
-    borderRadius: 15,
-    borderWidth: 1.5,
-    width: '90%',
-    padding: 10,
-    paddingLeft: 20,
-    borderWidth: 1.5,
-    marginBottom: 30,
-    fontSize: 18,
-  },
-  titleCheckbox: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    paddingVertical: 20
-  },
-  checkboxContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '80%',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingBottom: 40
-  },
-  checkbox: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: 110,
-    height: 60,
-    borderRadius: 10,
-    borderWidth: 1.5
-  },
-  label: {
-    fontSize: 18,
-    fontWeight: '500'
-  },
-  signUpButton: {
-    backgroundColor: '#8FD14F',
-    paddingVertical: 10,
-    paddingHorizontal: 50,
-    borderRadius: 15,
-    marginTop: 50,
-    borderWidth: 2,
-    borderColor: '#73A246'
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 19,
-    fontWeight: 'bold'
-  }
-});
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      backgroundColor: '#ffffff'
+    },
+    topContainer: {
+      width: '100%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-around',
+      marginBottom: 25
+    },
+    topMid: {
+      alignItems: 'center'
+    },
+    topText: {
+      fontSize: 25,
+      fontWeight: 'bold'
+    },
+    logo: {
+      width: 85,
+      height: 85,
+      resizeMode: 'contain',
+      
+    },
+    inputContainer: {
+      flex: 1,
+      alignItems: 'center'
+    },
+    imagePicker: {
+      borderRadius: 50,
+      borderWidth: 2,
+      width: 100,
+      height: 100,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 30
+    },
+    image: {
+      borderRadius: 50,
+      width: "100%",
+      height: "100%"
+    },
+    input: {
+      borderRadius: 15,
+      borderWidth: 1.5,
+      width: '90%',
+      padding: 10,
+      paddingLeft: 20,
+      borderWidth: 1.5,
+      marginBottom: 20,
+      fontSize: 18
+    },
+    titleCheckbox: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      paddingVertical: 20
+    },
+    checkboxContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      width: '80%',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      paddingBottom: 30
+    },
+    checkbox: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      width: 110,
+      height: 60,
+      borderRadius: 10,
+      borderWidth: 1.5
+    },
+    label: {
+      fontSize: 18,
+      fontWeight: '500'
+    },
+    signUpButton: {
+      backgroundColor: '#8FD14F',
+      paddingVertical: 10,
+      paddingHorizontal: 50,
+      borderRadius: 15,
+      marginTop: 20,
+      borderWidth: 2,
+      borderColor: '#73A246'
+    },
+    buttonText: {
+      color: '#fff',
+      fontSize: 19,
+      fontWeight: 'bold'
+    }
+  });
