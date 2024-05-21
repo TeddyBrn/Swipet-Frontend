@@ -24,6 +24,11 @@ import SwipeScreen from './screens/SwipeScreen';
 import MessageScreen from "./screens/MessageScreen";
 import SettingsScreen from "./screens/SettingsScreen"
 import NotificationsScreen from './screens/NotificationsScreen';
+import ProfilScreen from './screens/ProfilScreen';
+import ProfileAnimalScreen from './screens/ProfilAnimalScreen';
+import HistoriqueScreen from './screens/HistoriqueScreen';
+import AvisScreen from './screens/AvisScreen';
+import PaymentScreen from './screens/PaymentScreen';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -77,6 +82,11 @@ export default function App() {
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
           <Stack.Screen name="Notifications" component={NotificationsScreen} />
           <Stack.Screen name="Settings" component={SettingsScreen} />
+          <Stack.Screen name="Profil" component={ProfilScreen} />
+          <Stack.Screen name="ProfilAnimal" component={ProfileAnimalScreen} />
+          <Stack.Screen name="Payment" component={PaymentScreen} />
+          <Stack.Screen name="Historique" component={HistoriqueScreen} />
+          <Stack.Screen name="Avis" component={AvisScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
