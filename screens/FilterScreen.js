@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Dropdown } from 'react-native-element-dropdown';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ageData = [
   { label: '18 ans', value: 1 },
@@ -11,11 +11,32 @@ const ageData = [
   { label: '45 ans', value: 4 },
 ];
 
+const durationData = [
+  { label: "moins d'une semaine", value: 1 },
+  { label: "une semaine à deux semaines", value: 2 },
+  { label: "deux à trois semaines", value: 3 },
+  { label: "plus de trois semaines", value: 4 },
+];
+
 const FiltersScreen = ({ navigation }) => {
   const [kmValue, setKmValue] = useState(2);
   const [ageValue, setAgeValue] = useState(null);
+  const [averageNote, setAverageNote] = useState(0);
+  const [durationValue, setDurationValue] = useState(null);
+
+  
+  
 
 
+
+  const stars = [];
+  for (let i = 0; i < 5; i++) {
+    let style = { 'cursor': 'pointer' };
+    if (i < averageNote) {
+      style = { 'color': '#2196f3', 'cursor': 'pointer' };
+    }
+    stars.push(<Ionicons key={i} name="star" size={26} color={style.color} onPress={() => setAverageNote(i + 1)} style={style} />);
+  }
 
   return (
     <View style={styles.container}>
@@ -23,16 +44,16 @@ const FiltersScreen = ({ navigation }) => {
       <Text style={styles.text}>Choisissez vos préférences</Text>
       <View style={styles.optionsContainer}>
         <Text style={styles.sliderValue}>Distance: moins de {kmValue} Km</Text>
-        <Slider
+        <Slider 
           style={styles.slider}
           minimumValue={2}
           maximumValue={30}
           step={2}
           value={kmValue}
           onValueChange={setKmValue}
-          minimumTrackTintColor="#1fb28a" // Couleur de la partie du slider avant le pouce (la partie active)
-          maximumTrackTintColor="#222222"// // Couleur de la partie du slider après le pouce (la partie inactive)
-          thumbTintColor="#1fb28a" // Couleur du pouce (le bouton mobile du slider)
+          minimumTrackTintColor="#2196f3"
+          maximumTrackTintColor="#222222"
+          thumbTintColor="#2196f3"
         />
         <Text style={styles.sliderValue}>Age minimum:</Text>
         <Dropdown
@@ -42,7 +63,29 @@ const FiltersScreen = ({ navigation }) => {
           valueField="value"
           value={ageValue}
           onChange={item => setAgeValue(item.value)}
-          placeholder="Age min"
+          placeholder="rechercher un age minimum"
+          activeColor='#2196f3'
+          selectedTextStyle={styles.selectedTextStyle}
+          
+         
+          
+        />
+        <Text style={styles.sliderValue}>Note minimum:</Text>
+        <Text style={styles.stars}>{stars}</Text>
+        <Text style={styles.sliderValue}>Durée:</Text>
+        <Dropdown
+          style={styles.dropdown}
+          data={durationData}
+          labelField="label"
+          valueField="value"
+          value={durationValue}
+          onChange={item => setAgeValue(item.value)}
+          placeholder="rechercher une durée"
+          activeColor='#2196f3'
+          selectedTextStyle={styles.selectedTextStyle}
+          
+         
+          
         />
       </View>
       <TouchableOpacity
@@ -50,9 +93,12 @@ const FiltersScreen = ({ navigation }) => {
         activeOpacity={0.8}>
         <Text style={styles.buttonText}>Valider</Text>
       </TouchableOpacity>
+      
     </View>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -104,6 +150,15 @@ const styles = StyleSheet.create({
     width: '90%',
     marginBottom: 20,
   },
+  selectedTextStyle: {
+    fontSize: 16,
+    color: "#2196f3",
+    fontWeight: 'bold',
+
+  },
+  stars: {
+marginBottom:15
+  },
   buttonText: {
     fontSize: 18,
     color: '#FFF',
@@ -111,3 +166,38 @@ const styles = StyleSheet.create({
 });
 
 export default FiltersScreen;
+
+/*
+structure personalnote de mymoviz
+function Movie(props) {
+ const [personalNote, setPersonalNote] = useState(0);
+
+
+   const personalStars = [];
+  for (let i = 0; i < 10; i++) {
+    let style = { 'cursor': 'pointer' };
+    if (i < personalNote) {
+      style = { 'color': '#2196f3', 'cursor': 'pointer' };
+    }
+    personalStars.push(<FontAwesomeIcon key={i} icon={faStar} onClick={() => setPersonalNote(i + 1)} style={style} className="note" />);
+  }
+
+  return (
+    <span>{personalStars} ({personalNote})</span>
+      );
+}
+
+
+
+Doc de Slider : https://www.npmjs.com/package/@react-native-community/slider
+ Doc de Dropdown : https://www.npmjs.com/package/react-native-element-dropdown
+
+  renderRightIcon={() => (
+            <Ionicon
+              style={styles.icon}
+              color={isFocus ? 'blue' : 'black'}
+              name="chevron-down-outline"
+              size={20}
+            />
+          )}
+*/

@@ -10,7 +10,8 @@ import {
     Text,
     CheckBox
 } from 'react-native';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 
@@ -25,19 +26,21 @@ export default function ProfilScreen({ navigation }) {
     };
 
     return (
+        <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={styles.container}
-        >
-            <View style={styles.backContainer}>
-                <TouchableOpacity onPress={handleBackPress}>
-                    <Image source={require('../assets/back.jpg')} style={styles.backButton} />
-                </TouchableOpacity>
-            </View>
-            <Text>Profil</Text>
-            <View style={styles.logoContainer}>
-                <Image source={require('../assets/logo.jpg')} style={styles.logo} />
-            </View>
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <View style={styles.topContainer}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={60} color="#E06359" />
+          </TouchableOpacity>
+          <View style={styles.topMid}>
+            <Text style={styles.topText}>Profil</Text>
+          </View>
+          <Image
+            source={require('../assets/miniLogo.png')}
+            style={styles.logo}
+          />
+        </View>
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
@@ -79,6 +82,7 @@ export default function ProfilScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
+        </SafeAreaView>
     );
 }
 
@@ -88,6 +92,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#ffffff',
     },
+    topContainer: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        marginBottom: 30
+      },
+      topMid: {
+        alignItems: 'center'
+      },
+      topText: {
+        fontSize: 25,
+        fontWeight: 'bold'
+      },
+      logo: {
+        width: 85,
+        height: 85,
+        resizeMode: 'contain'
+      },
     signupButton: {
         backgroundColor: '#8FD14F',
         paddingVertical: 10,

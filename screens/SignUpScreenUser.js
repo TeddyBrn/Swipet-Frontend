@@ -114,6 +114,7 @@ const handleConnexion = () => {
             <Ionicons name="images-outline" size={60} color="#555" />
             )}
           </TouchableOpacity>
+
           <TextInput
             style={styles.input}
             onChangeText={(value) => setLastname(value)}
@@ -182,6 +183,7 @@ const handleConnexion = () => {
                 value={checkbox2}
                 onValueChange={()=>handleCheckbox2()}
                 style={styles.check}
+               
               />
             </View>
           </View>
@@ -198,98 +200,98 @@ const handleConnexion = () => {
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: 'center',
-      backgroundColor: '#ffffff'
-    },
-    topContainer: {
-      width: '100%',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-around',
-      marginBottom: 25
-    },
-    topMid: {
-      alignItems: 'center'
-    },
-    topText: {
-      fontSize: 25,
-      fontWeight: 'bold'
-    },
-    logo: {
-      width: 85,
-      height: 85,
-      resizeMode: 'contain',
-      
-    },
-    inputContainer: {
-      flex: 1,
-      alignItems: 'center'
-    },
-    imagePicker: {
-      borderRadius: 50,
-      borderWidth: 2,
-      width: 100,
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginBottom: 30
-    },
-    image: {
-      borderRadius: 50,
-      width: "100%",
-      height: "100%"
-    },
-    input: {
-      borderRadius: 15,
-      borderWidth: 1.5,
-      width: '90%',
-      padding: 10,
-      paddingLeft: 20,
-      borderWidth: 1.5,
-      marginBottom: 20,
-      fontSize: 18
-    },
-    titleCheckbox: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      paddingVertical: 20
-    },
-    checkboxContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      width: '80%',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-      paddingBottom: 30
-    },
-    checkbox: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-      width: 110,
-      height: 60,
-      borderRadius: 10,
-      borderWidth: 1.5
-    },
-    label: {
-      fontSize: 18,
-      fontWeight: '500'
-    },
-    signUpButton: {
-      backgroundColor: '#8FD14F',
-      paddingVertical: 10,
-      paddingHorizontal: 50,
-      borderRadius: 15,
-      marginTop: 20,
-      borderWidth: 2,
-      borderColor: '#73A246'
-    },
-    buttonText: {
-      color: '#fff',
-      fontSize: 19,
-      fontWeight: 'bold'
-    }
-  });
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#ffffff'
+  },
+  topContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginBottom: 25
+  },
+  topMid: {
+    alignItems: 'center'
+  },
+  topText: {
+    fontSize: 25,
+    fontWeight: 'bold'
+  },
+  logo: {
+    width: 85,
+    height: 85,
+    resizeMode: 'contain',
+    
+  },
+  inputContainer: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  imagePicker: {
+    borderRadius: 50,
+    borderWidth: 2,
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 30
+  },
+  image: {
+    borderRadius: 50,
+    width: "100%",
+    height: "100%"
+  },
+  input: {
+    borderRadius: 15,
+    borderWidth: 1.5,
+    width: '90%',
+    padding: 10,
+    paddingLeft: 20,
+    borderWidth: 1.5,
+    marginBottom: 20,
+    fontSize: 18
+  },
+  titleCheckbox: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingVertical: 20
+  },
+  checkboxContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '80%',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingBottom: 30
+  },
+  checkbox: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: 110,
+    height: 60,
+    borderRadius: 10,
+    borderWidth: 1.5
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: '500'
+  },
+  signUpButton: {
+    backgroundColor: '#8FD14F',
+    paddingVertical: 10,
+    paddingHorizontal: 50,
+    borderRadius: 15,
+    marginTop: 20,
+    borderWidth: 2,
+    borderColor: '#73A246'
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 19,
+    fontWeight: 'bold'
+  }
+});
