@@ -8,7 +8,10 @@ export default function ProfileCard({ navigation }) {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerR}>
-          <Image source={require('../assets/logo.jpg')} style={styles.logo} />
+          <Image
+            source={require('../assets/miniLogo.png')}
+            style={styles.logo}
+          />
           <Text style={styles.headerText}>SWIPET</Text>
         </View>
         <View style={styles.headerR}>
@@ -56,7 +59,11 @@ export default function ProfileCard({ navigation }) {
             <Ionicons name="close-circle-outline" size={80} color="#CD4F4F" />
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.7}>
-            <Ionicons name="checkmark-circle-outline" size={80} color="#8FD14F" />
+            <Ionicons
+              name="checkmark-circle-outline"
+              size={80}
+              color="#8FD14F"
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -75,13 +82,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     marginBottom: 10,
-    shadowColor: '#000',
+    shadowColor: '#000000',
     shadowOffset: {
       width: 0,
-      height: 10
+      height: 18
     },
-    shadowOpacity: 0.12,
-    shadowRadius: 10.46,
+    shadowOpacity: 0.25,
+    shadowRadius: 20.0,
     elevation: 20
   },
   headerR: {
@@ -111,9 +118,17 @@ const styles = StyleSheet.create({
     width: '90%',
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: '#54545420',
+    backgroundColor: '#EAEAEA',
     borderRadius: 15,
-    paddingTop: 8
+    paddingTop: 8,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 18
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 20.0,
+    elevation: 5
   },
   profileImage: {
     width: '95%',
@@ -143,7 +158,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1.5,
     borderBottomColor: 'gray',
     borderBottomWidth: 1.5,
-    paddingLeft: 10
+    paddingLeft: 10,
   },
   bioLabel: {
     fontSize: 24,
@@ -159,8 +174,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
-  
-  },
+    marginTop: 10,
+  }
 });
 
 /*
