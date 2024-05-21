@@ -25,8 +25,8 @@ export default function ProfilAnimalScreen({ navigation }) {
     const [genre, setGenre] = useState('');
     const [bio, setBio] = useState('');
 
-    const gender = ['Male', 'Female'];
-  const typeAnimal = ['Male', 'Female']
+    const gender = ['Male', 'Female','Non Binaire'];
+  const typeAnimal = ['chien', 'chat']
 
     const handleBackPress = () => {
         navigation.goBack();
