@@ -2,8 +2,15 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { profilData } from '../data/profils';
 
 export default function ProfileCard({ navigation }) {
+
+    const handleLike = () => {
+        
+    }
+
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -54,11 +61,11 @@ export default function ProfileCard({ navigation }) {
             </Text>
           </View>
         </View>
-        <View style={styles.actionButtons}>
+        <View style={styles.actionButtons} onPress={handleDislike}>
           <TouchableOpacity activeOpacity={0.7}>
             <Ionicons name="close-circle-outline" size={80} color="#CD4F4F" />
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.7}>
+          <TouchableOpacity activeOpacity={0.7} onPress={handleLike}>
             <Ionicons
               name="checkmark-circle-outline"
               size={80}
