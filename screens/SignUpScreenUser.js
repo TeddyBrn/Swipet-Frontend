@@ -14,35 +14,77 @@ import Checkbox from 'expo-checkbox';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
+import { useDispatch } from 'react-redux';
+import { login } from '../reducers/users';
 
-import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
-export default function ConnectionScreen({ navigation }) {
-  const [lastName, setLastName] = useState('');
-  const [firstname, setFirstname] = useState('');
-  const [age, setAge] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [checkbox1, setCheckbox1] = useState('');
-  const [checkbox2, setCheckbox2] = useState('');
-  const [city, setCity] = useState('');
+export default function SignUpScreenUser({ navigation }) {
 
-  const [image, setImage] = useState(null);
+    const dispatch = useDispatch();
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1
-    });
+    const [lastname, setLastname] = useState('');
+    const [firstname, setFirstname] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [checkbox1, setCheckbox1] = useState(false);
+    const [checkbox2, setCheckbox2] = useState(false);
+    const [city, setCity] = useState('');
+    const [age, setAge] = useState('');
+    const [image, setImage] = useState(null);
 
-    console.log(result.assets[0].uri);
+    const pickImage = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1
+      });
+  
+      console.log(result.assets[0].uri);
+  
+      if (!result.canceled) {
+        setImage(result.assets[0].uri);
+      }
+    };
 
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
+
+const handleCheckbox1 = ()  => {
+    if (checkbox2 === false) {
+        setCheckbox1(true)
+    } else {
+        setCheckbox2(false);
+        setCheckbox1(true)
     }
-  };
+};
+
+const handleCheckbox2 = ()  => {
+    if (checkbox1 === false) {
+        setCheckbox2(true)
+    } else {
+        setCheckbox1(false);
+        setCheckbox2(true)
+    }
+};
+
+let role = '';
+if (checkbox1 === true && checkbox2 === false) {role = 'garder'};
+if (checkbox2 === true && checkbox1 === false) {role = 'faire garder'};
+
+const handleConnexion = () => {
+
+            fetch('http://192.168.233.47:3000/profils/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ firstname, lastname, email, password, city, role, birthDate: age }),
+            }).then(response => response.json())
+            .then(data => {
+                console.log(data)
+            data.result && dispatch(login({ token: data.token, email }));
+            navigation.navigate("SignUpAnimal")
+            });
+            
+        //   }      
+    };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -67,16 +109,16 @@ export default function ConnectionScreen({ navigation }) {
             activeOpacity={0.8}
             onPress={pickImage}>
             {image ? (
-              <Image source={{ uri: image }} style={styles.image} />
+            <Image source={{ uri: image }} style={styles.image} />
             ) : (
-              <Ionicons name="images-outline" size={60} color="#555" />
+            <Ionicons name="images-outline" size={60} color="#555" />
             )}
           </TouchableOpacity>
 
           <TextInput
             style={styles.input}
-            onChangeText={(value) => setLastName(value)}
-            value={lastName}
+            onChangeText={(value) => setLastname(value)}
+            value={lastname}
             placeholder="Nom"
             placeholderTextColor="grey"
             autoCapitalize="none"
@@ -128,7 +170,7 @@ export default function ConnectionScreen({ navigation }) {
               <Text style={styles.label}>Garder</Text>
               <Checkbox
                 value={checkbox1}
-                onValueChange={setCheckbox1}
+                onValueChange={()=>handleCheckbox1()}
                 style={styles.check}
               />
             </View>
@@ -139,7 +181,7 @@ export default function ConnectionScreen({ navigation }) {
               </View>
               <Checkbox
                 value={checkbox2}
-                onValueChange={setCheckbox2}
+                onValueChange={()=>handleCheckbox2()}
                 style={styles.check}
                
               />
@@ -148,7 +190,7 @@ export default function ConnectionScreen({ navigation }) {
           <TouchableOpacity
             style={styles.signUpButton}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('SignUpAnimal')}>
+            onPress={() => handleConnexion()}>
             <Text style={styles.buttonText}>Confirmer</Text>
           </TouchableOpacity>
         </View>

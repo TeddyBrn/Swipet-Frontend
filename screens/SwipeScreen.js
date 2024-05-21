@@ -231,5 +231,44 @@ ou  <Tab.Screen name="SwipeScreen" component={SwipeScreen} />
 
 
 
+const profilesData = [
+  {
+    uriPhoto: '../assets/myprofile.jpg',
+    note: 4.5,
+    name: "Alice",
+    age: 28,
+    bio: "Grande amoureuse des animaux de compagnie, surtout des chats et des chiens."
+  },
+  {
+    uriPhoto: '../assets/myprofile.jpg',
+    note: 3.8,
+    name: "Bob",
+    age: 34,
+    bio: "Passionné par les animaux domestiques,  j'adore passer du temps avec mes deux chiens."
+  },
+  {
+    uriPhoto: '../assets/myprofile.jpg',
+    note: 4.9,
+    name: "Claire",
+    age: 26,
+    bio: "je trouve une grande joie à m'occuper de ses animaux de compagnie"
+  },
+  {
+    uriPhoto: '../assets/myprofile.jpg',
+    note: 4.2,
+    name: "David",
+    age: 31,
+    bio: "Les animaux de compagnie occupent une place spéciale dans sa vie, j'aime les perroquets et les poissons."
+  },
+  {
+    uriPhoto: '../assets/myprofile.jpg',
+    note: 4.7,
+    name: "Elise",
+    age: 29,
+    bio: "toujours eu une passion pour les animaux domestiques, particulièrement les lapins et les hamsters."
+  }
+];
+
+
 
 */

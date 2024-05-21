@@ -14,22 +14,59 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useDispatch, useSelector } from 'react-redux';
+import { addAnimal, login } from '../reducers/users';
 
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
-export default function ConnectionScreen({ navigation }) {
-  const [name, setName] = useState('');
-  const [year, setYear] = useState('');
-  const [type, setType] = useState('');
-  const [password, setPassword] = useState('');
-  const [checkbox1, setCheckbox1] = useState('');
-  const [checkbox2, setCheckbox2] = useState('');
-  const [city, setCity] = useState('');
+export default function SignUpScreenAnimal({ navigation }) {
+
+    const dispatch = useDispatch();
+    const user= useSelector((state) => state.users.value);
+    console.log(user)
+
+    const [name, setName] = useState('');
+    const [year, setYear] = useState('');
+    const [bio, setBio] = useState('');
+    const [detail, setDetail] = useState('');
 
   const gender = ['Male', 'Female'];
-  const typeAnimal = ['Male', 'Female'];
+  const animalType = ['Chien', 'Chat', 'Lapin'];
 
-  return (
+  const handleAddAnimal = () => {
+
+        fetch(`http://192.168.233.47:3000/profils/signup/animal/${user.token}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, year, animalType, gender, bio, detail}),
+          }).then(response => response.json())
+            .then(data => {
+               data.result && dispatch(addAnimal({ token: data.token, name, year, animalType, gender, bio, detail }));
+               setName(''); setYear('');   setBio('');
+            });
+        
+}
+
+  const handleConnexion = () => {
+
+
+        fetch(`http://192.168.233.47:3000/profils/signup/animal/${user.token}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, birthDate:year, animalType, gender, bio, detail}),
+            }).then(response => response.json())
+            .then(data => {
+                console.log(data)
+               data.result && dispatch(addAnimal({ name, year, animalType, gender, bio, detail }));
+               navigation.navigate('TabNavigator')
+            });
+};
+
+const handleBackPress = () => {
+    navigation.goBack();
+};
+
+return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -57,9 +94,25 @@ export default function ConnectionScreen({ navigation }) {
           />
           <TextInput
             style={styles.input}
-            onChangeText={(value) => setName(value)}
-            value={name}
+            onChangeText={(value) => setYear(value)}
+            value={year}
             placeholder="Age"
+            placeholderTextColor="grey"
+            autoCapitalize="none"
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => setBio(value)}
+            value={bio}
+            placeholder="Bio"
+            placeholderTextColor="grey"
+            autoCapitalize="none"
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => setDetail(value)}
+            value={detail}
+            placeholder="Detail"
             placeholderTextColor="grey"
             autoCapitalize="none"
           />
@@ -93,7 +146,7 @@ export default function ConnectionScreen({ navigation }) {
           />
 
           <SelectDropdown
-            data={typeAnimal}
+            data={animalType}
             onSelect={(selectedItem) => {
               console.log(selectedItem);
             }}
@@ -124,7 +177,7 @@ export default function ConnectionScreen({ navigation }) {
           <TouchableOpacity
             style={styles.signUpButton}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('TabNavigator')}>
+            onPress={() => handleConnexion()}>
             <Text style={styles.buttonText}>Confirmer</Text>
           </TouchableOpacity>
         </View>
