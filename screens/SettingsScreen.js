@@ -13,19 +13,34 @@ const SettingsScreen = ({ navigation }) => {
         
         
       </View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity 
+      style={styles.button}
+      activeOpacity={0.8}
+      onPress={() => navigation.navigate('ProfilAnimal')}>
         <Text style={styles.buttonText}>Profil Animal</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity 
+      style={styles.button}
+      activeOpacity={0.8}
+        onPress={() => navigation.navigate('Profil')}>
         <Text style={styles.buttonText}>Profil</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity 
+      style={styles.button}
+      activeOpacity={0.8}
+      onPress={() => navigation.navigate('Historique')}>
         <Text style={styles.buttonText}>Historique</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity 
+      style={styles.button}
+      activeOpacity={0.8}
+        onPress={() => navigation.navigate('Payment')}>
         <Text style={styles.buttonText}>Moyen De Paiement</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity 
+      style={styles.button}
+      activeOpacity={0.8}
+      onPress={() => navigation.navigate('Avis')}>
         <Text style={styles.buttonText}>Avis</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.viewProfileButton}>
