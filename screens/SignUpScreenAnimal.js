@@ -10,8 +10,8 @@ import {
     Option,
     TouchableOpacity,
     Text,
-    CheckBox
 } from 'react-native';
+
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
 
@@ -27,33 +27,57 @@ export default function ConnectionScreen({ navigation }) {
 
     const handleAddAnimal = () => {
 
-
-        fetch('http://192.168.233.47:8081/profils/signup', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, age, animalType: type, gender, bio, detail, photo}),
-          }).then(response => response.json())
-            .then(data => {
-               data.result && dispatch(login({ token: data.token, email }));
-            });
-        setName(''); setAge(''); setType(''); setGender(''); setBio(''); setDetail(''); setPhoto('');
-
+        if (
+            !checkBody(req.body, [
+              "name",
+              "age",
+              "type",
+              "gender",
+              "bio",
+              "detail",
+            ])
+        )  {
+            res.json({ result: false, error: "Missing or empty fields" });
+            return;
+           } else {
+            fetch('http://192.168.233.47:8081/profils/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, age, animalType: type, gender, bio, detail}),
+              }).then(response => response.json())
+                .then(data => {
+                   data.result && dispatch(addAnimal({ token: data.token, name, age, animalType: type, gender, bio, detail }));
+                });
+            setName(''); setAge(''); setType(''); setGender(''); setBio(''); setDetail('');
+           }
     }
 
     const handleConnexion = () => {
 
+        if (
+            !checkBody(req.body, [
+              "name",
+              "age",
+              "type",
+              "gender",
+              "bio",
+              "detail",
+            ])
+        )  {
+            res.json({ result: false, error: "Missing or empty fields" });
+            return;
+           } else {
+            fetch('http://192.168.233.47:8081/profils/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, age, animalType: type, gender, bio, detail}),
+                }).then(response => response.json())
+                .then(data => {
+                   data.result && dispatch(addAnimal({ token: data.token, name, age, animalType: type, gender, bio, detail }));
+                });
 
-
-        fetch('http://192.168.233.47:8081/profils/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, age, animalType: type, gender, bio, detail, photo}),
-    }).then(response => response.json())
-      .then(data => {
-         data.result && dispatch(login({ token: data.token, email }));
-      });
-      navigation.navigate("SwipeScreen")
-
+            navigation.navigate("SwipeScreen")
+            }
     };
 
 
@@ -93,15 +117,20 @@ export default function ConnectionScreen({ navigation }) {
                     keyboardType="date"
                     autoCapitalize="none"
                 />
-                <TextInput
+                 <Select value={type} onChange={(value) => setType(value)} style={styles.input}>
+                    <Option value="chat">Chat</Option>
+                    <Option value="Chien">Chien</Option>
+                    <Option value="Lapin">Lapin</Option>
+                </Select>
+                {/* <TextInput
                     style={styles.input}
                     onChangeText={(value) => setType(value)}
                     value={type}
                     placeholder="Type"
                     placeholderTextColor="grey"    
                     autoCapitalize="none"
-                />
-                <   Select value={gender} onChange={(value) => setGender(value)} style={styles.input}>
+                /> */}
+                <Select value={gender} onChange={(value) => setGender(value)} style={styles.input}>
                     <Option value="male">Male</Option>
                     <Option value="female">Female</Option>
                 </Select>
