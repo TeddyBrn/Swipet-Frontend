@@ -1,19 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { profilData } from '../data/profils';
+import { useEffect } from 'react';
 
 export default function ProfileCard({ navigation }) {
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState('');
+  const [age, setAge] = useState('');
+  const [bio, setBio] = useState('');
+  const [img, setImg] = useState('');
+  const [note, setNote] = useState(0);
 
-    const handleLike = () => {
+  useEffect(() => {
+    setName(profilData[0].firstname);
+    setAge(profilData[0].age);
+    setBio(profilData[0].bio);
+    setImg(profilData[0].url);
+    setNote(profilData[0].avis[0].note);
+  }, []);
 
-    }
+  const handleLike = () => {
+    setCount(count + 1);
+    setName(profilData[count].firstname);
+    setAge(profilData[count].age);
+    setBio(profilData[count].bio);
+    setImg(profilData[count].url);
+    setNote(profilData[count].avis[0].note);
+  };
 
-    const handleDislike = () => {
-        
-    }
-
+  const handleDislike = () => {
+    setCount(count + 1);
+    setName(profilData[count].firstname);
+    setAge(profilData[count].age);
+    setBio(profilData[count].bio);
+    setImg(profilData[count].url);
+    setNote(profilData[count].avis[0].note);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -40,14 +64,11 @@ export default function ProfileCard({ navigation }) {
       </View>
       <View style={styles.main}>
         <View style={styles.profileContainer}>
-          <Image
-            source={require('../assets/myprofile.jpg')}
-            style={styles.profileImage}
-          />
+          <Image source={img} style={styles.profileImage} />
           <View style={styles.ratingContainer}>
             {Array(5)
               .fill()
-              .map((_, i) => (
+              .map((i) => (
                 <Image
                   key={i}
                   source={require('../assets/star.png')}
@@ -56,17 +77,15 @@ export default function ProfileCard({ navigation }) {
               ))}
           </View>
           <View style={styles.infos}>
-            <Text style={styles.profileName}>Sarah, 6 ans</Text>
-            <Text style={styles.bioLabel}>Bio</Text>
-            <Text style={styles.bioText}>
-              J'aime les animaux pour leur faire des gros calinous et des
-              poutous baveux ainsi que les emmener en balades, non je rigole je
-              veux juste de la moula 💵 .
+            <Text style={styles.profileName}>
+              {name} , {age} ans
             </Text>
+            <Text style={styles.bioLabel}>Bio</Text>
+            <Text style={styles.bioText}>{bio}</Text>
           </View>
         </View>
-        <View style={styles.actionButtons} onPress={handleDislike}>
-          <TouchableOpacity activeOpacity={0.7}>
+        <View style={styles.actionButtons}>
+          <TouchableOpacity activeOpacity={0.7} onPress={handleDislike}>
             <Ionicons name="close-circle-outline" size={80} color="#CD4F4F" />
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.7} onPress={handleLike}>
@@ -169,7 +188,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1.5,
     borderBottomColor: 'gray',
     borderBottomWidth: 1.5,
-    paddingLeft: 10,
+    paddingLeft: 10
   },
   bioLabel: {
     fontSize: 24,
@@ -185,7 +204,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
-    marginTop: 10,
+    marginTop: 10
   }
 });
 
