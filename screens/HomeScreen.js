@@ -15,9 +15,9 @@ export default function HomeScreen({ navigation }) {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
-      <View style={styles.logoContainer}>
+      <TouchableOpacity style={styles.logoContainer} onPress={() => navigation.navigate('TabNavigator', { screen: 'Swipe' })}>
         <Image source={require('../assets/logo.jpg')} style={styles.logo} />
-      </View>
+      </TouchableOpacity>
       <Text style={styles.title}>Bienvenue sur Swipet</Text>
       <TouchableOpacity
         style={[styles.button]}
@@ -88,5 +88,6 @@ import Connection from './screens/HomeScreen';
 <Stack.Screen name="Home" component={HomeScreen} />
 
 ...
-
+onPress={() => navigation.navigate('TabNavigator', { screen: 'Swipe' })}
+navigation.navigate('TabNavigator', { screen: 'Swipe' });
 */
