@@ -38,9 +38,9 @@ const FiltersScreen = ({ navigation }) => {
           step={2}
           value={kmValue}
           onValueChange={setKmValue}
-          minimumTrackTintColor="#1fb28a"
+          minimumTrackTintColor="#2196f3"
           maximumTrackTintColor="#222222"
-          thumbTintColor="#1fb28a"
+          thumbTintColor="#2196f3"
         />
         <Text style={styles.sliderValue}>Age minimum:</Text>
         <Dropdown
