@@ -52,11 +52,11 @@ export default function ProfileCard({ navigation }) {
           </View>
         </View>
         <View style={styles.actionButtons}>
-          <TouchableOpacity style={styles.dislikeButton} activeOpacity={0.7}>
-            <Text style={styles.buttonText}>X</Text>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Ionicons name="close-circle-outline" size={80} color="#CD4F4F" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.likeButton} activeOpacity={0.7}>
-            <Text style={styles.buttonText}>✓</Text>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Ionicons name="checkmark-circle-outline" size={80} color="#8FD14F" />
           </TouchableOpacity>
         </View>
       </View>
@@ -75,14 +75,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     marginBottom: 10,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
-        width: 0,
-        height: 10,
+      width: 0,
+      height: 10
     },
     shadowOpacity: 0.12,
-    shadowRadius: 5.46,
-    elevation:9,
+    shadowRadius: 10.46,
+    elevation: 20
   },
   headerR: {
     flexDirection: 'row',
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   profileContainer: {
-    height: '80%',
+    height: '78%',
     width: '90%',
     flexDirection: 'column',
     alignItems: 'center',
@@ -133,53 +133,34 @@ const styles = StyleSheet.create({
     marginHorizontal: 1
   },
   infos: {
-    width: '89%',
+    width: '89%'
   },
   profileName: {
     fontSize: 25,
     fontWeight: 'bold',
     paddingVertical: 10,
-    borderTopColor: "gray",
+    borderTopColor: 'gray',
     borderTopWidth: 1.5,
-    borderBottomColor: "gray",
+    borderBottomColor: 'gray',
     borderBottomWidth: 1.5,
     paddingLeft: 10
   },
   bioLabel: {
-    fontSize: 16,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginVertical: 5
+    marginTop: 8,
+    marginBottom: 15
   },
   bioText: {
-    fontSize: 14,
-    textAlign: 'center',
-    marginBottom: 10,
+    fontSize: 18,
     width: '90%'
   },
   actionButtons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
-    marginTop: 10
+  
   },
-  dislikeButton: {
-    backgroundColor: '#ff4d4d',
-    padding: 10,
-    borderRadius: 30,
-    width: 60,
-    alignItems: 'center'
-  },
-  likeButton: {
-    backgroundColor: '#4dff4d',
-    padding: 10,
-    borderRadius: 30,
-    width: 60,
-    alignItems: 'center'
-  },
-  buttonText: {
-    fontSize: 18,
-    color: '#ffffff'
-  }
 });
 
 /*
