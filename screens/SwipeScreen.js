@@ -7,6 +7,10 @@ import { profilData } from '../data/profils';
 export default function ProfileCard({ navigation }) {
 
     const handleLike = () => {
+
+    }
+
+    const handleDislike = () => {
         
     }
 
