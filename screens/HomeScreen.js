@@ -11,6 +11,7 @@ import {
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
 export default function HomeScreen({ navigation }) {
+  
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -23,7 +24,7 @@ export default function HomeScreen({ navigation }) {
         style={[styles.button]}
         activeOpacity={0.8}
         onPress={() => navigation.navigate('SignUp')}>
-        <Text style={styles.buttonText}>Inscription</Text>
+        <Text style={[styles.buttonText, styles.color]}>Inscription</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.button, styles.signInButton]}
@@ -41,7 +42,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffffff'
-    // fontFamily: 'Montserrat',
   },
   logoContainer: {
     alignItems: 'center'
@@ -58,21 +58,26 @@ const styles = StyleSheet.create({
     marginTop: 50
   },
   button: {
-    backgroundColor: '#5BBDF4', 
-    width: '65%',
-    paddingVertical: 15,
+    backgroundColor: '#5BBDF4',
+    borderColor: "#488fb5", 
+    width: '55%',
+    paddingVertical: 10,
     alignItems: 'center',
-    borderRadius: 15,
+    borderRadius: 5,
     marginBottom: 60,
     borderWidth: 1.5
   },
   buttonText: {
-    color: 'black',
-    fontSize: 22,
-    fontWeight: 'bold'
+    color: '#488fb5',
+    fontSize: 25,
+    fontWeight: 'bold',
+    letterSpacing: 3
   },
   signInButton: {
     backgroundColor: '#ffffff',
+  },
+  color: {
+    color: 'white',
   }
 });
 

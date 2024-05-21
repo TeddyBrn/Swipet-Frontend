@@ -8,7 +8,8 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
-  Button
+  Button,
+  Pressable
 } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -16,75 +17,101 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 import { useDispatch } from 'react-redux';
 import { login } from '../reducers/users';
-
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 export default function SignUpScreenUser({ navigation }) {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  const [lastname, setLastname] = useState('');
+  const [firstname, setFirstname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [checkbox1, setCheckbox1] = useState(false);
+  const [checkbox2, setCheckbox2] = useState(false);
+  const [city, setCity] = useState('');
+  const [age, setAge] = useState('');
+  const [image, setImage] = useState(null);
 
-    const [lastname, setLastname] = useState('');
-    const [firstname, setFirstname] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [checkbox1, setCheckbox1] = useState(false);
-    const [checkbox2, setCheckbox2] = useState(false);
-    const [city, setCity] = useState('');
-    const [age, setAge] = useState('');
-    const [image, setImage] = useState(null);
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1
+    });
 
-    const pickImage = async () => {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1
-      });
-  
-      console.log(result.assets[0].uri);
-  
-      if (!result.canceled) {
-        setImage(result.assets[0].uri);
-      }
-    };
+    console.log(result.assets[0].uri);
 
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
-const handleCheckbox1 = ()  => {
+  const handleCheckbox1 = () => {
     if (checkbox2 === false) {
-        setCheckbox1(true)
+      setCheckbox1(true);
     } else {
-        setCheckbox2(false);
-        setCheckbox1(true)
+      setCheckbox2(false);
+      setCheckbox1(true);
     }
-};
+  };
 
-const handleCheckbox2 = ()  => {
+  const handleCheckbox2 = () => {
     if (checkbox1 === false) {
-        setCheckbox2(true)
+      setCheckbox2(true);
     } else {
-        setCheckbox1(false);
-        setCheckbox2(true)
+      setCheckbox1(false);
+      setCheckbox2(true);
     }
-};
+  };
 
-let role = '';
-if (checkbox1 === true && checkbox2 === false) {role = 'garder'};
-if (checkbox2 === true && checkbox1 === false) {role = 'faire garder'};
+  let role = '';
+  if (checkbox1 === true && checkbox2 === false) {
+    role = 'garder';
+  }
+  if (checkbox2 === true && checkbox1 === false) {
+    role = 'faire garder';
+  }
 
-const handleConnexion = () => {
+  const handleConnexion = () => {
+    fetch('http://192.168.233.47:3000/profils/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstname,
+        lastname,
+        email,
+        password,
+        city,
+        role,
+        birthDate: age
+      })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        data.result && dispatch(login({ token: data.token, email }));
+        navigation.navigate('SignUpAnimal');
+      });
+  };
 
-            fetch('http://192.168.233.47:3000/profils/signup', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ firstname, lastname, email, password, city, role, birthDate: age }),
-            }).then(response => response.json())
-            .then(data => {
-                console.log(data)
-            data.result && dispatch(login({ token: data.token, email }));
-            navigation.navigate("SignUpAnimal")
-            });
-            
-        //   }      
-    };
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [dateB, setDateB] = useState('');
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.warn(date);
+    setDateB(date);
+    hideDatePicker();
+    date && console.log(dateB);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -109,68 +136,92 @@ const handleConnexion = () => {
             activeOpacity={0.8}
             onPress={pickImage}>
             {image ? (
-            <Image source={{ uri: image }} style={styles.image} />
+              <Image source={{ uri: image }} style={styles.image} />
             ) : (
-            <Ionicons name="images-outline" size={60} color="#555" />
+              <Image source={require('../assets/add-image.png')} style={{ width: 60, height: 60, color: '#555' }} />
             )}
+            
           </TouchableOpacity>
+          <View style={styles.inputContain}>
+          <View style={styles.inputDate}>
+            <Ionicons name="person" size={20} color="#555" />
+            
+            <TextInput
+              style={styles.dateText}
+              onChangeText={(value) => setLastname(value)}
+              value={lastname}
+              placeholder="Nom"
+              placeholderTextColor="grey"
+              autoCapitalize="none"
+            />
+          </View>
 
-          <TextInput
-            style={styles.input}
-            onChangeText={(value) => setLastname(value)}
-            value={lastname}
-            placeholder="Nom"
-            placeholderTextColor="grey"
-            autoCapitalize="none"
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={(value) => setFirstname(value)}
-            value={firstname}
-            placeholder="Prénom"
-            placeholderTextColor="grey"
-            autoCapitalize="none"
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={(value) => setAge(value)}
-            value={age}
-            placeholder="Age"
-            placeholderTextColor="grey"
-            autoCapitalize="none"
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={(value) => setEmail(value)}
-            value={email}
-            placeholder="E-mail"
-            placeholderTextColor="grey"
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={(value) => setPassword(value)}
-            value={password}
-            placeholder="Mot de passe"
-            placeholderTextColor="grey"
-            secureTextEntry
-          />
-          <TextInput
-            style={styles.input}
+          <View style={styles.inputDate}>
+            <Ionicons name="person" size={20} color="#555" />
+            <TextInput
+              style={styles.dateText}
+              onChangeText={(value) => setFirstname(value)}
+              value={firstname}
+              placeholder="Prénom"
+              placeholderTextColor="grey"
+              autoCapitalize="none"
+            />
+          </View>
+          <View style={styles.inputDate}>
+            <Ionicons name="mail" size={20} color="#555" />
+            <TextInput
+              style={styles.dateText}
+              onChangeText={(value) => setEmail(value)}
+              value={email}
+              placeholder="E-mail"
+              placeholderTextColor="grey"
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+          </View>
+          <View style={styles.inputDate}>
+            <Ionicons name="lock-closed" size={20} color="#555" />
+            <TextInput
+              style={styles.dateText}
+              onChangeText={(value) => setPassword(value)}
+              value={password}
+              placeholder="Mot de passe"
+              placeholderTextColor="grey"
+              secureTextEntry
+            />
+          </View>
+          <View style={styles.inputDate}>
+            <Ionicons name="business" size={20} color="#555" />
+            <TextInput
+            style={styles.dateText}
             onChangeText={(value) => setCity(value)}
             value={city}
             placeholder="Ville"
             placeholderTextColor="grey"
             autoCapitalize="none"
           />
+          </View>
+          
+          <Pressable style={styles.inputDate} onPress={showDatePicker}>
+            <Ionicons name="calendar" size={20} color="#333" />
+            <Text style={styles.dateText}>Date de Naissance</Text>
+          </Pressable>
+          
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+          />
+          </View>
+          
           <Text style={styles.titleCheckbox}>Vous souhaitez :</Text>
           <View style={styles.checkboxContainer}>
             <View style={styles.checkbox}>
               <Text style={styles.label}>Garder</Text>
               <Checkbox
                 value={checkbox1}
-                onValueChange={()=>handleCheckbox1()}
+                onValueChange={() => handleCheckbox1()}
                 style={styles.check}
               />
             </View>
@@ -181,9 +232,8 @@ const handleConnexion = () => {
               </View>
               <Checkbox
                 value={checkbox2}
-                onValueChange={()=>handleCheckbox2()}
+                onValueChange={() => handleCheckbox2()}
                 style={styles.check}
-               
               />
             </View>
           </View>
@@ -210,10 +260,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginBottom: 25
+    marginBottom: 15
   },
   topMid: {
-    alignItems: 'center'
+    alignItems: 'center',
   },
   topText: {
     fontSize: 25,
@@ -222,8 +272,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 85,
     height: 85,
-    resizeMode: 'contain',
-    
+    resizeMode: 'contain'
   },
   inputContainer: {
     flex: 1,
@@ -236,22 +285,35 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30
+    marginBottom: -30,
   },
   image: {
     borderRadius: 50,
-    width: "100%",
-    height: "100%"
+    width: '100%',
+    height: '100%'
   },
-  input: {
-    borderRadius: 15,
-    borderWidth: 1.5,
-    width: '90%',
+  inputContain: {
+    width: '95%',
     padding: 10,
     paddingLeft: 20,
-    borderWidth: 1.5,
-    marginBottom: 20,
-    fontSize: 18
+    marginTop: 20, 
+    alignItems: 'center'
+  },
+  inputDate: {
+    borderRadius: 10,
+    borderBottomWidth: 1.5,
+    width: '80%',
+    padding: 10,
+    marginVertical: 10,
+    paddingLeft: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#444'
+  },
+  dateText: {
+    fontSize: 18,
+    paddingLeft: 10,
+    color: '#444'
   },
   titleCheckbox: {
     fontSize: 20,
@@ -271,10 +333,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    width: 110,
+    width: 130,
     height: 60,
-    borderRadius: 10,
-    borderWidth: 1.5
+    borderRadius: 5,
+    borderWidth: 1.5,
+    backgroundColor: '#efefef',
+    borderColor: '#ccc'
   },
   label: {
     fontSize: 18,
@@ -283,8 +347,8 @@ const styles = StyleSheet.create({
   signUpButton: {
     backgroundColor: '#8FD14F',
     paddingVertical: 10,
-    paddingHorizontal: 50,
-    borderRadius: 15,
+    paddingHorizontal: 30,
+    borderRadius: 10,
     marginTop: 20,
     borderWidth: 2,
     borderColor: '#73A246'
