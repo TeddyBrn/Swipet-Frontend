@@ -9,6 +9,11 @@ import {
     TouchableOpacity,
     Text,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import SelectDropdown from 'react-native-select-dropdown';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 
 
@@ -20,24 +25,30 @@ export default function ProfilAnimalScreen({ navigation }) {
     const [genre, setGenre] = useState('');
     const [bio, setBio] = useState('');
 
+    const gender = ['Male', 'Female'];
+  const typeAnimal = ['Male', 'Female']
+
     const handleBackPress = () => {
         navigation.goBack();
     };
 
     return (
+        <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={styles.container}
-        >
-            <View style={styles.backContainer}>
-                <TouchableOpacity onPress={handleBackPress}>
-                    <Image source={require('../assets/back.jpg')} style={styles.backButton} />
-                </TouchableOpacity>
-            </View>
-            <Text>Profil Animal</Text>
-            <View style={styles.logoContainer}>
-                <Image source={require('../assets/logo.jpg')} style={styles.logo} />
-            </View>
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <View style={styles.topContainer}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={60} color="#E06359" />
+          </TouchableOpacity>
+          <View style={styles.topMid}>
+            <Text style={styles.topText}>Profil</Text>
+            <Text style={styles.topText}>Animal</Text>
+          </View>
+          <Image
+            source={require('../assets/miniLogo.png')}
+            style={styles.logo}
+          />
+        </View>
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
@@ -55,22 +66,63 @@ export default function ProfilAnimalScreen({ navigation }) {
                     placeholderTextColor="grey"
                     autoCapitalize="none"
                 />
-                <TextInput
-                    style={styles.input}
-                    onChangeText={(value) => setGenre(value)}
-                    value={genre}
-                    placeholder="Genre"
-                    placeholderTextColor="grey"
-                    autoCapitalize="none"
-                />
-                <TextInput
-                    style={styles.input}
-                    onChangeText={(value) => setType(value)}
-                    value={type}
-                    placeholder="Type : chien, chat..."
-                    placeholderTextColor="grey"
-                    secureTextEntry
-                />
+                <SelectDropdown
+            data={gender}
+            onSelect={(selectedItem) => {
+              console.log(selectedItem);
+            }}
+            renderButton={(selectedItem, isOpened) => {
+              return (
+                <View style={styles.dropdownButtonStyle}>
+                  <Text style={styles.dropdownButtonTxtStyle}>
+                    {(selectedItem && selectedItem) || 'Genre'}
+                  </Text>
+                  <Icon
+                    name={isOpened ? 'chevron-up' : 'chevron-down'}
+                    style={styles.dropdownButtonArrowStyle}
+                  />
+                </View>
+              );
+            }}
+            renderItem={(item) => {
+              return (
+                <View style={styles.dropdownItemStyle}>
+                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                </View>
+              );
+            }}
+            showsVerticalScrollIndicator={false}
+            dropdownStyle={styles.dropdownMenuStyle}
+          />
+
+          <SelectDropdown
+            data={typeAnimal}
+            onSelect={(selectedItem) => {
+              console.log(selectedItem);
+            }}
+            renderButton={(selectedItem, isOpened) => {
+              return (
+                <View style={styles.dropdownButtonStyle}>
+                  <Text style={styles.dropdownButtonTxtStyle}>
+                    {(selectedItem && selectedItem) || 'Type : chien, chat ...'}
+                  </Text>
+                  <Icon
+                    name={isOpened ? 'chevron-up' : 'chevron-down'}
+                    style={styles.dropdownButtonArrowStyle}
+                  />
+                </View>
+              );
+            }}
+            renderItem={(item) => {
+              return (
+                <View style={styles.dropdownItemStyle}>
+                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                </View>
+              );
+            }}
+            showsVerticalScrollIndicator={false}
+            dropdownStyle={styles.dropdownMenuStyle}
+          />
                 <TextInput
                     style={styles.inputBio}
                     onChangeText={(value) => setBio(value)}
@@ -86,6 +138,7 @@ export default function ProfilAnimalScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
+        </SafeAreaView>
     );
 }
 
@@ -95,6 +148,63 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#ffffff',
     },
+    topContainer: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        marginBottom: 30
+      },
+      topMid: {
+        alignItems: 'center'
+      },
+      topText: {
+        fontSize: 25,
+        fontWeight: 'bold'
+      },
+      logo: {
+        width: 85,
+        height: 85,
+        resizeMode: 'contain'
+      },
+      dropdownButtonStyle: {
+        width: '90%',
+        height: 50,
+        borderWidth: 1.3,
+        borderRadius: 15,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 30,
+        paddingHorizontal: 12
+      },
+      dropdownButtonTxtStyle: {
+        flex: 1,
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#57606f'
+      },
+      dropdownButtonArrowStyle: {
+        fontSize: 28
+      },
+      dropdownMenuStyle: {
+        backgroundColor: '#eee',
+        borderRadius: 8
+      },
+      dropdownItemStyle: {
+        width: '100%',
+        flexDirection: 'row',
+        paddingHorizontal: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 8
+      },
+      dropdownItemTxtStyle: {
+        flex: 1,
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#151E26'
+      },
     signupButton: {
         backgroundColor: '#8FD14F',
         paddingVertical: 10,
@@ -154,9 +264,4 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         // fontFamily: 'Montserrat',
     },
-    logo: {
-        width: 85,
-        height: 85,
-        resizeMode: 'contain',
-        },
 })
