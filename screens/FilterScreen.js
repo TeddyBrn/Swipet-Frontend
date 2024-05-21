@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Dropdown } from 'react-native-element-dropdown';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ageData = [
   { label: '18 ans', value: 1 },
@@ -14,8 +14,16 @@ const ageData = [
 const FiltersScreen = ({ navigation }) => {
   const [kmValue, setKmValue] = useState(2);
   const [ageValue, setAgeValue] = useState(null);
+  const [averageNote, setAverageNote] = useState(0);
 
-
+  const stars = [];
+  for (let i = 0; i < 5; i++) {
+    let style = { 'cursor': 'pointer' };
+    if (i < averageNote) {
+      style = { 'color': '#2196f3', 'cursor': 'pointer' };
+    }
+    stars.push(<Ionicons key={i} name="star" size={24} color={style.color} onPress={() => setAverageNote(i + 1)} style={style} />);
+  }
 
   return (
     <View style={styles.container}>
@@ -30,9 +38,9 @@ const FiltersScreen = ({ navigation }) => {
           step={2}
           value={kmValue}
           onValueChange={setKmValue}
-          minimumTrackTintColor="#1fb28a" // Couleur de la partie du slider avant le pouce (la partie active)
-          maximumTrackTintColor="#222222"// // Couleur de la partie du slider après le pouce (la partie inactive)
-          thumbTintColor="#1fb28a" // Couleur du pouce (le bouton mobile du slider)
+          minimumTrackTintColor="#1fb28a"
+          maximumTrackTintColor="#222222"
+          thumbTintColor="#1fb28a"
         />
         <Text style={styles.sliderValue}>Age minimum:</Text>
         <Dropdown
@@ -44,6 +52,7 @@ const FiltersScreen = ({ navigation }) => {
           onChange={item => setAgeValue(item.value)}
           placeholder="Age min"
         />
+        <Text>{stars}</Text>
       </View>
       <TouchableOpacity
         style={styles.button}
@@ -53,6 +62,8 @@ const FiltersScreen = ({ navigation }) => {
     </View>
   );
 };
+
+// ... (reste du code inchangé)
 
 const styles = StyleSheet.create({
   container: {
@@ -111,3 +122,26 @@ const styles = StyleSheet.create({
 });
 
 export default FiltersScreen;
+
+/*
+structure personalnote de mymoviz
+function Movie(props) {
+ const [personalNote, setPersonalNote] = useState(0);
+
+
+   const personalStars = [];
+  for (let i = 0; i < 10; i++) {
+    let style = { 'cursor': 'pointer' };
+    if (i < personalNote) {
+      style = { 'color': '#2196f3', 'cursor': 'pointer' };
+    }
+    personalStars.push(<FontAwesomeIcon key={i} icon={faStar} onClick={() => setPersonalNote(i + 1)} style={style} className="note" />);
+  }
+
+  return (
+    <span>{personalStars} ({personalNote})</span>
+      );
+}
+
+<Text>{stars} </Text>
+*/
