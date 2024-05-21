@@ -1,89 +1,33 @@
 import React, { useState } from 'react';
 import {
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    View,
-    TextInput,
-    Select,
-    Option,
-    TouchableOpacity,
-    Text,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text
 } from 'react-native';
+import Checkbox from 'expo-checkbox';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import SelectDropdown from 'react-native-select-dropdown';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
-
-
 export default function ConnectionScreen({ navigation }) {
-    const [name, setName] = useState('');
-    const [age, setAge] = useState('');
-    const [type, setType] = useState('');
-    const [gender, setGender] = useState('');
-    const [bio, setBio] = useState('');
-    const [detail, setDetail] = useState('');
-  //  const [photo, setPhoto] = useState('');
+  const [name, setName] = useState('');
+  const [year, setYear] = useState('');
+  const [type, setType] = useState('');
+  const [password, setPassword] = useState('');
+  const [checkbox1, setCheckbox1] = useState('');
+  const [checkbox2, setCheckbox2] = useState('');
+  const [city, setCity] = useState('');
 
-    const handleAddAnimal = () => {
-
-        if (
-            !checkBody(req.body, [
-              "name",
-              "age",
-              "type",
-              "gender",
-              "bio",
-              "detail",
-            ])
-        )  {
-            res.json({ result: false, error: "Missing or empty fields" });
-            return;
-           } else {
-            fetch('http://192.168.233.47:8081/profils/signup', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, age, animalType: type, gender, bio, detail}),
-              }).then(response => response.json())
-                .then(data => {
-                   data.result && dispatch(addAnimal({ token: data.token, name, age, animalType: type, gender, bio, detail }));
-                });
-            setName(''); setAge(''); setType(''); setGender(''); setBio(''); setDetail('');
-           }
-    }
-
-    const handleConnexion = () => {
-
-        if (
-            !checkBody(req.body, [
-              "name",
-              "age",
-              "type",
-              "gender",
-              "bio",
-              "detail",
-            ])
-        )  {
-            res.json({ result: false, error: "Missing or empty fields" });
-            return;
-           } else {
-            fetch('http://192.168.233.47:8081/profils/signup', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, age, animalType: type, gender, bio, detail}),
-                }).then(response => response.json())
-                .then(data => {
-                   data.result && dispatch(addAnimal({ token: data.token, name, age, animalType: type, gender, bio, detail }));
-                });
-
-            navigation.navigate("SwipeScreen")
-            }
-    };
-
-
-    const handleBackPress = () => {
-        navigation.goBack();
-    };
+  const gender = ['Male', 'Female'];
+  const typeAnimal = ['Male', 'Female'];
 
     return (
         <KeyboardAvoidingView

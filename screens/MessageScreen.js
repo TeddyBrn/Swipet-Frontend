@@ -11,19 +11,23 @@ import {
   ScrollView
 } from "react-native";
 import { useSelector } from 'react-redux';
-// import Burger from "../components/Burger";
+
 
 
 export default function MessageScreen({navigation}) {
- 
+  // const burgers = useSelector((state) => state.favorite.value);
 
-  let favorite = <Text style={styles.text}>Vous n'avez pas encore de matchs !</Text>;
-
+  // let favorite = <Text style={styles.text}>Vous n'avez pas encore de matchs !</Text>;
+  // if (burgers.length > 0) {
+  //   favorite = burgers.map((data, i) => {
+  //     return <Burger key={i} {...data} isFavorite inFavorite />;
+  //   });
+  // }
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.burgersContainer}>
-        {favorite}
+      <Text style={styles.text}>Vous n'avez pas encore de matchs !</Text>
       </ScrollView>
     </SafeAreaView>
     

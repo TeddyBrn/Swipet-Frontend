@@ -20,7 +20,7 @@ export default function SignInScreen({ navigation }) {
   const [signInEmail, setSignInEmail] = useState('');
   const [emailError, setEmailError] = useState(false);
   const [signInPassword, setSignInPassword] = useState('');
-  const [passwordError, setPasswordError] = useState(false);
+  
 
   const dispatch = useDispatch();
 
@@ -48,11 +48,9 @@ export default function SignInScreen({ navigation }) {
             navigation.navigate('TabNavigator', { screen: 'Swipe' });
           } else {
             setEmailError(true);
-            setPasswordError(true);
           }
         } else {
           setEmailError(true);
-          setPasswordError(true);
         }
       });
   };
@@ -70,7 +68,7 @@ export default function SignInScreen({ navigation }) {
         <Image source={require('../assets/logo.jpg')} style={styles.logo} />
       </View>
       <View style={styles.inputContainer}>
-        {emailError && <Text style={styles.error}>Invalid email address</Text>}
+        {emailError && <Text style={styles.error}>Invalid email address or password</Text>}
         <TextInput
           style={styles.input}
           onChangeText={(value) => setSignInEmail(value)}
@@ -82,7 +80,6 @@ export default function SignInScreen({ navigation }) {
           textContentType="emailAddress"
           autoCapitalize="none"
         />
-        {passwordError && <Text style={styles.error}>Invalid password</Text>}
         <TextInput
           style={styles.input}
           onChangeText={(value) => setSignInPassword(value)}
@@ -160,7 +157,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   error: {
-    color: 'red',
+    color: '#e23636',
   },
 });
 
