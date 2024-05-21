@@ -22,7 +22,7 @@ const FiltersScreen = ({ navigation }) => {
     if (i < averageNote) {
       style = { 'color': '#2196f3', 'cursor': 'pointer' };
     }
-    stars.push(<Ionicons key={i} name="star" size={24} color={style.color} onPress={() => setAverageNote(i + 1)} style={style} />);
+    stars.push(<Ionicons key={i} name="star" size={26} color={style.color} onPress={() => setAverageNote(i + 1)} style={style} />);
   }
 
   return (
@@ -31,7 +31,7 @@ const FiltersScreen = ({ navigation }) => {
       <Text style={styles.text}>Choisissez vos préférences</Text>
       <View style={styles.optionsContainer}>
         <Text style={styles.sliderValue}>Distance: moins de {kmValue} Km</Text>
-        <Slider
+        <Slider 
           style={styles.slider}
           minimumValue={2}
           maximumValue={30}
@@ -52,6 +52,7 @@ const FiltersScreen = ({ navigation }) => {
           onChange={item => setAgeValue(item.value)}
           placeholder="Age min"
         />
+        <Text style={styles.sliderValue}>Note minimum:</Text>
         <Text>{stars}</Text>
       </View>
       <TouchableOpacity
@@ -63,7 +64,7 @@ const FiltersScreen = ({ navigation }) => {
   );
 };
 
-// ... (reste du code inchangé)
+
 
 const styles = StyleSheet.create({
   container: {
@@ -143,5 +144,8 @@ function Movie(props) {
       );
 }
 
-<Text>{stars} </Text>
+
+
+Doc de Slider : https://www.npmjs.com/package/@react-native-community/slider
+ Doc de Dropdown : https://www.npmjs.com/package/react-native-element-dropdown
 */
