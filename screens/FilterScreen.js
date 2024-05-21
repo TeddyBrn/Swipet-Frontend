@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -11,10 +11,23 @@ const ageData = [
   { label: '45 ans', value: 4 },
 ];
 
+const durationData = [
+  { label: "moins d'une semaine", value: 1 },
+  { label: "une semaine à deux semaines", value: 2 },
+  { label: "deux à trois semaines", value: 3 },
+  { label: "plus de trois semaines", value: 4 },
+];
+
 const FiltersScreen = ({ navigation }) => {
   const [kmValue, setKmValue] = useState(2);
   const [ageValue, setAgeValue] = useState(null);
   const [averageNote, setAverageNote] = useState(0);
+  const [durationValue, setDurationValue] = useState(null);
+
+  
+  
+
+
 
   const stars = [];
   for (let i = 0; i < 5; i++) {
@@ -50,16 +63,37 @@ const FiltersScreen = ({ navigation }) => {
           valueField="value"
           value={ageValue}
           onChange={item => setAgeValue(item.value)}
-          placeholder="Age min"
+          placeholder="rechercher un age minimum"
+          activeColor='#2196f3'
+          selectedTextStyle={styles.selectedTextStyle}
+          
+         
+          
         />
         <Text style={styles.sliderValue}>Note minimum:</Text>
-        <Text>{stars}</Text>
+        <Text style={styles.stars}>{stars}</Text>
+        <Text style={styles.sliderValue}>Durée:</Text>
+        <Dropdown
+          style={styles.dropdown}
+          data={durationData}
+          labelField="label"
+          valueField="value"
+          value={durationValue}
+          onChange={item => setAgeValue(item.value)}
+          placeholder="rechercher une durée"
+          activeColor='#2196f3'
+          selectedTextStyle={styles.selectedTextStyle}
+          
+         
+          
+        />
       </View>
       <TouchableOpacity
         style={styles.button}
         activeOpacity={0.8}>
         <Text style={styles.buttonText}>Valider</Text>
       </TouchableOpacity>
+      
     </View>
   );
 };
@@ -116,6 +150,15 @@ const styles = StyleSheet.create({
     width: '90%',
     marginBottom: 20,
   },
+  selectedTextStyle: {
+    fontSize: 16,
+    color: "#2196f3",
+    fontWeight: 'bold',
+
+  },
+  stars: {
+marginBottom:15
+  },
   buttonText: {
     fontSize: 18,
     color: '#FFF',
@@ -148,4 +191,13 @@ function Movie(props) {
 
 Doc de Slider : https://www.npmjs.com/package/@react-native-community/slider
  Doc de Dropdown : https://www.npmjs.com/package/react-native-element-dropdown
+
+  renderRightIcon={() => (
+            <Ionicon
+              style={styles.icon}
+              color={isFocus ? 'blue' : 'black'}
+              name="chevron-down-outline"
+              size={20}
+            />
+          )}
 */
