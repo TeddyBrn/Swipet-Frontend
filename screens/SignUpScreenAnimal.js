@@ -53,7 +53,7 @@ export default function SignUpScreenAnimal({ navigation }) {
         fetch(`http://192.168.233.47:3000/profils/signup/animal/${user.token}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, year, animalType, gender, bio, detail}),
+            body: JSON.stringify({ name, birthDate:year, animalType, gender, bio, detail}),
             }).then(response => response.json())
             .then(data => {
                 console.log(data)
@@ -94,8 +94,8 @@ return (
           />
           <TextInput
             style={styles.input}
-            onChangeText={(value) => setAge(value)}
-            value={age}
+            onChangeText={(value) => setYear(value)}
+            value={year}
             placeholder="Age"
             placeholderTextColor="grey"
             autoCapitalize="none"
@@ -146,7 +146,7 @@ return (
           />
 
           <SelectDropdown
-            data={typeAnimal}
+            data={animalType}
             onSelect={(selectedItem) => {
               console.log(selectedItem);
             }}
