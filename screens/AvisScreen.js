@@ -9,7 +9,7 @@ import {
     Text,
 } from 'react-native';
 
-export default function HistoriqueScreen({ navigation }) {
+export default function AvisScreen({ navigation }) {
 
     const handleBackPress = () => {
         navigation.goBack();

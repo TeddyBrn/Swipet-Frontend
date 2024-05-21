@@ -14,6 +14,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
 import { login } from '../reducers/users';
 
+
+
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export default function SignInScreen({ navigation }) {
@@ -21,7 +23,7 @@ export default function SignInScreen({ navigation }) {
   const [emailError, setEmailError] = useState(false);
   const [signInPassword, setSignInPassword] = useState('');
   
-
+  
   const dispatch = useDispatch();
 
   const handleConnection = () => {

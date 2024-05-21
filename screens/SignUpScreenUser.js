@@ -7,22 +7,42 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Text
+  Text,
+  Button
 } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as ImagePicker from 'expo-image-picker';
 
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
 export default function ConnectionScreen({ navigation }) {
   const [lastName, setLastName] = useState('');
   const [firstname, setFirstname] = useState('');
+  const [age, setAge] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checkbox1, setCheckbox1] = useState('');
   const [checkbox2, setCheckbox2] = useState('');
   const [city, setCity] = useState('');
+
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1
+    });
+
+    console.log(result.assets[0].uri);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -42,6 +62,17 @@ export default function ConnectionScreen({ navigation }) {
           />
         </View>
         <View style={styles.inputContainer}>
+          <TouchableOpacity
+            style={styles.imagePicker}
+            activeOpacity={0.8}
+            onPress={pickImage}>
+            {image ? (
+              <Image source={{ uri: image }} style={styles.image} />
+            ) : (
+              <Ionicons name="images-outline" size={60} color="#555" />
+            )}
+          </TouchableOpacity>
+
           <TextInput
             style={styles.input}
             onChangeText={(value) => setLastName(value)}
@@ -55,6 +86,14 @@ export default function ConnectionScreen({ navigation }) {
             onChangeText={(value) => setFirstname(value)}
             value={firstname}
             placeholder="Prénom"
+            placeholderTextColor="grey"
+            autoCapitalize="none"
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => setAge(value)}
+            value={age}
+            placeholder="Age"
             placeholderTextColor="grey"
             autoCapitalize="none"
           />
@@ -102,6 +141,7 @@ export default function ConnectionScreen({ navigation }) {
                 value={checkbox2}
                 onValueChange={setCheckbox2}
                 style={styles.check}
+               
               />
             </View>
           </View>
@@ -128,7 +168,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginBottom: 30,
+    marginBottom: 25
   },
   topMid: {
     alignItems: 'center'
@@ -140,11 +180,26 @@ const styles = StyleSheet.create({
   logo: {
     width: 85,
     height: 85,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
+    
   },
   inputContainer: {
     flex: 1,
+    alignItems: 'center'
+  },
+  imagePicker: {
+    borderRadius: 50,
+    borderWidth: 2,
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 30
+  },
+  image: {
+    borderRadius: 50,
+    width: "100%",
+    height: "100%"
   },
   input: {
     borderRadius: 15,
@@ -153,8 +208,8 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingLeft: 20,
     borderWidth: 1.5,
-    marginBottom: 30,
-    fontSize: 18,
+    marginBottom: 20,
+    fontSize: 18
   },
   titleCheckbox: {
     fontSize: 20,
@@ -167,7 +222,7 @@ const styles = StyleSheet.create({
     width: '80%',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingBottom: 40
+    paddingBottom: 30
   },
   checkbox: {
     display: 'flex',
@@ -188,7 +243,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 50,
     borderRadius: 15,
-    marginTop: 50,
+    marginTop: 20,
     borderWidth: 2,
     borderColor: '#73A246'
   },
