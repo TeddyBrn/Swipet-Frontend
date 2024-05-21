@@ -24,29 +24,33 @@ export default function ProfileCard({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.profileContainer}>
-        <Image
-          source={require('../assets/myprofile.jpg')}
-          style={styles.profileImage}
-        />
-        <View style={styles.ratingContainer}>
-          {Array(5)
-            .fill()
-            .map((_, i) => (
-              <Image
-                key={i}
-                source={require('../assets/star.png')}
-                style={styles.star}
-              />
-            ))}
+      <View style={styles.main}>
+        <View style={styles.profileContainer}>
+          <Image
+            source={require('../assets/myprofile.jpg')}
+            style={styles.profileImage}
+          />
+          <View style={styles.ratingContainer}>
+            {Array(5)
+              .fill()
+              .map((_, i) => (
+                <Image
+                  key={i}
+                  source={require('../assets/star.png')}
+                  style={styles.star}
+                />
+              ))}
+          </View>
+          <View style={styles.infos}>
+            <Text style={styles.profileName}>Sarah, 6 ans</Text>
+            <Text style={styles.bioLabel}>Bio</Text>
+            <Text style={styles.bioText}>
+              J'aime les animaux pour leur faire des gros calinous et des
+              poutous baveux ainsi que les emmener en balades, non je rigole je
+              veux juste de la moula 💵 .
+            </Text>
+          </View>
         </View>
-        <Text style={styles.profileName}>Sarah, 6 ans</Text>
-        <Text style={styles.bioLabel}>Bio</Text>
-        <Text style={styles.bioText}>
-          J'aime les animaux pour leur faire des gros calinous et des poutous
-          baveux ainsi que les emmener en balades, non je rigole je veux juste
-          de la moula 💵 .
-        </Text>
         <View style={styles.actionButtons}>
           <TouchableOpacity style={styles.dislikeButton} activeOpacity={0.7}>
             <Text style={styles.buttonText}>X</Text>
@@ -69,7 +73,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // marginBottom: 10
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 10,
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 5.46,
+    elevation:9,
   },
   headerR: {
     flexDirection: 'row',
@@ -88,34 +101,49 @@ const styles = StyleSheet.create({
   iconButton: {
     marginHorizontal: 10
   },
+  main: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center'
+  },
   profileContainer: {
-    flex: 1,
+    height: '80%',
+    width: '90%',
+    flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
-    borderRadius: 10,
-    paddingTop: 40
+    backgroundColor: '#54545420',
+    borderRadius: 15,
+    paddingTop: 8
   },
   profileImage: {
-    width: '90%',
-    height: 380,
-    borderRadius: 10,
-    borderColor: 'black',
-    borderWidth: 1,
-    resizeMode: 'contain'
+    width: '95%',
+    height: 340,
+    borderRadius: 15,
+    resizeMode: 'cover'
   },
   ratingContainer: {
     flexDirection: 'row',
-    marginVertical: 5
+    marginVertical: 10,
+    justifyContent: 'flex-start',
+    width: '90%'
   },
   star: {
     width: 30,
     height: 30,
-    marginHorizontal: 2
+    marginHorizontal: 1
+  },
+  infos: {
+    width: '89%',
   },
   profileName: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
-    marginBottom: 5
+    paddingVertical: 10,
+    borderTopColor: "gray",
+    borderTopWidth: 1.5,
+    borderBottomColor: "gray",
+    borderBottomWidth: 1.5,
+    paddingLeft: 10
   },
   bioLabel: {
     fontSize: 16,

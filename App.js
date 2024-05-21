@@ -45,12 +45,14 @@ const TabNavigator = () => {
             iconName = 'home';
           }
 
-          return <Ionicons name={iconName} size={30} color={color} />;
+          return <Ionicons name={iconName} size={40} color={color} />;
         },
-        tabBarActiveTintColor: '#3497CE',
-        tabBarInactiveTintColor: '#222222',
-        tabBarActiveBackgroundColor: '#A7A7A7',
-        tabBarInactiveBackgroundColor: '#A7A7A7',
+        tabBarActiveTintColor: '#0984e3',
+        tabBarInactiveTintColor: '#1e272e',
+        tabBarActiveBackgroundColor: '#bbb',
+        tabBarInactiveBackgroundColor: '#bbb',
+        tabBarShowLabel: false,
+        tabBarStyle: { height: 70 },
         headerShown: false
       })}>
       <Tab.Screen name="Filtres" component={FilterScreen} />
