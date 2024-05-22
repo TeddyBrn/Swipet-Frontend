@@ -3,11 +3,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import * as Font from 'expo-font';
+import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
+import AppLoading from 'expo-app-loading';
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
@@ -69,7 +70,7 @@ const TabNavigator = () => {
 };
 
 export default function App() {
-  const [fontsLoaded, fontError] = Font.useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     'AlfaSlabOne-Regular': require('./assets/fonts/AlfaSlabOne-Regular.ttf'),
     'PoetsenOne-Regular': require('./assets/fonts/PoetsenOne-Regular.ttf'),
     'Montserrat-Black': require('./assets/fonts/Montserrat/Montserrat-Black.ttf'),
@@ -90,35 +91,28 @@ export default function App() {
     'Montserrat-Thin': require('./assets/fonts/Montserrat/Montserrat-Thin.ttf'),
     'Montserrat-ThinItalic': require('./assets/fonts/Montserrat/Montserrat-ThinItalic.ttf')
   });
-
-  
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded || fontError) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
-
-  if (!fontsLoaded && !fontError) {
+    
+    if (!fontsLoaded) {
     return null;
-  }
+    }
+
 
   return (
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen onLayout={onLayoutRootView} name="Home" component={HomeScreen} />
-          <Stack.Screen onLayout={onLayoutRootView} name="SignIn" component={SignInScreen} />
-          <Stack.Screen onLayout={onLayoutRootView} name="SignUp" component={SignUpScreenUser} />
-          <Stack.Screen onLayout={onLayoutRootView} name="SignUpAnimal" component={SignUpScreenAnimal} />
-          <Stack.Screen onLayout={onLayoutRootView} name="TabNavigator" component={TabNavigator} />
-          <Stack.Screen onLayout={onLayoutRootView} name="Notifications" component={NotificationsScreen} />
-          <Stack.Screen onLayout={onLayoutRootView} name="Settings" component={SettingsScreen} />
-          <Stack.Screen onLayout={onLayoutRootView} name="Profil" component={ProfilScreen} />
-          <Stack.Screen onLayout={onLayoutRootView} name="ProfilAnimal" component={ProfileAnimalScreen} />
-          <Stack.Screen onLayout={onLayoutRootView} name="Payment" component={PaymentScreen} />
-          <Stack.Screen onLayout={onLayoutRootView} name="Historique" component={HistoriqueScreen} />
-          <Stack.Screen onLayout={onLayoutRootView} name="Avis" component={AvisScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="SignIn" component={SignInScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreenUser} />
+          <Stack.Screen name="SignUpAnimal" component={SignUpScreenAnimal} />
+          <Stack.Screen name="TabNavigator" component={TabNavigator} />
+          <Stack.Screen name="Notifications" component={NotificationsScreen} />
+          <Stack.Screen name="Settings" component={SettingsScreen} />
+          <Stack.Screen name="Profil" component={ProfilScreen} />
+          <Stack.Screen name="ProfilAnimal" component={ProfileAnimalScreen} />
+          <Stack.Screen name="Payment" component={PaymentScreen} />
+          <Stack.Screen name="Historique" component={HistoriqueScreen} />
+          <Stack.Screen name="Avis" component={AvisScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
