@@ -276,7 +276,8 @@ const styles = StyleSheet.create({
     
   },
   topMid: {
-    alignItems: 'center'
+    alignItems: 'center',
+    
   },
   topText: {
     fontSize: 25,
@@ -290,7 +291,8 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    
   },
   imagePicker: {
     borderRadius: 50,

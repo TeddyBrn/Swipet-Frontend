@@ -32,6 +32,7 @@ export default function ProfileCard({ navigation }) {
     setAge(profilData[count].age);
     setBio(profilData[count].bio);
     setImg(profilData[count].url);
+    setNote(profilData[count].avis[0].note);
     addAlike();
   };
   console.log(user.like)
