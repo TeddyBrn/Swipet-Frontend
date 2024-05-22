@@ -44,7 +44,7 @@ export const profilData = [
     avis: [
       {
         _id: '60f5a3d5e13e2c6fef3e4c8c',
-        note: 2.9
+        note: 1.9
       }
     ],
     like: ['60f5a3d5e13e2c6fef3e4c8d'],
@@ -61,7 +61,7 @@ export const profilData = [
     avis: [
       {
         _id: '60f5a3d5e13e2c6fef3e4c91',
-        note: 3
+        note: 4.6
       }
     ],
     like: ['60f5a3d5e13e2c6fef3e4c92', '60f5a3d5e13e2c6fef3e4c93'],
@@ -78,7 +78,7 @@ export const profilData = [
     avis: [
       {
         _id: '60f5a3d5e13e2c6fef3e4c96',
-        note: 4
+        note: 4.4
       }
     ],
     like: ['60f5a3d5e13e2c6fef3e4c97', '60f5a3d5e13e2c6fef3e4c98'],
@@ -95,7 +95,7 @@ export const profilData = [
     avis: [
       {
         _id: '60f5a3d5e13e2c6fef3e4c9b',
-        note: 5
+        note: 4.9
       }
     ],
     like: ['60f5a3d5e13e2c6fef3e4c9c'],
@@ -112,7 +112,7 @@ export const profilData = [
     avis: [
       {
         _id: '60f5a3d5e13e2c6fef3e4ca0',
-        note: 4
+        note: 4.4
       }
     ],
     like: ['60f5a3d5e13e2c6fef3e4ca1'],
@@ -129,7 +129,7 @@ export const profilData = [
     avis: [
       {
         _id: '60f5a3d5e13e2c6fef3e4ca5',
-        note: 5
+        note: 4.1
       }
     ],
     like: ['60f5a3d5e13e2c6fef3e4ca6'],
@@ -146,7 +146,7 @@ export const profilData = [
     avis: [
       {
         _id: '60f5a3d5e13e2c6fef3e4caa',
-        note: 3
+        note: 2.9
       }
     ],
     like: ['60f5a3d5e13e2c6fef3e4cab', '60f5a3d5e13e2c6fef3e4cac'],
@@ -163,7 +163,7 @@ export const profilData = [
     avis: [
       {
         _id: '60f5a3d5e13e2c6fef3e4caf',
-        note: 4
+        note: 4.9
       }
     ],
     like: ['60f5a3d5e13e2c6fef3e4cb0'],

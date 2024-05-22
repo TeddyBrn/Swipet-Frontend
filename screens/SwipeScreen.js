@@ -80,7 +80,7 @@ const addAlike = () => dispatch(addLike(profilData[count]._id))
           <Text style={styles.profileNote}>
               {note}/5
             </Text>
-            {Array(Math.round(profilData[count].avis[0].note))
+            {Array(Math.round(note))
               .fill()
               .map((i) => (
                 <Image
