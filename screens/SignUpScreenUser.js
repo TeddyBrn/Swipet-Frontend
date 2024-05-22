@@ -157,7 +157,6 @@ export default function SignUpScreenUser({ navigation }) {
           <View style={styles.inputContain}>
             <View style={styles.input}>
               <Ionicons name="person" size={20} color="#555" />
-
               <TextInput
                 style={styles.inputText}
                 onChangeText={(value) => setLastname(value)}
@@ -273,7 +272,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginBottom: 15
+    marginBottom: 15,
+    
   },
   topMid: {
     alignItems: 'center'
