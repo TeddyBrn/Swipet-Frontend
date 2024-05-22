@@ -13,20 +13,45 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { addAnimal, login } from '../reducers/users';
 
 
 
 
 export default function ProfilAnimalScreen({ navigation }) {
+
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.users.value);
+
     const [name, setName] = useState('');
-    const [year, setYear] = useState('');
+    const [detail, setDetail] = useState('');
     const [type, setType] = useState('');
     const [genre, setGenre] = useState('');
     const [bio, setBio] = useState('');
 
     const gender = ['Male', 'Female','Non Binaire'];
   const typeAnimal = ['chien', 'chat']
+
+  const handleChange = () => {
+
+    fetch(`http://192.168.1.30:3000/settings/editanimal/${user.token}/${user.profilAnimal[0]._id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name,
+        bio: bio,
+        detail: detail,
+      })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        data.result &&
+          dispatch(login({ name, bio, detail }));
+            setName(name); setDetail(detail); setBio(bio);
+        })
+     }
 
     const handleBackPress = () => {
         navigation.goBack();
@@ -60,37 +85,37 @@ export default function ProfilAnimalScreen({ navigation }) {
                 />
                 <TextInput
                     style={styles.input}
-                    onChangeText={(value) => setYear(value)}
-                    value={year}
-                    placeholder="Age"
+                    onChangeText={(value) => setDetail(value)}
+                    value={detail}
+                    placeholder="Detail"
                     placeholderTextColor="grey"
                     autoCapitalize="none"
                 />
                 <SelectDropdown
-            data={gender}
-            onSelect={(selectedItem) => {
-              console.log(selectedItem);
-            }}
-            renderButton={(selectedItem, isOpened) => {
-              return (
-                <View style={styles.dropdownButtonStyle}>
-                  <Text style={styles.dropdownButtonTxtStyle}>
-                    {(selectedItem && selectedItem) || 'Genre'}
-                  </Text>
-                  <Icon
-                    name={isOpened ? 'chevron-up' : 'chevron-down'}
-                    style={styles.dropdownButtonArrowStyle}
-                  />
-                </View>
-              );
-            }}
-            renderItem={(item) => {
-              return (
-                <View style={styles.dropdownItemStyle}>
-                  <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
-                </View>
-              );
-            }}
+                  data={gender}
+                  onSelect={(selectedItem) => {
+                    console.log(selectedItem);
+                  }}
+                  renderButton={(selectedItem, isOpened) => {
+                  return (
+                    <View style={styles.dropdownButtonStyle}>
+                      <Text style={styles.dropdownButtonTxtStyle}>
+                        {(selectedItem && selectedItem) || 'Genre'}
+                      </Text>
+                      <Icon
+                        name={isOpened ? 'chevron-up' : 'chevron-down'}
+                        style={styles.dropdownButtonArrowStyle}
+                      />
+                    </View>
+                  );
+                  }}
+                  renderItem={(item) => {
+                    return (
+                      <View style={styles.dropdownItemStyle}>
+                        <Text style={styles.dropdownItemTxtStyle}>{item}</Text>
+                      </View>
+                    );
+                  }}
             showsVerticalScrollIndicator={false}
             dropdownStyle={styles.dropdownMenuStyle}
           />
