@@ -27,11 +27,6 @@ const userSlice = createSlice({
       state.value.lastname = action.payload.lastname;
       state.value.city = action.payload.city;
       state.value.role = action.payload.role;
-      state.value.profilAnimal.push(action.payload);
-      state.value.avis.push(action.payload);
-      state.value.historique.push(action.payload);
-      state.value.like.push(action.payload);
-      state.value.likeReceived.push(action.payload);
     },
     logout: (state) => {
       state.value.token = null;

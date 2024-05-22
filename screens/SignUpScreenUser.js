@@ -18,19 +18,21 @@ import * as ImagePicker from 'expo-image-picker';
 import { useDispatch } from 'react-redux';
 import { login } from '../reducers/users';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { calculAge } from '../modules/calculAge';
 
 export default function SignUpScreenUser({ navigation }) {
   const dispatch = useDispatch();
 
+  const [image, setImage] = useState(null);
   const [lastname, setLastname] = useState('');
   const [firstname, setFirstname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [checkbox1, setCheckbox1] = useState(false);
-  const [checkbox2, setCheckbox2] = useState(false);
   const [city, setCity] = useState('');
-  const [age, setAge] = useState('');
-  const [image, setImage] = useState(null);
+  const [birthDate, setBirthDate] = useState('');
+  const [role, setRole] = useState('');
+
+  // ImagePicker
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -47,34 +49,60 @@ export default function SignUpScreenUser({ navigation }) {
     }
   };
 
+  // CheckBox
+
+  const [checkbox1, setCheckbox1] = useState(false);
+  const [checkbox2, setCheckbox2] = useState(false);
+
   const handleCheckbox1 = () => {
     if (checkbox2 === false) {
       setCheckbox1(true);
+      setRole('garder');
     } else {
       setCheckbox2(false);
       setCheckbox1(true);
+      setRole('garder');
     }
   };
 
   const handleCheckbox2 = () => {
     if (checkbox1 === false) {
       setCheckbox2(true);
+      setRole('faire garder');
     } else {
       setCheckbox1(false);
       setCheckbox2(true);
+      setRole('faire garder');
     }
   };
 
-  let role = '';
-  if (checkbox1 === true && checkbox2 === false) {
-    role = 'garder';
-  }
-  if (checkbox2 === true && checkbox1 === false) {
-    role = 'faire garder';
-  }
+  // if (checkbox1 === true && checkbox2 === false) {
+  //   setRole('garder');
+  // }
+  // if (checkbox2 === true && checkbox1 === false) {
+  //   setRole('faire garder');
+  // }
+
+  // DatePicker
+
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.warn(date);
+    setBirthDate(date);
+    hideDatePicker();
+    
+  };
 
   const handleConnexion = () => {
-    fetch('http://192.168.233.47:3000/profils/signup', {
+    fetch('http://192.168.1.30:3000/profils/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -84,7 +112,7 @@ export default function SignUpScreenUser({ navigation }) {
         password,
         city,
         role,
-        birthDate: age
+        birthDate
       })
     })
       .then((response) => response.json())
@@ -93,24 +121,6 @@ export default function SignUpScreenUser({ navigation }) {
         data.result && dispatch(login({ token: data.token, email }));
         navigation.navigate('SignUpAnimal');
       });
-  };
-
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [dateB, setDateB] = useState('');
-
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
-  const handleConfirm = (date) => {
-    console.warn(date);
-    setDateB(date);
-    hideDatePicker();
-    date && console.log(dateB);
   };
 
   return (
@@ -157,7 +167,7 @@ export default function SignUpScreenUser({ navigation }) {
                 autoCapitalize="none"
               />
             </View>
-
+            
             <View style={styles.input}>
               <Ionicons name="person" size={20} color="#555" />
               <TextInput
@@ -169,6 +179,17 @@ export default function SignUpScreenUser({ navigation }) {
                 autoCapitalize="none"
               />
             </View>
+            <Pressable style={styles.input} onPress={showDatePicker}>
+              <Ionicons name="calendar" size={20} color="#333" />
+              <Text style={styles.inputText}>Date de Naissance {birthDate && 'birthDate'}</Text>
+            </Pressable>
+
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
+            />
             <View style={styles.input}>
               <Ionicons name="mail" size={20} color="#555" />
               <TextInput
@@ -203,18 +224,6 @@ export default function SignUpScreenUser({ navigation }) {
                 autoCapitalize="none"
               />
             </View>
-
-            <Pressable style={styles.input} onPress={showDatePicker}>
-              <Ionicons name="calendar" size={20} color="#333" />
-              <Text style={styles.inputText}>Date de Naissance</Text>
-            </Pressable>
-
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
           </View>
 
           <Text style={styles.titleCheckbox}>Vous souhaitez :</Text>
@@ -242,8 +251,8 @@ export default function SignUpScreenUser({ navigation }) {
           <TouchableOpacity
             style={styles.signUpButton}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('SignUpAnimal')}
-            // onPress={() => handleConnexion()}
+            // onPress={() => navigation.navigate('SignUpAnimal')}
+            onPress={() => handleConnexion()}
           >
             <Text style={styles.buttonText}>Confirmer</Text>
           </TouchableOpacity>

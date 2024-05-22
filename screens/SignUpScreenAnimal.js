@@ -18,6 +18,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 import { addAnimal, login } from '../reducers/users';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import * as ImagePicker from 'expo-image-picker';
+
 
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
@@ -26,64 +28,37 @@ export default function SignUpScreenAnimal({ navigation }) {
   const user = useSelector((state) => state.users.value);
   console.log(user);
 
+  const [photo, setPhoto] = useState(null);
   const [name, setName] = useState('');
-  const [year, setYear] = useState('');
+  const [birthDate, setBirthDate] = useState('');
   const [bio, setBio] = useState('');
   const [detail, setDetail] = useState('');
+  const [gender, setGender] = useState('');
+  const [animalType, setAnimalType] = useState('');
 
-  const gender = ['Male', 'Female'];
-  const animalType = ['Chien', 'Chat', 'Lapin'];
+  const dataGender = ['Male', 'Female'];
+  const dataAnimalType = ['Chien', 'Chat', 'Lapin'];
 
-  const handleAddAnimal = () => {
-    fetch(`http://192.168.233.47:3000/profils/signup/animal/${user.token}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, year, animalType, gender, bio, detail })
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        data.result &&
-          dispatch(
-            addAnimal({
-              token: data.token,
-              name,
-              year,
-              animalType,
-              gender,
-              bio,
-              detail
-            })
-          );
-        setName('');
-        setYear('');
-        setBio('');
-      });
+  // ImagePicker
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1
+    });
+
+    console.log(result.assets[0].uri);
+
+    if (!result.canceled) {
+      setPhoto(result.assets[0].uri);
+    }
   };
 
-  const handleConnexion = () => {
-    fetch(`http://192.168.233.47:3000/profils/signup/animal/${user.token}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name,
-        birthDate: year,
-        animalType,
-        gender,
-        bio,
-        detail
-      })
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        data.result &&
-          dispatch(addAnimal({ name, year, animalType, gender, bio, detail }));
-        navigation.navigate('TabNavigator');
-      });
-  };
+  // DatePicker
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [dateB, setDateB] = useState('');
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -95,10 +70,59 @@ export default function SignUpScreenAnimal({ navigation }) {
 
   const handleConfirm = (date) => {
     console.warn(date);
-    setDateB(date);
+    setBirthDate(date);
     hideDatePicker();
-    date && console.log(dateB);
   };
+
+  // const handleAddAnimal = () => {
+  //   fetch(`http://192.168.233.47:3000/profils/signup/animal/${user.token}`, {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({ name, year, animalType, gender, bio, detail })
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       data.result &&
+  //         dispatch(
+  //           addAnimal({
+  //             token: data.token,
+  //             name,
+  //             age,
+  //             animalType,
+  //             gender,
+  //             bio,
+  //             detail
+  //           })
+  //         );
+  //       setName('');
+  //       setYear('');
+  //       setBio('');
+  //     });
+  // };
+
+  const handleConnexion = () => {
+    fetch(`http://192.168.1.30:3000/profils/signup/animal/${user.token}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        birthDate,
+        animalType,
+        gender,
+        bio,
+        detail
+      })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        data.result &&
+          dispatch(addAnimal({ name, birthDate, animalType, gender, bio, detail }));
+        navigation.navigate('TabNavigator');
+      });
+  };
+
+ 
 
   return (
     <SafeAreaView style={styles.container}>
@@ -118,6 +142,19 @@ export default function SignUpScreenAnimal({ navigation }) {
           />
         </View>
         <View style={styles.inputContainer}>
+        <TouchableOpacity
+            style={styles.imagePicker}
+            activeOpacity={0.8}
+            onPress={pickImage}>
+            {photo ? (
+              <Image source={{ uri: photo }} style={styles.image} />
+            ) : (
+              <Image
+                source={require('../assets/add-image.png')}
+                style={{ width: 60, height: 60, color: '#555' }}
+              />
+            )}
+          </TouchableOpacity>
           <View style={styles.inputContain}>
             <View style={styles.input}>
               <Ionicons name="person" size={20} color="#33464d" />
@@ -142,7 +179,6 @@ export default function SignUpScreenAnimal({ navigation }) {
               onCancel={hideDatePicker}
             />
             <View style={styles.input}>
-              <Ionicons name="person" size={20} color="#33464d" />
               <TextInput
                 style={styles.inputText}
                 onChangeText={(value) => setBio(value)}
@@ -153,19 +189,19 @@ export default function SignUpScreenAnimal({ navigation }) {
               />
             </View>
             <View style={styles.input}>
-              <Ionicons name="person" size={20} color="#33464d" />
               <TextInput
                 style={styles.inputText}
                 onChangeText={(value) => setDetail(value)}
                 value={detail}
-                placeholder="Detail"
+                placeholder="Detail sur la garde"
                 placeholderTextColor="#5a7869"
                 autoCapitalize="none"
               />
             </View>
             <SelectDropdown
-              data={gender}
+              data={dataGender}
               onSelect={(selectedItem) => {
+                setGender(selectedItem)
                 console.log(selectedItem);
               }}
               renderButton={(selectedItem, isOpened) => {
@@ -193,8 +229,9 @@ export default function SignUpScreenAnimal({ navigation }) {
             />
 
             <SelectDropdown
-              data={animalType}
+              data={dataAnimalType}
               onSelect={(selectedItem) => {
+                setAnimalType(selectedItem)
                 console.log(selectedItem);
               }}
               renderButton={(selectedItem, isOpened) => {
@@ -225,8 +262,8 @@ export default function SignUpScreenAnimal({ navigation }) {
           <TouchableOpacity
             style={styles.signUpButton}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('TabNavigator')}
-            // onPress={() => handleConnexion()}
+            // onPress={() => navigation.navigate('TabNavigator')}
+            onPress={() => handleConnexion()}
             >
             <Text style={styles.buttonText}>Confirmer</Text>
           </TouchableOpacity>
@@ -261,6 +298,21 @@ const styles = StyleSheet.create({
     width: 85,
     height: 85,
     resizeMode: 'contain'
+  },
+  imagePicker: {
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#33464d',
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: -30
+  },
+  image: {
+    borderRadius: 50,
+    width: '100%',
+    height: '100%'
   },
   inputContain: {
     width: '95%',
