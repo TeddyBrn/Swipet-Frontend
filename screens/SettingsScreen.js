@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginBottom: 15,
+    marginBottom: 50,
     backgroundColor: '#fff',
     shadowColor: '#000000',
     shadowOffset: {
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: 'center',
     borderRadius: 8,
-    marginTop: 220
+    marginTop: 200
   },
   logoutButtonText: {
     fontSize: 25,
