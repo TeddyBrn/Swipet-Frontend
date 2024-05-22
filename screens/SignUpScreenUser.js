@@ -271,7 +271,8 @@ const styles = StyleSheet.create({
   },
   topText: {
     fontSize: 25,
-    fontWeight: 'bold'
+    fontFamily: 'Montserrat-Bold',
+    color: '#33464d'
   },
   logo: {
     width: 85,
@@ -285,6 +286,7 @@ const styles = StyleSheet.create({
   imagePicker: {
     borderRadius: 50,
     borderWidth: 2,
+    borderColor: '#33464d',
     width: 100,
     height: 100,
     justifyContent: 'center',
@@ -312,17 +314,18 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    borderColor: '#444'
+    borderColor: '#33464d'
   },
   inputText: {
     fontSize: 18,
     paddingLeft: 10,
-    color: '#444'
+    color: '#5a7869'
   },
   titleCheckbox: {
     fontSize: 20,
-    fontWeight: 'bold',
-    paddingVertical: 20
+    fontFamily: 'Montserrat-Bold',
+    paddingVertical: 20,
+    color: '#33464d'
   },
   checkboxContainer: {
     display: 'flex',
@@ -342,11 +345,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1.5,
     backgroundColor: '#efefef',
-    borderColor: '#ccc'
+    borderColor: '#33464d'
   },
   label: {
     fontSize: 18,
-    fontWeight: '500'
+    fontFamily: 'Montserrat-Bold',
+    color: '#33464d'
   },
   signUpButton: {
     backgroundColor: '#8FD14F',

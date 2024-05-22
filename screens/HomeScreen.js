@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
     fontSize: 33,
     marginBottom: 100,
     marginTop: 50,
-    fontFamily: 'PoetsenOne-Regular'
+    fontFamily: 'PoetsenOne-Regular',
+    color: '#33464d'
   },
   button: {
     backgroundColor: '#5a7869',

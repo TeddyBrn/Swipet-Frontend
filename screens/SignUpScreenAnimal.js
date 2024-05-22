@@ -254,8 +254,9 @@ const styles = StyleSheet.create({
   },
   topText: {
     fontSize: 25,
-    fontWeight: 'bold'
-  },
+    fontFamily: 'Montserrat-Bold' ,
+    color: '#33464d'
+   },
   logo: {
     width: 85,
     height: 85,
@@ -286,12 +287,12 @@ const styles = StyleSheet.create({
   inputText: {
     fontSize: 18,
     paddingLeft: 10,
-    color: '#444'
+    color: '#5a7869'
   },
   dropdownButtonStyle: {
     width: '80%',
     height: 50,
-    borderWidth: 1.3,
+    borderBottomWidth: 1.3,
     borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'center',
