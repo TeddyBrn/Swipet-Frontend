@@ -1,7 +1,7 @@
 export const profilData = [
   {
     _id: '60f5a3d5e13e2c6fef3e4c81',
-    firstname: 'Jean',
+    firstname: 'Marie',
     age: '30',
     city: 'Paris',
     role: 'Garder',
@@ -10,7 +10,7 @@ export const profilData = [
     avis: [
       {
         _id: '60f5a3d5e13e2c6fef3e4c82',
-        note: 5
+        note: 4.7
       }
     ],
     like: ['60f5a3d5e13e2c6fef3e4c83', '60f5a3d5e13e2c6fef3e4c84'],
@@ -18,7 +18,7 @@ export const profilData = [
   },
   {
     _id: '60f5a3d5e13e2c6fef3e4c86',
-    firstname: 'Marie',
+    firstname: 'Jean',
     age: '25',
     city: 'Lyon',
     role: 'Garder',
@@ -27,7 +27,7 @@ export const profilData = [
     avis: [
       {
         _id: '60f5a3d5e13e2c6fef3e4c87',
-        note: 4
+        note: 3.8
       }
     ],
     like: ['60f5a3d5e13e2c6fef3e4c88'],
@@ -44,7 +44,7 @@ export const profilData = [
     avis: [
       {
         _id: '60f5a3d5e13e2c6fef3e4c8c',
-        note: 5
+        note: 2.9
       }
     ],
     like: ['60f5a3d5e13e2c6fef3e4c8d'],

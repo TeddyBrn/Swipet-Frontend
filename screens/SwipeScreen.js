@@ -24,7 +24,7 @@ const addAlike = () => dispatch(addLike(profilData[count]._id))
     setAge(profilData[0].age);
     setBio(profilData[0].bio);
     setImg(profilData[0].url);
-    setNote(profilData[0].avis[0].note);
+    setNote(profilData[count].avis[0].note);
   }, []);
 
   const handleLike = () => {
@@ -33,7 +33,6 @@ const addAlike = () => dispatch(addLike(profilData[count]._id))
     setAge(profilData[count].age);
     setBio(profilData[count].bio);
     setImg(profilData[count].url);
-    setNote(profilData[count].avis[0].note);
     addAlike();
     
 
@@ -78,7 +77,10 @@ const addAlike = () => dispatch(addLike(profilData[count]._id))
         <View style={styles.profileContainer}>
           <Image source={img} style={styles.profileImage} />
           <View style={styles.ratingContainer}>
-            {Array(5)
+          <Text style={styles.profileNote}>
+              {note}/5
+            </Text>
+            {Array(Math.round(profilData[count].avis[0].note))
               .fill()
               .map((i) => (
                 <Image
@@ -203,6 +205,12 @@ const styles = StyleSheet.create({
     borderBottomColor: 'gray',
     borderBottomWidth: 1.5,
     paddingLeft: 10
+  },
+  profileNote: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingLeft: 10,
+    paddingRight: 10
   },
   bioLabel: {
     fontSize: 24,
