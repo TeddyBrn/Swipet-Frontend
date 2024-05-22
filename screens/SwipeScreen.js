@@ -34,7 +34,7 @@ export default function ProfileCard({ navigation }) {
     setImg(profilData[count].url);
     addAlike();
   };
-
+  console.log(user.like)
   const handleDislike = () => {
     setCount(count + 1);
     setName(profilData[count].firstname);
