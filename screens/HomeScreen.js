@@ -52,14 +52,14 @@ const styles = StyleSheet.create({
     resizeMode: 'contain' //https://reactnative.dev/docs/image-style-props#resizemode
   },
   title: {
-    fontSize: 30,
+    fontSize: 33,
     marginBottom: 100,
     marginTop: 50,
     fontFamily: 'PoetsenOne-Regular'
   },
   button: {
-    backgroundColor: '#5BBDF4',
-    borderColor: "#488fb5", 
+    backgroundColor: '#5a7869',
+    borderColor: "#33464d", 
     width: '55%',
     paddingVertical: 10,
     alignItems: 'center',
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5
   },
   buttonText: {
-    color: '#488fb5',
+    color: '#33464d',
     fontSize: 25,
     fontFamily: 'Montserrat-Bold'
   },
