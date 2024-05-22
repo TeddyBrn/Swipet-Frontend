@@ -62,7 +62,7 @@ export default function SignInScreen({ navigation }) {
       style={styles.container}>
       <View style={styles.backContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={60} color="#E06359" />
+          <Ionicons name="chevron-back" size={60} color="#33464d" />
         </TouchableOpacity>
       </View>
       <View style={styles.logoContainer}>
