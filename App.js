@@ -4,11 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
-import AppLoading from 'expo-app-loading';
 
-// SplashScreen.preventAutoHideAsync();
 
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
