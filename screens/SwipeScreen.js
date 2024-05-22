@@ -54,23 +54,23 @@ const addAlike = () => dispatch(addLike(profilData[count]._id))
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.headerR}>
+        
           <Image
             source={require('../assets/miniLogo.png')}
             style={styles.logo}
           />
-          <Text style={styles.headerText}>SWIPET</Text>
-        </View>
+          
+        
         <View style={styles.headerR}>
           <TouchableOpacity
             style={styles.iconButton}
             onPress={() => navigation.navigate('Notifications')}>
-            <Ionicons name="notifications" size={35} color="#222" />
+            <Ionicons name="notifications" size={35} color="#33464d" />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.iconButton}
             onPress={() => navigation.navigate('Settings')}>
-            <Ionicons name="settings-outline" size={35} color="#222" />
+            <Ionicons name="settings-outline" size={35} color="#33464d" />
           </TouchableOpacity>
         </View>
       </View>
@@ -141,7 +141,9 @@ const styles = StyleSheet.create({
   logo: {
     width: 60,
     height: 60,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
+    marginLeft: 20,
+    marginVertical: 5,
   },
   headerText: {
     fontSize: 24,

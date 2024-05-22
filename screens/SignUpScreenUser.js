@@ -119,7 +119,7 @@ export default function SignUpScreenUser({ navigation }) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={styles.topContainer}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="arrow-back" size={60} color="#E06359" />
+            <Ionicons name="chevron-back" size={60} color="#33464d" />
           </TouchableOpacity>
           <View style={styles.topMid}>
             <Text style={styles.topText}>Profil</Text>
@@ -138,83 +138,85 @@ export default function SignUpScreenUser({ navigation }) {
             {image ? (
               <Image source={{ uri: image }} style={styles.image} />
             ) : (
-              <Image source={require('../assets/add-image.png')} style={{ width: 60, height: 60, color: '#555' }} />
+              <Image
+                source={require('../assets/add-image.png')}
+                style={{ width: 60, height: 60, color: '#555' }}
+              />
             )}
-            
           </TouchableOpacity>
           <View style={styles.inputContain}>
-          <View style={styles.inputDate}>
-            <Ionicons name="person" size={20} color="#555" />
-            
-            <TextInput
-              style={styles.dateText}
-              onChangeText={(value) => setLastname(value)}
-              value={lastname}
-              placeholder="Nom"
-              placeholderTextColor="grey"
-              autoCapitalize="none"
+            <View style={styles.input}>
+              <Ionicons name="person" size={20} color="#555" />
+
+              <TextInput
+                style={styles.inputText}
+                onChangeText={(value) => setLastname(value)}
+                value={lastname}
+                placeholder="Nom"
+                placeholderTextColor="grey"
+                autoCapitalize="none"
+              />
+            </View>
+
+            <View style={styles.input}>
+              <Ionicons name="person" size={20} color="#555" />
+              <TextInput
+                style={styles.inputText}
+                onChangeText={(value) => setFirstname(value)}
+                value={firstname}
+                placeholder="Prénom"
+                placeholderTextColor="grey"
+                autoCapitalize="none"
+              />
+            </View>
+            <View style={styles.input}>
+              <Ionicons name="mail" size={20} color="#555" />
+              <TextInput
+                style={styles.inputText}
+                onChangeText={(value) => setEmail(value)}
+                value={email}
+                placeholder="E-mail"
+                placeholderTextColor="grey"
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+            </View>
+            <View style={styles.input}>
+              <Ionicons name="lock-closed" size={20} color="#555" />
+              <TextInput
+                style={styles.inputText}
+                onChangeText={(value) => setPassword(value)}
+                value={password}
+                placeholder="Mot de passe"
+                placeholderTextColor="grey"
+                secureTextEntry
+              />
+            </View>
+            <View style={styles.input}>
+              <Ionicons name="business" size={20} color="#555" />
+              <TextInput
+                style={styles.inputText}
+                onChangeText={(value) => setCity(value)}
+                value={city}
+                placeholder="Ville"
+                placeholderTextColor="grey"
+                autoCapitalize="none"
+              />
+            </View>
+
+            <Pressable style={styles.input} onPress={showDatePicker}>
+              <Ionicons name="calendar" size={20} color="#333" />
+              <Text style={styles.inputText}>Date de Naissance</Text>
+            </Pressable>
+
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
             />
           </View>
 
-          <View style={styles.inputDate}>
-            <Ionicons name="person" size={20} color="#555" />
-            <TextInput
-              style={styles.dateText}
-              onChangeText={(value) => setFirstname(value)}
-              value={firstname}
-              placeholder="Prénom"
-              placeholderTextColor="grey"
-              autoCapitalize="none"
-            />
-          </View>
-          <View style={styles.inputDate}>
-            <Ionicons name="mail" size={20} color="#555" />
-            <TextInput
-              style={styles.dateText}
-              onChangeText={(value) => setEmail(value)}
-              value={email}
-              placeholder="E-mail"
-              placeholderTextColor="grey"
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-          </View>
-          <View style={styles.inputDate}>
-            <Ionicons name="lock-closed" size={20} color="#555" />
-            <TextInput
-              style={styles.dateText}
-              onChangeText={(value) => setPassword(value)}
-              value={password}
-              placeholder="Mot de passe"
-              placeholderTextColor="grey"
-              secureTextEntry
-            />
-          </View>
-          <View style={styles.inputDate}>
-            <Ionicons name="business" size={20} color="#555" />
-            <TextInput
-            style={styles.dateText}
-            onChangeText={(value) => setCity(value)}
-            value={city}
-            placeholder="Ville"
-            placeholderTextColor="grey"
-            autoCapitalize="none"
-          />
-          </View>
-          
-          <Pressable style={styles.inputDate} onPress={showDatePicker}>
-            <Ionicons name="calendar" size={20} color="#333" />
-            <Text style={styles.dateText}>Date de Naissance</Text>
-          </Pressable>
-          
-          <DateTimePickerModal
-            isVisible={isDatePickerVisible}
-            mode="date"
-            onConfirm={handleConfirm}
-            onCancel={hideDatePicker}
-          />
-          </View>
-          
           <Text style={styles.titleCheckbox}>Vous souhaitez :</Text>
           <View style={styles.checkboxContainer}>
             <View style={styles.checkbox}>
@@ -240,7 +242,9 @@ export default function SignUpScreenUser({ navigation }) {
           <TouchableOpacity
             style={styles.signUpButton}
             activeOpacity={0.8}
-            onPress={() => handleConnexion()}>
+            onPress={() => navigation.navigate('SignUpAnimal')}
+            // onPress={() => handleConnexion()}
+          >
             <Text style={styles.buttonText}>Confirmer</Text>
           </TouchableOpacity>
         </View>
@@ -263,11 +267,12 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   topMid: {
-    alignItems: 'center',
+    alignItems: 'center'
   },
   topText: {
     fontSize: 25,
-    fontWeight: 'bold'
+    fontFamily: 'Montserrat-Bold',
+    color: '#33464d'
   },
   logo: {
     width: 85,
@@ -281,11 +286,12 @@ const styles = StyleSheet.create({
   imagePicker: {
     borderRadius: 50,
     borderWidth: 2,
+    borderColor: '#33464d',
     width: 100,
     height: 100,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: -30,
+    marginBottom: -30
   },
   image: {
     borderRadius: 50,
@@ -296,10 +302,10 @@ const styles = StyleSheet.create({
     width: '95%',
     padding: 10,
     paddingLeft: 20,
-    marginTop: 20, 
+    marginTop: 20,
     alignItems: 'center'
   },
-  inputDate: {
+  input: {
     borderRadius: 10,
     borderBottomWidth: 1.5,
     width: '80%',
@@ -308,17 +314,18 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    borderColor: '#444'
+    borderColor: '#33464d'
   },
-  dateText: {
+  inputText: {
     fontSize: 18,
     paddingLeft: 10,
-    color: '#444'
+    color: '#5a7869'
   },
   titleCheckbox: {
     fontSize: 20,
-    fontWeight: 'bold',
-    paddingVertical: 20
+    fontFamily: 'Montserrat-Bold',
+    paddingVertical: 20,
+    color: '#33464d'
   },
   checkboxContainer: {
     display: 'flex',
@@ -338,11 +345,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1.5,
     backgroundColor: '#efefef',
-    borderColor: '#ccc'
+    borderColor: '#33464d'
   },
   label: {
     fontSize: 18,
-    fontWeight: '500'
+    fontFamily: 'Montserrat-Bold',
+    color: '#33464d'
   },
   signUpButton: {
     backgroundColor: '#8FD14F',
