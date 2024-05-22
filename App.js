@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -90,6 +90,8 @@ export default function App() {
     'Montserrat-Thin': require('./assets/fonts/Montserrat/Montserrat-Thin.ttf'),
     'Montserrat-ThinItalic': require('./assets/fonts/Montserrat/Montserrat-ThinItalic.ttf')
   });
+
+  
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {
