@@ -13,7 +13,7 @@ const ageData = [
 
 const durationData = [
   { label: "moins d'une semaine", value: 1 },
-  { label: "une semaine à deux semaines", value: 2 },
+  { label: "une à deux semaines", value: 2 },
   { label: "deux à trois semaines", value: 3 },
   { label: "plus de trois semaines", value: 4 },
 ];
@@ -62,7 +62,7 @@ const FiltersScreen = ({ navigation }) => {
           labelField="label"
           valueField="value"
           value={ageValue}
-          onChange={item => setAgeValue(item.value)}
+          onChange={item => setDurationValue(item.value)}
           placeholder="rechercher un age minimum"
           activeColor='#2196f3'
           selectedTextStyle={styles.selectedTextStyle}

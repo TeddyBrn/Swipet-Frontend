@@ -156,11 +156,11 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   profileImage: {
-    // Adapter la hauteur à un pourcentage de la hauteur de l'écran
-    width: '95%',
+    // Adapter la hauteur et la largeur à un pourcentage de la hauteur de l'écran
+    width: width * 0.95,
     height: height * 0.4,
     borderRadius: 15,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
   },
   ratingContainer: {
     flexDirection: 'row',
