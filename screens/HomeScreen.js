@@ -52,10 +52,10 @@ const styles = StyleSheet.create({
     resizeMode: 'contain' //https://reactnative.dev/docs/image-style-props#resizemode
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
+    fontSize: 30,
     marginBottom: 100,
-    marginTop: 50
+    marginTop: 50,
+    fontFamily: 'PoetsenOne-Regular'
   },
   button: {
     backgroundColor: '#5BBDF4',
@@ -70,8 +70,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#488fb5',
     fontSize: 25,
-    fontWeight: 'bold',
-    letterSpacing: 3
+    fontFamily: 'Montserrat-Bold'
   },
   signInButton: {
     backgroundColor: '#ffffff',
