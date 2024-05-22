@@ -4,8 +4,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { profilData } from '../data/profils';
 import { useEffect } from 'react';
+import { useDispatch, useSelector} from 'react-redux';
+import { addLike } from '../reducers/users';
 
 export default function ProfileCard({ navigation }) {
+const dispatch = useDispatch();
+const user = useSelector((state)=> state.users.value)
+const addAlike = () => dispatch(addLike(profilData[count]._id))
+
   const [count, setCount] = useState(0);
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
@@ -28,7 +34,11 @@ export default function ProfileCard({ navigation }) {
     setBio(profilData[count].bio);
     setImg(profilData[count].url);
     setNote(profilData[count].avis[0].note);
+    addAlike();
+    
+
   };
+  console.log(user.like)
 
   const handleDislike = () => {
     setCount(count + 1);
@@ -37,6 +47,8 @@ export default function ProfileCard({ navigation }) {
     setBio(profilData[count].bio);
     setImg(profilData[count].url);
     setNote(profilData[count].avis[0].note);
+    
+    
   };
 
   return (

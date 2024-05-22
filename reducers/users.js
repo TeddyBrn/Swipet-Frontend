@@ -40,9 +40,12 @@ const userSlice = createSlice({
   ,
   addAnimal: (state, action) => {
     state.value.profilAnimal.push(action.payload)
+  }  ,
+  addLike: (state, action) => {
+    state.value.like.push(action.payload);
   }
   }
 });
 
-export const { login, logout, addAnimal } = userSlice.actions;
+export const { login, logout, addAnimal, addLike } = userSlice.actions;
 export default userSlice.reducer;
