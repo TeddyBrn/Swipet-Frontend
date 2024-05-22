@@ -14,20 +14,17 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
 import { login } from '../reducers/users';
 
-
-
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export default function SignInScreen({ navigation }) {
   const [signInEmail, setSignInEmail] = useState('');
   const [emailError, setEmailError] = useState(false);
   const [signInPassword, setSignInPassword] = useState('');
-  
-  
+
   const dispatch = useDispatch();
- const url1 = "http://192.168.1.30:3000/profils/signin"
- const url2 = "http://192.168.1.27:8081/profils/signin"
- 
+  const url1 = 'http://192.168.1.30:3000/profils/signin';
+  const url2 = 'http://192.168.1.27:8081/profils/signin';
+
   const handleConnection = () => {
     fetch(url2, {
       method: 'POST',
@@ -65,33 +62,42 @@ export default function SignInScreen({ navigation }) {
       style={styles.container}>
       <View style={styles.backContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={60} color="#E06359" />
+          <Ionicons name="chevron-back" size={60} color="#33464d" />
         </TouchableOpacity>
       </View>
       <View style={styles.logoContainer}>
         <Image source={require('../assets/logo.jpg')} style={styles.logo} />
       </View>
       <View style={styles.inputContainer}>
-        {emailError && <Text style={styles.error}>Invalid email address or password</Text>}
-        <TextInput
-          style={styles.input}
-          onChangeText={(value) => setSignInEmail(value)}
-          value={signInEmail}
-          placeholder="E-mail"
-          placeholderTextColor="grey"
-          keyboardType="email-address"
-          autoComplete="email"
-          textContentType="emailAddress"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={(value) => setSignInPassword(value)}
-          value={signInPassword}
-          placeholder="Mot de passe"
-          placeholderTextColor="grey"
-          secureTextEntry
-        />
+        {emailError && (
+          <Text style={styles.error}>Invalid email address or password</Text>
+        )}
+
+        <View style={styles.input}>
+          <Ionicons name="mail" size={20} color="#555" />
+          <TextInput
+            style={styles.inputText}
+            onChangeText={(value) => setSignInEmail(value)}
+            value={signInEmail}
+            placeholder="E-mail"
+            placeholderTextColor="grey"
+            keyboardType="email-address"
+            autoComplete="email"
+            textContentType="emailAddress"
+            autoCapitalize="none"
+          />
+        </View>
+        <View style={styles.input}>
+          <Ionicons name="lock-closed" size={20} color="#555" />
+          <TextInput
+            style={styles.inputText}
+            onChangeText={(value) => setSignInPassword(value)}
+            value={signInPassword}
+            placeholder="Mot de passe"
+            placeholderTextColor="grey"
+            secureTextEntry
+          />
+        </View>
         <TouchableOpacity
           style={styles.signInButton}
           activeOpacity={0.8}
@@ -135,15 +141,20 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   input: {
-    borderRadius: 15,
-    width: '100%',
+    borderRadius: 10,
+    borderBottomWidth: 1.5,
+    width: '80%',
     padding: 10,
     marginVertical: 10,
-    marginBottom: 30,
-    borderWidth: 2,
-    paddingLeft: 20
-
-    // fontFamily: 'Montserrat',
+    paddingLeft: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#33464d'
+  },
+  inputText: {
+    fontSize: 18,
+    paddingLeft: 10,
+    color: '#5a7869'
   },
   signInButton: {
     backgroundColor: '#8FD14F',
@@ -161,8 +172,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   error: {
-    color: '#e23636',
-  },
+    color: '#e23636'
+  }
 });
 
 /*
