@@ -256,3 +256,30 @@ const styles = StyleSheet.create({
     elevation: 40
   }
 });
+
+
+/*
+const swiperRef = useRef(null);
+
+  const handleSwipeLeft = () => {
+    if (swiperRef.current) {
+      swiperRef.current.swipeLeft();
+    }
+  };
+
+  const handleSwipeRight = () => {
+    if (swiperRef.current) {
+      swiperRef.current.swipeRight();
+    }
+  };
+
+<Swiper ref={swiperRef}   />
+        
+
+ <TouchableOpacity style={styles.button} onPress={handleSwipeLeft}>
+          <Text>Swipe Left</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleSwipeRight}>
+          <Text>Swipe Right</Text>
+        </TouchableOpacity>
+*/
