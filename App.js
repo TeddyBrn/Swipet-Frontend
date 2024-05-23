@@ -86,7 +86,17 @@ export default function App() {
     'Montserrat-SemiBold': require('./assets/fonts/Montserrat/Montserrat-SemiBold.ttf'),
     'Montserrat-SemiBoldItalic': require('./assets/fonts/Montserrat/Montserrat-SemiBoldItalic.ttf'),
     'Montserrat-Thin': require('./assets/fonts/Montserrat/Montserrat-Thin.ttf'),
-    'Montserrat-ThinItalic': require('./assets/fonts/Montserrat/Montserrat-ThinItalic.ttf')
+    'Montserrat-ThinItalic': require('./assets/fonts/Montserrat/Montserrat-ThinItalic.ttf'),
+    'Quicksand-Bold': require('./assets/fonts/Quicksand/Quicksand-Bold.ttf'),
+    'Quicksand-Light': require('./assets/fonts/Quicksand/Quicksand-Light.ttf'),
+    'Quicksand-Medium': require('./assets/fonts/Quicksand/Quicksand-Medium.ttf'),
+    'Quicksand-Regular': require('./assets/fonts/Quicksand/Quicksand-Regular.ttf'),
+    'Quicksand-SemiBold': require('./assets/fonts/Quicksand/Quicksand-SemiBold.ttf'),
+
+
+
+
+
   });
     
     if (!fontsLoaded) {
