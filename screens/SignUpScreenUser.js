@@ -331,6 +331,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingLeft: 10,
     color: '#5a7869',
+    width:'90%'
+
   },
   titleCheckbox: {
     fontSize: 20,
@@ -364,17 +366,17 @@ const styles = StyleSheet.create({
     color: '#33464d'
   },
   signUpButton: {
-    backgroundColor: '#8FD14F',
+    backgroundColor: '#5a7869',
+    borderColor: "#33464d", 
+    width: '55%',
     paddingVertical: 10,
-    paddingHorizontal: 30,
-    borderRadius: 10,
-    marginTop: 20,
-    borderWidth: 2,
-    borderColor: '#73A246'
+    alignItems: 'center',
+    borderRadius: 5,
+    borderWidth: 1.5
   },
   buttonText: {
     color: '#fff',
-    fontSize: 19,
-    fontWeight: 'bold'
+    fontSize: 23,
+    fontFamily: 'Montserrat-Bold'
   }
 });
