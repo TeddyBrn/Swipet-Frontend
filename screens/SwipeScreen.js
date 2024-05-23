@@ -58,6 +58,7 @@ export default function ProfileCard({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.i}>
       <View style={styles.header}>
         <Image source={require('../assets/miniLogo.png')} style={styles.logo} />
         <View style={styles.headerR}>
@@ -75,7 +76,6 @@ export default function ProfileCard({ navigation }) {
       </View>
       <View style={styles.main}>
         <Swiper
-          
           cards={profilData} // Les données des profils à swiper
           renderCard={(card) => {
             return (
@@ -126,7 +126,7 @@ export default function ProfileCard({ navigation }) {
           stackSize={4} // Nombre de cartes empilées en arrière-plan
         />
       </View>
-
+      </View>
     </SafeAreaView>
   );
 }
@@ -137,6 +137,10 @@ const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  i: {
+    flex: 1,
+    backgroundColor: '#d5e8de'
   },
   header: {
     flexDirection: 'row',
@@ -188,7 +192,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 20.0,
-    elevation: 20
+    elevation: 10
   },
   profileImage: {
     // Adapter la hauteur et la largeur à un pourcentage de la hauteur de l'écran
