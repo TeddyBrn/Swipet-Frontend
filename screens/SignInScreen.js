@@ -27,7 +27,7 @@ export default function SignInScreen({ navigation }) {
   const url42 = 'http://192.168.1.40:8081/profils/signin';
 
   const handleConnection = () => {
-    fetch(url42, {
+    fetch(url1, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -102,8 +102,8 @@ export default function SignInScreen({ navigation }) {
         <TouchableOpacity
           style={styles.signInButton}
           activeOpacity={0.8}
-          // onPress={() => handleConnection()}
-          onPress={() => navigation.navigate('TabNavigator', { screen: 'Swipe' })}
+          onPress={() => handleConnection()}
+          // onPress={() => navigation.navigate('TabNavigator', { screen: 'Swipe' })}
           >
           <Text style={styles.buttonText}>Connexion</Text>
         </TouchableOpacity>
