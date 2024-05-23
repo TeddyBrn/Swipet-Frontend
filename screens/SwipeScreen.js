@@ -86,10 +86,10 @@ export default function ProfileCard({ navigation }) {
         <View style={styles.actionButtons}>
           
           <TouchableOpacity style={styles.buttonSwipe} activeOpacity={0.7} onPress={handleDislike}>
-            <Ionicons  name="close-outline" size={70} color="#f74c4f" />
+            <Ionicons  name="close-outline" size={65} color="#f74c4f" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonSwipe} activeOpacity={0.7} onPress={handleLike}>
-            <Ionicons  name="heart" size={55} color="#00f99e" />
+            <Ionicons  name="heart" size={50} color="#00f99e" />
           </TouchableOpacity>
         </View>
       </View>
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 20.0,
-    elevation: 5,
+    elevation: 10,
   },
   profileImage: {
     // Adapter la hauteur et la largeur à un pourcentage de la hauteur de l'écran
@@ -214,12 +214,20 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonSwipe: {
-    backgroundColor: '#111',
+    backgroundColor: '#fff',
     borderRadius: 50,
-    height: 65,
-    width: 65,
+    height: 70,
+    width: 70,
     alignItems: 'center',
-    justifyContent:"center"
+    justifyContent:"center",
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 18,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 20.0,
+    elevation: 40,
   },
 });
 
