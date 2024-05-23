@@ -53,10 +53,10 @@ const TabNavigator = () => {
         },
         tabBarActiveTintColor: '#5a7869',
         tabBarInactiveTintColor: '#33464d',
-        tabBarActiveBackgroundColor: '#e0dfe2',
-        tabBarInactiveBackgroundColor: '#e0dfe2',
+        tabBarActiveBackgroundColor: '#fff',
+        tabBarInactiveBackgroundColor: '#fff',
         tabBarShowLabel: false,
-        tabBarStyle: { height: 70 },
+        tabBarStyle: { height: 70, },
         headerShown: false
       })}>
       <Tab.Screen name="Filtres" component={FilterScreen} />
@@ -92,7 +92,6 @@ export default function App() {
     if (!fontsLoaded) {
     return null;
     }
-
 
   return (
     <Provider store={store}>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text,  TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { Image } from 'expo-image';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +18,7 @@ export default function ProfileCard({ navigation }) {
   const [bio, setBio] = useState('');
   const [img, setImg] = useState('');
   const [note, setNote] = useState(0);
+  console.log(img)
 
   useEffect(() => {
     setName(profilData[0].firstname);
@@ -32,6 +34,7 @@ export default function ProfileCard({ navigation }) {
     setAge(profilData[count].age);
     setBio(profilData[count].bio);
     setImg(profilData[count].url);
+    setNote(profilData[count].avis[0].note);
     addAlike();
   };
   console.log(user.like)
@@ -63,7 +66,7 @@ export default function ProfileCard({ navigation }) {
       </View>
       <View style={styles.main}>
         <View style={styles.profileContainer}>
-          <Image source={img} style={styles.profileImage} />
+          <Image style={styles.profileImage} source={img}  />
           <View style={styles.ratingContainer}>
             <Text style={styles.profileNote}>{note}/5</Text>
             {Array(Math.round(note))
@@ -81,11 +84,12 @@ export default function ProfileCard({ navigation }) {
           </View>
         </View>
         <View style={styles.actionButtons}>
-          <TouchableOpacity activeOpacity={0.7} onPress={handleDislike}>
-            <Ionicons name="close-circle-outline" size={80} color="#CD4F4F" />
+          
+          <TouchableOpacity style={styles.buttonSwipe} activeOpacity={0.7} onPress={handleDislike}>
+            <Ionicons  name="close-outline" size={65} color="#f74c4f" />
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.7} onPress={handleLike}>
-            <Ionicons name="checkmark-circle-outline" size={80} color="#8FD14F" />
+          <TouchableOpacity style={styles.buttonSwipe} activeOpacity={0.7} onPress={handleLike}>
+            <Ionicons  name="heart" size={50} color="#00f99e" />
           </TouchableOpacity>
         </View>
       </View>
@@ -133,14 +137,15 @@ const styles = StyleSheet.create({
   },
   main: {
     width: '100%',
-    height: '100%',
+    height: '91%',
     alignItems: 'center',
+    justifyContent:"space-around"
   },
   profileContainer: {
     // Adapter la hauteur à un pourcentage de la hauteur de l'écran
-    height: height * 0.69,
+    height: height * 0.70,
     // Adapter la largeur à un pourcentage de la largeur de l'écran
-    width: width * 0.9,
+    width: width * 0.93,
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: '#EAEAEA',
@@ -153,7 +158,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 20.0,
-    elevation: 5,
+    elevation: 10,
   },
   profileImage: {
     // Adapter la hauteur et la largeur à un pourcentage de la hauteur de l'écran
@@ -208,34 +213,22 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 10,
   },
+  buttonSwipe: {
+    backgroundColor: '#fff',
+    borderRadius: 50,
+    height: 70,
+    width: 70,
+    alignItems: 'center',
+    justifyContent:"center",
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 18,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 20.0,
+    elevation: 40,
+  },
 });
 
 
-
-/*
-Dans dossier assets
-logo.jpg
-bell.png
-home.png
-profile.png
-settings.png
-conversation.png
-filter.png
-star.png
-
-Dans app.tsx 
-import SwipeScreen from './screens/SwipeScreen';
-
-...
-
-<Stack.Screen name="TabNavigator" component={TabNavigator} />
-
-...
-ou  <Tab.Screen name="SwipeScreen" component={SwipeScreen} />
-
-
-
-
-
-
-*/

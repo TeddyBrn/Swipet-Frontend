@@ -150,36 +150,36 @@ export default function SignUpScreenUser({ navigation }) {
             ) : (
               <Image
                 source={require('../assets/add-image.png')}
-                style={{ width: 60, height: 60, color: '#555' }}
+                style={{ width: 60, height: 60, color: '#33464d' }}
               />
             )}
           </TouchableOpacity>
           <View style={styles.inputContain}>
             <View style={styles.input}>
-              <Ionicons name="person" size={20} color="#555" />
+              <Ionicons name="person" size={20} color="#33464d" />
               <TextInput
                 style={styles.inputText}
                 onChangeText={(value) => setLastname(value)}
                 value={lastname}
                 placeholder="Nom"
-                placeholderTextColor="grey"
+                placeholderTextColor="#5a7869"
                 autoCapitalize="none"
               />
             </View>
             
             <View style={styles.input}>
-              <Ionicons name="person" size={20} color="#555" />
+              <Ionicons name="person" size={20} color="#33464d" />
               <TextInput
                 style={styles.inputText}
                 onChangeText={(value) => setFirstname(value)}
                 value={firstname}
                 placeholder="Prénom"
-                placeholderTextColor="grey"
+                placeholderTextColor="#5a7869"
                 autoCapitalize="none"
               />
             </View>
             <Pressable style={styles.input} onPress={showDatePicker}>
-              <Ionicons name="calendar" size={20} color="#333" />
+              <Ionicons name="calendar" size={20} color="#33464d" />
               <Text style={styles.inputText}>Date de Naissance {birthDate && 'birthDate'}</Text>
             </Pressable>
 
@@ -190,36 +190,36 @@ export default function SignUpScreenUser({ navigation }) {
               onCancel={hideDatePicker}
             />
             <View style={styles.input}>
-              <Ionicons name="mail" size={20} color="#555" />
+              <Ionicons name="mail" size={20} color="#33464d" />
               <TextInput
                 style={styles.inputText}
                 onChangeText={(value) => setEmail(value)}
                 value={email}
                 placeholder="E-mail"
-                placeholderTextColor="grey"
+                placeholderTextColor="#5a7869"
                 keyboardType="email-address"
                 autoCapitalize="none"
               />
             </View>
             <View style={styles.input}>
-              <Ionicons name="lock-closed" size={20} color="#555" />
+              <Ionicons name="lock-closed" size={20} color="#33464d" />
               <TextInput
                 style={styles.inputText}
                 onChangeText={(value) => setPassword(value)}
                 value={password}
                 placeholder="Mot de passe"
-                placeholderTextColor="grey"
+                placeholderTextColor="#5a7869"
                 secureTextEntry
               />
             </View>
             <View style={styles.input}>
-              <Ionicons name="business" size={20} color="#555" />
+              <Ionicons name="business" size={20} color="#33464d" />
               <TextInput
                 style={styles.inputText}
                 onChangeText={(value) => setCity(value)}
                 value={city}
                 placeholder="Ville"
-                placeholderTextColor="grey"
+                placeholderTextColor="#5a7869"
                 autoCapitalize="none"
               />
             </View>
@@ -250,8 +250,8 @@ export default function SignUpScreenUser({ navigation }) {
           <TouchableOpacity
             style={styles.signUpButton}
             activeOpacity={0.8}
-            // onPress={() => navigation.navigate('SignUpAnimal')}
-            onPress={() => handleConnexion()}
+            onPress={() => navigation.navigate('SignUpAnimal')}
+            // onPress={() => handleConnexion()}
           >
             <Text style={styles.buttonText}>Confirmer</Text>
           </TouchableOpacity>
@@ -276,7 +276,8 @@ const styles = StyleSheet.create({
     
   },
   topMid: {
-    alignItems: 'center'
+    alignItems: 'center',
+    
   },
   topText: {
     fontSize: 25,
@@ -290,7 +291,8 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    
   },
   imagePicker: {
     borderRadius: 50,
@@ -328,7 +330,7 @@ const styles = StyleSheet.create({
   inputText: {
     fontSize: 18,
     paddingLeft: 10,
-    color: '#5a7869'
+    color: '#5a7869',
   },
   titleCheckbox: {
     fontSize: 20,
@@ -353,8 +355,8 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 5,
     borderWidth: 1.5,
-    backgroundColor: '#efefef',
-    borderColor: '#33464d'
+    backgroundColor: '#fff',
+    borderColor: '#dfdfe1'
   },
   label: {
     fontSize: 18,
