@@ -157,7 +157,8 @@ const styles = StyleSheet.create({
   inputText: {
     fontSize: 18,
     paddingLeft: 10,
-    color: '#5a7869'
+    color: '#5a7869',
+    width: '90%',
   },
   signInButton: {
     backgroundColor: '#5a7869',
