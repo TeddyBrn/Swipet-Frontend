@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: 'center',
     borderRadius: 8,
-    marginTop: 200
+    marginTop: 150
   },
   logoutButtonText: {
     fontSize: 25,
