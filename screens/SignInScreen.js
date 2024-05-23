@@ -27,7 +27,7 @@ export default function SignInScreen({ navigation }) {
   const url42 = 'http://192.168.1.40:8081/profils/signin';
 
   const handleConnection = () => {
-    fetch(url1, {
+    fetch(url2, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

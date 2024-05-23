@@ -3172,7 +3172,7 @@ expo-image-picker@^15.0.5:
   dependencies:
     expo-image-loader "~4.7.0"
 
-expo-image@^1.12.9:
+expo-image@~1.12.9:
   version "1.12.9"
   resolved "https://registry.yarnpkg.com/expo-image/-/expo-image-1.12.9.tgz#b6354ab1dcff65df596399a538e6985c44aacc0b"
   integrity sha512-WnC3Z3vsOTJLWE9FGB0a0GANmkpfBCqTf9bSLXXl50hEYiRcfwrAYZ/87oswAhggMGbJqOuLKZxt5rtuij1xcQ==
