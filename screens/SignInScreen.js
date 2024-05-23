@@ -102,7 +102,9 @@ export default function SignInScreen({ navigation }) {
         <TouchableOpacity
           style={styles.signInButton}
           activeOpacity={0.8}
-          onPress={() => handleConnection()}>
+          onPress={() => handleConnection()}
+          // onPress={() => navigation.navigate('TabNavigator', { screen: 'Swipe' })}
+          >
           <Text style={styles.buttonText}>Connexion</Text>
         </TouchableOpacity>
       </View>

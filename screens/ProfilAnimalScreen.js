@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import {
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    View,
-    TextInput,
-    TouchableOpacity,
-    Text,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -23,19 +23,22 @@ export default function ProfilAnimalScreen({ navigation }) {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
+  console.log(user)
 
-    const [name, setName] = useState('');
-    const [detail, setDetail] = useState('');
+    const [name, setName] = useState(user.profilAnimal.name);
+    const [detail, setDetail] = useState(user.profilAnimal.detail);
     const [type, setType] = useState('');
     const [genre, setGenre] = useState('');
-    const [bio, setBio] = useState('');
+    const [bio, setBio] = useState(user.profilAnimal.bio);
 
-    const gender = ['Male', 'Female','Non Binaire'];
-  const typeAnimal = ['chien', 'chat']
+
+
+  const gender = ['Male', 'Female', 'Non Binaire'];
+  const typeAnimal = ['chien', 'chat'];
 
   const handleChange = () => {
 
-    fetch(`http://192.168.1.30:3000/settings/editanimal/${user.token}/${user.profilAnimal[0]._id}`, {
+    fetch(`http://192.168.233.47:3000/settings/editanimal/${user.token}/${user.profilAnimal._id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -57,22 +60,27 @@ export default function ProfilAnimalScreen({ navigation }) {
         navigation.goBack();
     };
 
-    return (
-        <SafeAreaView style={styles.container}>
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-            <View style={styles.topContainer}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="arrow-back" size={60} color="#E06359" />
+    // return (
+    //     <SafeAreaView style={styles.container}>
+    //     <KeyboardAvoidingView
+    //         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+    //         <View style={styles.topContainer}>
+    //       <TouchableOpacity onPress={() => navigation.goBack()}>
+    //         <Ionicons name="arrow-back" size={60} color="#E06359" />
+  return (
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <View style={styles.topContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.back}>
+            <Ionicons name="chevron-back" size={60} color="#33464d" />
           </TouchableOpacity>
           <View style={styles.topMid}>
-            <Text style={styles.topText}>Profil</Text>
-            <Text style={styles.topText}>Animal</Text>
+            <Text style={styles.topText}>Profil Animal</Text>
           </View>
-          <Image
-            source={require('../assets/miniLogo.png')}
-            style={styles.logo}
-          />
+          <View style={{ width: 80 }}></View>
         </View>
             <View style={styles.inputContainer}>
                 <TextInput
@@ -157,7 +165,7 @@ export default function ProfilAnimalScreen({ navigation }) {
                     autoCapitalize="none"
                 />
                 <TouchableOpacity style={styles.signupButton} activeOpacity={0.8}
-                    onPress={() => navigation.navigate("TabNavigator")}
+                    onPress={() => handleChange()}
                 >
                     <Text style={styles.connexionButtonText}>Confirmer</Text>
                 </TouchableOpacity>
@@ -165,128 +173,43 @@ export default function ProfilAnimalScreen({ navigation }) {
         </KeyboardAvoidingView>
         </SafeAreaView>
     );
+  //     </KeyboardAvoidingView>
+  //   </SafeAreaView>
+  // );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#ffffff',
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#fff'
+  },
+  topContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+    backgroundColor: '#fff',
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 18,
     },
-    topContainer: {
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        marginBottom: 30
-      },
-      topMid: {
-        alignItems: 'center'
-      },
-      topText: {
-        fontSize: 25,
-        fontWeight: 'bold'
-      },
-      logo: {
-        width: 85,
-        height: 85,
-        resizeMode: 'contain'
-      },
-      dropdownButtonStyle: {
-        width: '90%',
-        height: 50,
-        borderWidth: 1.3,
-        borderRadius: 15,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 30,
-        paddingHorizontal: 12
-      },
-      dropdownButtonTxtStyle: {
-        flex: 1,
-        fontSize: 18,
-        fontWeight: '500',
-        color: '#57606f'
-      },
-      dropdownButtonArrowStyle: {
-        fontSize: 28
-      },
-      dropdownMenuStyle: {
-        backgroundColor: '#eee',
-        borderRadius: 8
-      },
-      dropdownItemStyle: {
-        width: '100%',
-        flexDirection: 'row',
-        paddingHorizontal: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingVertical: 8
-      },
-      dropdownItemTxtStyle: {
-        flex: 1,
-        fontSize: 18,
-        fontWeight: '500',
-        color: '#151E26'
-      },
-    signupButton: {
-        backgroundColor: '#8FD14F',
-        paddingVertical: 10,
-        paddingHorizontal: 50,
-        borderRadius: 20,
-        marginTop: 10,
-        borderWidth: 2,
-        borderColor: '#73A246',
-        alignItems: 'flex-end',
-
-    },
-    connexionButtonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'right',
-    },
-    inputContainer: {
-        width: '80%',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-    },
-    input: {
-        borderRadius: 20,
-        borderWidth: 1.5,
-        width: '100%',
-        padding: 10,
-        marginVertical: 10,
-        marginBottom: 20,
-        borderWidth: 2,
-        // fontFamily: 'Montserrat',
-    },
-    inputBio: {
-        borderRadius: 20,
-        borderWidth: 1.5,
-        width: '100%',
-        height: 150,
-        
-        marginVertical: 10,
-        marginBottom: 20,
-        borderWidth: 2,
-    },
-    checkboxContainer : {
-        display: 'flex',
-        flexDirection: 'row',
-        width: '80%',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-    },
-    checkbox: {
-        display: 'flex',
-        flexDirection: 'row',
-        width: 100,
-        height: 60,
-        borderRadius: 10,
-        padding: 10,
-        borderWidth: 2,
-        // fontFamily: 'Montserrat',
-    },
-})
+    shadowOpacity: 0.25,
+    shadowRadius: 20.0,
+    elevation: 20,
+  },
+  back: {
+    width: 80,
+    alignItems: 'center'
+  },
+  topMid: {
+    alignItems: 'center'
+  },
+  topText: {
+    fontSize: 25,
+    fontFamily: 'Montserrat-Bold',
+    color: '#33464d'
+  }
+});

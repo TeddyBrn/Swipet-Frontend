@@ -284,7 +284,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginBottom: 30
+    marginBottom: 30,
+    
   },
   topMid: {
     alignItems: 'center'
