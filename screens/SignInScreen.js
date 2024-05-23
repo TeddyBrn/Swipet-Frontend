@@ -23,7 +23,7 @@ export default function SignInScreen({ navigation }) {
 
   const dispatch = useDispatch();
   const url1 = 'http://192.168.1.30:3000/profils/signin';
-  const url2 = 'http://192.168.1.27:8081/profils/signin';
+  const url2 = 'http://192.168.1.27:3000/profils/signin';
   const url42 = 'http://192.168.1.40:8081/profils/signin';
 
   const handleConnection = () => {
