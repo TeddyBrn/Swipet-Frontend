@@ -1,10 +1,15 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../reducers/users';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SettingsScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.users.value);
+ console.log(`user.token => ${user.token}`)
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -54,7 +59,7 @@ const SettingsScreen = ({ navigation }) => {
             <Text style={[styles.buttonText, styles.color]}>Voir Profil</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.logoutButton}>
+          <TouchableOpacity style={styles.logoutButton} onPress={() =>  {dispatch(logout()); navigation.navigate('Home')} }>
             <Text style={styles.logoutButtonText}>Déconnexion</Text>
           </TouchableOpacity>
         </View>
@@ -145,3 +150,11 @@ const styles = StyleSheet.create({
 });
 
 export default SettingsScreen;
+
+
+/* 
+
+
+onPress={() => {  dispatch(logout()); }
+
+*/

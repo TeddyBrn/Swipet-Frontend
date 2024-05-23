@@ -30,7 +30,15 @@ const userSlice = createSlice({
     },
     logout: (state) => {
       state.value.token = null;
-      state.value.username = null;
+      state.value.email = null;
+      state.value.firstname = null;
+      state.value.lastname = null;
+      state.value.city = null;
+      state.value.role = null;
+      state.value.profilAnimal = [];
+      state.value.avis = [];
+      state.value.like = [];
+      state.value.likeReceived = [];
     }
   ,
   addAnimal: (state, action) => {
