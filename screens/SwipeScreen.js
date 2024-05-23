@@ -240,6 +240,37 @@ const styles = StyleSheet.create({
 
 
 /*
+déclencher un swipe avec un boutton
+
+const swiperRef = useRef(null);
+
+  const handleSwipeLeft = () => {
+    if (swiperRef.current) {
+      swiperRef.current.swipeLeft();
+    }
+  };
+
+  const handleSwipeRight = () => {
+    if (swiperRef.current) {
+      swiperRef.current.swipeRight();
+    }
+  };
+  
+<Swiper ref={swiperRef} ... />
+        
+
+
+<TouchableOpacity style={styles.button} onPress={handleSwipeLeft}>
+          <Text>Swipe Left</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleSwipeRight}>
+          <Text>Swipe Right</Text>
+        </TouchableOpacity>
+
+
+*/
+
+/*
 code précédent
 
 import React, { useState, useEffect } from 'react';
