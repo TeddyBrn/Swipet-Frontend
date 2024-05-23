@@ -14,44 +14,51 @@ const SettingsScreen = ({ navigation }) => {
         <View style={styles.topMid}>
           <Text style={styles.topText}>Paramètres</Text>
         </View>
-        <View style={{width: 60}}></View>
+        <View style={{ width: 60 }}></View>
       </View>
-      <TouchableOpacity
-        style={styles.button}
-        activeOpacity={0.8}
-        onPress={() => navigation.navigate('Profil')}>
-        <Text style={styles.buttonText}>Profil</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        activeOpacity={0.8}
-        onPress={() => navigation.navigate('ProfilAnimal')}>
-        <Text style={styles.buttonText}>Profil Animal</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        activeOpacity={0.8}
-        onPress={() => navigation.navigate('Historique')}>
-        <Text style={styles.buttonText}>Historique</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        activeOpacity={0.8}
-        onPress={() => navigation.navigate('Payment')}>
-        <Text style={styles.buttonText}>Moyen De Paiement</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        activeOpacity={0.8}
-        onPress={() => navigation.navigate('Avis')}>
-        <Text style={styles.buttonText}>Avis</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={[styles.button, styles.viewButton]}>
-        <Text style={[styles.buttonText, styles.color]}>Voir Profil</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.logoutButton}>
-        <Text style={styles.logoutButtonText}>Déconnexion</Text>
-      </TouchableOpacity>
+      <View style={styles.btn}>
+        <View style={styles.inputContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('Profil')}>
+            <Text style={styles.buttonText}>Profil</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('ProfilAnimal')}>
+            <Text style={styles.buttonText}>Profil Animal</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('Historique')}>
+            <Text style={styles.buttonText}>Historique</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('Payment')}>
+            <Text style={styles.buttonText}>Moyen De Paiement</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('Avis')}>
+            <Text style={styles.buttonText}>Avis</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.littleBtnContainer}>
+          <TouchableOpacity style={[styles.button, styles.viewButton]}>
+            <Text style={[styles.buttonText, styles.color]}>Voir Profil</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.logoutButton}>
+            <Text style={styles.logoutButtonText}>Déconnexion</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -72,11 +79,11 @@ const styles = StyleSheet.create({
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
-      height: 18,
+      height: 18
     },
     shadowOpacity: 0.25,
     shadowRadius: 20.0,
-    elevation: 20,
+    elevation: 20
   },
   topMid: {
     alignItems: 'center'
@@ -86,9 +93,23 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
     color: '#33464d'
   },
+  btn: {
+    width: '100%',
+    height: '85%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  inputContainer: {
+    width: '100%',
+    alignItems: 'center'
+  },
+  littleBtnContainer: {
+    width: '100%',
+    alignItems: 'center'
+  },
   button: {
     backgroundColor: '#fff',
-    borderColor: "#33464d", 
+    borderColor: '#33464d',
     width: '70%',
     paddingVertical: 10,
     alignItems: 'center',
@@ -103,10 +124,10 @@ const styles = StyleSheet.create({
   },
   viewButton: {
     backgroundColor: '#5a7869',
-    width: '50%',
+    width: '50%'
   },
   color: {
-    color: 'white',
+    color: 'white'
   },
   logoutButton: {
     width: '50%',
