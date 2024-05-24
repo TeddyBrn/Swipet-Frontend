@@ -116,19 +116,19 @@ export default function SignUpScreenAnimal({ navigation }) {
     formData.append('detail', detail);
     formData.append('birthDate', birthDate)
 
-    if (!'photoUrl') {
-      fetch('http://192.168.233.47:3000/profils/signup', {
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({name, animalType, gender, bio, detail, birthDate})
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        data.result && dispatch(login({ token: data.newDoc.token, lastname, firstname, email, city, role, birthDate: data.newDoc.birthDate, photo: data.newDoc.photo }));
-        navigation.navigate('SignUpAnimal');
-      });
+    // if (!'photoUrl') {
+    //   fetch(`http://192.168.233.47:3000/animals/addanimal/${user.token}`, {
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({name, animalType, gender, bio, detail, birthDate})
+    //   })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     data.result && dispatch(login({ token: data.newDoc.token, lastname, firstname, email, city, role, birthDate: data.newDoc.birthDate, photo: data.newDoc.photo }));
+    //     navigation.navigate('SignUpAnimal');
+    //   });
 
-    } else {
+    // } else {
 
 
   fetch(`http://192.168.233.47:3000/animals/addanimal/${user.token}`, {
@@ -141,7 +141,7 @@ export default function SignUpScreenAnimal({ navigation }) {
       data.result && dispatch(addAnimal({  data }));
       navigation.navigate('TabNavigator');
     });
-  }
+  // }
   };
 
  
