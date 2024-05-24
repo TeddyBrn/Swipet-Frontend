@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState,  useRef } from 'react';
 import {
   View,
   Text,
@@ -123,8 +123,9 @@ export default function ProfileCard({ navigation }) {
                     <Text style={styles.profileName}>
                       {card.firstname} , {card.age} ans
                     </Text>
+                    <Text style={styles.profileCity}> {card.city}</Text>
                     <View style={styles.ratingContainer}>
-                      <Text style={styles.profileCity}> {card.city}</Text>
+                      
                       <View style={styles.ratingContainer}>
                         <Text style={styles.profileNote}>
                           {card.avis[0].note}/5
@@ -216,7 +217,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 60,
     height: 60,
-    resizeMode: 'contain',
+    contentFit: 'contain', //"resizeMode" is deprecated, use "contentFit" instead
     marginLeft: 20,
     marginVertical: 5
   },
