@@ -284,8 +284,8 @@ export default function SignUpScreenAnimal({ navigation }) {
           <TouchableOpacity
             style={styles.signUpButton}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('TabNavigator')}
-            // onPress={() => handleConnexion()}
+            // onPress={() => navigation.navigate('TabNavigator')}
+            onPress={() => handleConnexion()}
             >
             <Text style={styles.buttonText}>Confirmer</Text>
           </TouchableOpacity>

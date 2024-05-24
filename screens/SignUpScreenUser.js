@@ -101,6 +101,8 @@ export default function SignUpScreenUser({ navigation }) {
 
   };
 
+  
+
   const handleConnexion = () => {
 
     const formData = new FormData();
@@ -134,7 +136,7 @@ export default function SignUpScreenUser({ navigation }) {
 
     // } else {
 
-      fetch('http://192.168.233.47:3000/profils/signup', {
+      fetch('http:////192.168.233.47/profils/signup', {
         method: 'POST',
         body: formData,
       })
