@@ -23,14 +23,15 @@ import { calculAge } from "../modules/calculAge";
 export default function SignUpScreenUser({ navigation }) {
   const dispatch = useDispatch();
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [city, setCity] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  const [age, setAge] = useState("");
   const [role, setRole] = useState("");
+  const [fieldError, setFieldError] = useState(false);
 
   // ImagePicker
 
@@ -85,22 +86,28 @@ export default function SignUpScreenUser({ navigation }) {
 
   // DatePicker
 
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  // const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
+  // const showDatePicker = () => {
+  //   setDatePickerVisibility(true);
+  // };
+  // const hideDatePicker = () => {
+  //   setDatePickerVisibility(false);
+  // };
 
-  const handleConfirm = (date) => {
-    console.warn(date);
-    setBirthDate(date);
-    hideDatePicker();
-  };
+  // const handleConfirm = (date) => {
+  //   console.warn(date);
+  //   setBirthDate(date);
+  //   hideDatePicker();
+  // };
+
+  
 
   const handleConnexion = () => {
+    if (!image) {
+      setFieldError(true);
+      return;
+    }
     const formData = new FormData();
 
     formData.append("photoFromFront", {
@@ -114,36 +121,22 @@ export default function SignUpScreenUser({ navigation }) {
     formData.append("password", password);
     formData.append("city", city);
     formData.append("role", role);
-    formData.append("birthDate", birthDate);
+    formData.append("age", age);
 
-    console.log(formData);
+    console.log(formData._parts[0]);
 
-    // if (!'photoFrmoFront') {
-    //   fetch('http://192.168.233.47:3000/profils/signup', {
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({lastname, firstname, email, password, city, role, birthDate,})
-    //   })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     data.result && dispatch(login({ token: data.newDoc.token, lastname, firstname, email, city, role, birthDate: data.newDoc.birthDate, photo: data.newDoc.photo }));
-    //     navigation.navigate('SignUpAnimal');
-    //   });
-
-    // } else {
-
-    const urlT = "http://192.168.1.30:3000/profils/signup";
-    const urlJohan = "http://192.168.1.27:3000/profils/signup";
-    const urlMael = "http://192.168.1.40:3000/profils/signup";
-    try {
-      fetch(urlT, {
-        method: "POST",
-        body: formData,
+    if (!image) {
+      fetch('http://192.168.233.47:3000/profils/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({lastname, firstname, email, password, city, role, birthDate,})
       })
-        .then((response) => response.json())
-        .then((data) => {
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('reponse du back',data)
+        if (data.result === true) {
           console.log(data);
-          data.result &&
+          // data.result &&
             dispatch(
               login({
                 token: data.newDoc.token,
@@ -152,18 +145,47 @@ export default function SignUpScreenUser({ navigation }) {
                 email,
                 city,
                 role,
-                birthDate: data.newDoc.birthDate,
+                age,
                 photo: data.newDoc.photo,
               })
             );
           navigation.navigate("SignUpAnimal");
+        } 
+      });
+
+    } else {
+      try {
+      fetch('http://192.168.233.47:3000/profils/signup', {
+        method: 'POST',
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('reponse du back avec image',data)
+          if (data.result) {
+            console.log(data);
+            // data.result &&
+              dispatch(
+                login({
+                  token: data.newDoc.token,
+                  lastname,
+                  firstname,
+                  email,
+                  city,
+                  role,
+                  birthDate: data.newDoc.birthDate,
+                  photo: data.newDoc.photo,
+                })
+              );
+            navigation.navigate("SignUpAnimal");
+          } 
         });
     } catch (e) {
       console.error(e);
       return e;
     }
   };
-  // }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -222,19 +244,20 @@ export default function SignUpScreenUser({ navigation }) {
                 autoCapitalize="none"
               />
             </View>
-            <Pressable style={styles.input} onPress={showDatePicker}>
-              <Ionicons name="calendar" size={20} color="#33464d" />
-              <Text style={styles.inputText}>
-                Date de Naissance {birthDate && "birthDate"}
-              </Text>
-            </Pressable>
 
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
+            <View style={styles.input}>
+              <Ionicons name="calendar" size={20} color="#33464d" />
+              <TextInput
+                style={styles.inputText}
+                onChangeText={(value) => setAge(value)}
+                value={age}
+                placeholder="Age"
+                placeholderTextColor="#5a7869"
+                autoCapitalize="none"
+                keyboardType="numeric"
+                maxLength={2}
+              />
+            </View>
             <View style={styles.input}>
               <Ionicons name="mail" size={20} color="#33464d" />
               <TextInput
@@ -269,6 +292,9 @@ export default function SignUpScreenUser({ navigation }) {
                 autoCapitalize="none"
               />
             </View>
+            {fieldError && (
+              <Text style={styles.error}>Missing or empty fields.</Text>
+            )}
           </View>
 
           <Text style={styles.titleCheckbox}>Vous souhaitez :</Text>
@@ -420,5 +446,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 23,
     fontFamily: "Montserrat-Bold",
+  },
+  error: {
+    color: "#e23636",
+    fontSize: 16,
   },
 });

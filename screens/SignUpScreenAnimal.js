@@ -30,7 +30,7 @@ export default function SignUpScreenAnimal({ navigation }) {
 
   const [photo, setPhoto] = useState(null);
   const [name, setName] = useState('');
-  const [birthDate, setBirthDate] = useState('');
+  const [age, setAge] = useState('');
   const [bio, setBio] = useState('');
   const [detail, setDetail] = useState('');
   const [gender, setGender] = useState('');
@@ -58,21 +58,21 @@ export default function SignUpScreenAnimal({ navigation }) {
 
   // DatePicker
 
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  // const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
+  // const showDatePicker = () => {
+  //   setDatePickerVisibility(true);
+  // };
 
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
+  // const hideDatePicker = () => {
+  //   setDatePickerVisibility(false);
+  // };
 
-  const handleConfirm = (date) => {
-    console.warn(date);
-    setBirthDate(date);
-    hideDatePicker();
-  };
+  // const handleConfirm = (date) => {
+  //   console.warn(date);
+  //   setBirthDate(date);
+  //   hideDatePicker();
+  // };
 
   // const handleAddAnimal = () => {
   //   fetch(`http://192.168.233.47:3000/profils/signup/animal/${user.token}`, {
@@ -114,21 +114,22 @@ export default function SignUpScreenAnimal({ navigation }) {
     formData.append('gender', gender);
     formData.append('bio', bio);
     formData.append('detail', detail);
-    formData.append('birthDate', birthDate)
+    formData.append('age', age)
 
-    // if (!'photoUrl') {
-    //   fetch(`http://192.168.233.47:3000/animals/addanimal/${user.token}`, {
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({name, animalType, gender, bio, detail, birthDate})
-    //   })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     data.result && dispatch(login({ token: data.newDoc.token, lastname, firstname, email, city, role, birthDate: data.newDoc.birthDate, photo: data.newDoc.photo }));
-    //     navigation.navigate('SignUpAnimal');
-    //   });
+    if (!photo) {
+      fetch(`http://192.168.233.47:3000/animals/addanimal/${user.token}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({name, animalType, gender, bio, detail, birthDate})
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        data.result && dispatch(addAnimal({ token: data.newDoc.token, name, animalType, gender, bio, birthDate }));
+        navigation.navigate('TabNavigator');
+      });
 
-    // } else {
+    } else {
 
 
   fetch(`http://192.168.1.30:3000/animals/addanimal/${user.token}`, {
@@ -138,10 +139,10 @@ export default function SignUpScreenAnimal({ navigation }) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      data.result && dispatch(addAnimal({  data }));
+      data.result && dispatch(addAnimal({ token: data.newDoc.token}));
       navigation.navigate('TabNavigator');
     });
-  // }
+  }
   };
 
  
@@ -189,17 +190,19 @@ export default function SignUpScreenAnimal({ navigation }) {
                 autoCapitalize="none"
               />
             </View>
-            <Pressable style={styles.input} onPress={showDatePicker}>
+            <View style={styles.input}>
               <Ionicons name="calendar" size={20} color="#33464d" />
-              <Text style={styles.inputText}>Date de Naissance</Text>
-            </Pressable>
-
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
+              <TextInput
+                style={styles.inputText}
+                onChangeText={(value) => setAge(value)}
+                value={age}
+                placeholder="Age"
+                placeholderTextColor="#5a7869"
+                autoCapitalize="none"
+                keyboardType="numeric"
+                maxLength={2}
+              />
+            </View>
             <View style={styles.input}>
               <TextInput
                 style={styles.inputText}
@@ -284,8 +287,8 @@ export default function SignUpScreenAnimal({ navigation }) {
           <TouchableOpacity
             style={styles.signUpButton}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('TabNavigator')}
-            // onPress={() => handleConnexion()}
+            // onPress={() => navigation.navigate('TabNavigator')}
+            onPress={() => handleConnexion()}
             >
             <Text style={styles.buttonText}>Confirmer</Text>
           </TouchableOpacity>
