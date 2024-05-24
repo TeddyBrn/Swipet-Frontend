@@ -12,16 +12,20 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
+import { useDispatch, useSelector } from 'react-redux';
+import { addAnimal, login } from '../reducers/users';
 
 export default function ProfilScreen({ navigation }) {
-  const [image, setImage] = useState(null);
-  const [lastname, setLastname] = useState('');
-  const [firstname, setFirstname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [city, setCity] = useState('');
-  const [birthDate, setBirthDate] = useState('');
-  const [role, setRole] = useState('');
+
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.users.value);
+  console.log(user)
+
+  const [lastname, setLastname] = useState(user.lastname);
+    const [city, setCity] = useState(user.city);
+    const [firstname, setFirstname] = useState(user.firstname);
+    const [email, setEmail] = useState(user.email);
+    const [image, setImage] = useState(null);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -37,6 +41,27 @@ export default function ProfilScreen({ navigation }) {
       setImage(result.assets[0].uri);
     }
   };
+
+  const handleChange = () => {
+
+    fetch(`http://192.168.233.47:3000/settings/editprofile/${user.token}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstname: firstname,
+        lastname: lastname,
+        city: city,
+        email: email,
+      })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        data.result &&
+          dispatch(login({ lastname, firstname, city, email }));
+            setCity(city); setFirstname(firstname); setLastname(lastname); setEmail(email);
+        })
+     }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -86,9 +111,9 @@ export default function ProfilScreen({ navigation }) {
               <Ionicons name="person" size={20} color="#555" />
               <TextInput
                 style={styles.inputText}
-                onChangeText={(value) => setLastname(value)}
-                value={lastname}
-                placeholder="Nom"
+                onChangeText={(value) => setFirstname(value)}
+                value={firstname}
+                placeholder="Prenom"
                 placeholderTextColor="grey"
                 autoCapitalize="none"
               />
@@ -103,6 +128,24 @@ export default function ProfilScreen({ navigation }) {
                 placeholderTextColor="grey"
                 autoCapitalize="none"
               />
+            </View>
+            <View style={styles.input}>
+              <Ionicons name="business" size={20} color="#555" />
+              <TextInput
+                style={styles.inputText}
+                onChangeText={(value) => setEmail(value)}
+                value={email}
+                placeholder="E-mail"
+                placeholderTextColor="grey"
+                autoCapitalize="none"
+              />
+            </View>
+            <View>
+            <TouchableOpacity style={styles.signupButton} activeOpacity={0.8}
+                    onPress={() => handleChange()}
+                >
+                    <Text style={styles.connexionButtonText}>Confirmer</Text>
+                </TouchableOpacity>
             </View>
           </View>
         </View>
