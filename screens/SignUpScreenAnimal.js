@@ -30,7 +30,7 @@ export default function SignUpScreenAnimal({ navigation }) {
 
   const [photo, setPhoto] = useState(null);
   const [name, setName] = useState('');
-  const [birthDate, setBirthDate] = useState('');
+  const [age, setAge] = useState('');
   const [bio, setBio] = useState('');
   const [detail, setDetail] = useState('');
   const [gender, setGender] = useState('');
@@ -58,21 +58,21 @@ export default function SignUpScreenAnimal({ navigation }) {
 
   // DatePicker
 
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  // const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
+  // const showDatePicker = () => {
+  //   setDatePickerVisibility(true);
+  // };
 
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
+  // const hideDatePicker = () => {
+  //   setDatePickerVisibility(false);
+  // };
 
-  const handleConfirm = (date) => {
-    console.warn(date);
-    setBirthDate(date);
-    hideDatePicker();
-  };
+  // const handleConfirm = (date) => {
+  //   console.warn(date);
+  //   setBirthDate(date);
+  //   hideDatePicker();
+  // };
 
   // const handleAddAnimal = () => {
   //   fetch(`http://192.168.233.47:3000/profils/signup/animal/${user.token}`, {
@@ -114,7 +114,7 @@ export default function SignUpScreenAnimal({ navigation }) {
     formData.append('gender', gender);
     formData.append('bio', bio);
     formData.append('detail', detail);
-    formData.append('birthDate', birthDate)
+    formData.append('age', age)
 
     // if (!'photoUrl') {
     //   fetch(`http://192.168.233.47:3000/animals/addanimal/${user.token}`, {
@@ -189,17 +189,19 @@ export default function SignUpScreenAnimal({ navigation }) {
                 autoCapitalize="none"
               />
             </View>
-            <Pressable style={styles.input} onPress={showDatePicker}>
+            <View style={styles.input}>
               <Ionicons name="calendar" size={20} color="#33464d" />
-              <Text style={styles.inputText}>Date de Naissance</Text>
-            </Pressable>
-
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
+              <TextInput
+                style={styles.inputText}
+                onChangeText={(value) => setAge(value)}
+                value={age}
+                placeholder="Age"
+                placeholderTextColor="#5a7869"
+                autoCapitalize="none"
+                keyboardType="numeric"
+                maxLength={2}
+              />
+            </View>
             <View style={styles.input}>
               <TextInput
                 style={styles.inputText}
