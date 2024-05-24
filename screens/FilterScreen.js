@@ -11,6 +11,23 @@ import Slider from '@react-native-community/slider';
 import { Dropdown } from 'react-native-element-dropdown';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { profilData } from '../data/profils';
+
+
+// fonctionnalité de filtre en cours...
+export let newArray = (profilData, ageValue, averageNote) => {
+  let profilDataFilter = [];
+
+  for (let i = 0; i < profilData.length; i++) {
+    if (profilData[i].age <= ageValue && profilData[i].avis[0].note >= averageNote) {
+      profilDataFilter.push(profilData[i]);
+    }
+  }
+
+  return profilDataFilter;
+};
+
+
 
 const ageData = [
   { label: '18 ans', value: 1 },
@@ -49,7 +66,10 @@ const FiltersScreen = ({ navigation }) => {
       />
     );
   }
-
+  // const handleValidate = () => {
+  //   const filteredProfiles = newArray(profilData, ageValue, averageNote);
+  //   console.log(filteredProfiles); 
+  // };
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -107,10 +127,10 @@ const FiltersScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} activeOpacity={0.8}>
+          <TouchableOpacity style={styles.button} activeOpacity={0.8} >
             <Text style={styles.buttonText}>Valider</Text>
           </TouchableOpacity>
-          </View>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -160,7 +180,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#5a7869',
-    borderColor: "#33464d", 
+    borderColor: "#33464d",
     width: '55%',
     paddingVertical: 10,
     alignItems: 'center',
@@ -177,7 +197,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 30,
     borderWidth: 5,
-    borderRadius:20,
+    borderRadius: 20,
     borderColor: '#33464d',
     overflow: 'scroll',
     marginLeft: 20,
@@ -206,7 +226,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-   
+
   },
   buttonText: {
     fontSize: 18,
