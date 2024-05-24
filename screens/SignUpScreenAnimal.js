@@ -131,7 +131,7 @@ export default function SignUpScreenAnimal({ navigation }) {
     // } else {
 
 
-  fetch(`http://192.168.233.47:3000/animals/addanimal/${user.token}`, {
+  fetch(`http://192.168.1.30:3000/animals/addanimal/${user.token}`, {
     method: 'POST',
     body: formData,
     })
