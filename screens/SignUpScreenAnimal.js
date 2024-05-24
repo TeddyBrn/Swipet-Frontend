@@ -116,19 +116,20 @@ export default function SignUpScreenAnimal({ navigation }) {
     formData.append('detail', detail);
     formData.append('birthDate', birthDate)
 
-    // if (!'photoUrl') {
-    //   fetch(`http://192.168.233.47:3000/animals/addanimal/${user.token}`, {
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({name, animalType, gender, bio, detail, birthDate})
-    //   })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     data.result && dispatch(login({ token: data.newDoc.token, lastname, firstname, email, city, role, birthDate: data.newDoc.birthDate, photo: data.newDoc.photo }));
-    //     navigation.navigate('SignUpAnimal');
-    //   });
+    if (!photo) {
+      fetch(`http://192.168.233.47:3000/animals/addanimal/${user.token}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({name, animalType, gender, bio, detail, birthDate})
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        data.result && dispatch(addAnimal({ token: data.newDoc.token, name, animalType, gender, bio, birthDate }));
+        navigation.navigate('TabNavigator');
+      });
 
-    // } else {
+    } else {
 
 
   fetch(`http://192.168.233.47:3000/animals/addanimal/${user.token}`, {
@@ -138,10 +139,10 @@ export default function SignUpScreenAnimal({ navigation }) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      data.result && dispatch(addAnimal({  data }));
+      data.result && dispatch(addAnimal({ token: data.newDoc.token}));
       navigation.navigate('TabNavigator');
     });
-  // }
+  }
   };
 
  
