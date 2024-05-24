@@ -23,14 +23,15 @@ import { calculAge } from "../modules/calculAge";
 export default function SignUpScreenUser({ navigation }) {
   const dispatch = useDispatch();
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [city, setCity] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  const [age, setAge] = useState("");
   const [role, setRole] = useState("");
+  const [fieldError, setFieldError] = useState(false);
 
   // ImagePicker
 
@@ -85,24 +86,28 @@ export default function SignUpScreenUser({ navigation }) {
 
   // DatePicker
 
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  // const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
+  // const showDatePicker = () => {
+  //   setDatePickerVisibility(true);
+  // };
+  // const hideDatePicker = () => {
+  //   setDatePickerVisibility(false);
+  // };
 
-  const handleConfirm = (date) => {
-    console.warn(date);
-    setBirthDate(date);
-    hideDatePicker();
-  };
+  // const handleConfirm = (date) => {
+  //   console.warn(date);
+  //   setBirthDate(date);
+  //   hideDatePicker();
+  // };
 
   
 
   const handleConnexion = () => {
+    if (!image) {
+      setFieldError(true);
+      return;
+    }
     const formData = new FormData();
 
     formData.append("photoFromFront", {
@@ -116,9 +121,9 @@ export default function SignUpScreenUser({ navigation }) {
     formData.append("password", password);
     formData.append("city", city);
     formData.append("role", role);
-    formData.append("birthDate", birthDate);
+    formData.append("age", age);
 
-    console.log(formData);
+    console.log(formData._parts[0]);
 
     if (!image) {
       fetch('http://192.168.233.47:3000/profils/signup', {
@@ -140,7 +145,7 @@ export default function SignUpScreenUser({ navigation }) {
                 email,
                 city,
                 role,
-                birthDate: data.newDoc.birthDate,
+                age,
                 photo: data.newDoc.photo,
               })
             );
@@ -239,19 +244,20 @@ export default function SignUpScreenUser({ navigation }) {
                 autoCapitalize="none"
               />
             </View>
-            <Pressable style={styles.input} onPress={showDatePicker}>
-              <Ionicons name="calendar" size={20} color="#33464d" />
-              <Text style={styles.inputText}>
-                Date de Naissance {birthDate && "birthDate"}
-              </Text>
-            </Pressable>
 
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
+            <View style={styles.input}>
+              <Ionicons name="calendar" size={20} color="#33464d" />
+              <TextInput
+                style={styles.inputText}
+                onChangeText={(value) => setAge(value)}
+                value={age}
+                placeholder="Age"
+                placeholderTextColor="#5a7869"
+                autoCapitalize="none"
+                keyboardType="numeric"
+                maxLength={2}
+              />
+            </View>
             <View style={styles.input}>
               <Ionicons name="mail" size={20} color="#33464d" />
               <TextInput
@@ -286,6 +292,9 @@ export default function SignUpScreenUser({ navigation }) {
                 autoCapitalize="none"
               />
             </View>
+            {fieldError && (
+              <Text style={styles.error}>Missing or empty fields.</Text>
+            )}
           </View>
 
           <Text style={styles.titleCheckbox}>Vous souhaitez :</Text>
@@ -437,5 +446,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 23,
     fontFamily: "Montserrat-Bold",
+  },
+  error: {
+    color: "#e23636",
+    fontSize: 16,
   },
 });
