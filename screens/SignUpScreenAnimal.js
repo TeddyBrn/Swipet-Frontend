@@ -284,8 +284,8 @@ export default function SignUpScreenAnimal({ navigation }) {
           <TouchableOpacity
             style={styles.signUpButton}
             activeOpacity={0.8}
-            // onPress={() => navigation.navigate('TabNavigator')}
-            onPress={() => handleConnexion()}
+            onPress={() => navigation.navigate('TabNavigator')}
+            // onPress={() => handleConnexion()}
             >
             <Text style={styles.buttonText}>Confirmer</Text>
           </TouchableOpacity>
@@ -362,7 +362,8 @@ const styles = StyleSheet.create({
   inputText: {
     fontSize: 18,
     paddingLeft: 10,
-    color: '#5a7869'
+    color: '#5a7869',
+    width:'90%'
   },
   dropdownButtonStyle: {
     width: '80%',
@@ -405,17 +406,18 @@ const styles = StyleSheet.create({
     color: '#151E26'
   },
   signUpButton: {
-    backgroundColor: '#8FD14F',
+    backgroundColor: '#5a7869',
+    borderColor: "#33464d", 
+    width: '55%',
     paddingVertical: 10,
-    paddingHorizontal: 50,
-    borderRadius: 15,
-    marginTop: 50,
-    borderWidth: 2,
-    borderColor: '#73A246'
+    alignItems: 'center',
+    borderRadius: 5,
+    marginTop: 70,
+    borderWidth: 1.5
   },
   buttonText: {
     color: '#fff',
-    fontSize: 19,
-    fontWeight: 'bold'
+    fontSize: 23,
+    fontFamily: 'Montserrat-Bold'
   }
 });

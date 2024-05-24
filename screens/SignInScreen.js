@@ -22,13 +22,12 @@ export default function SignInScreen({ navigation }) {
   const [signInPassword, setSignInPassword] = useState('');
 
   const dispatch = useDispatch();
-  const url1 = 'http://192.168.233.47:3000/profils/signin';
-  const url2 = 'http://192.168.1.27:3000/profils/signin';
-  const url42 = 'http://192.168.1.40:8081/profils/signin';
-  
+  const urlT = 'http://192.168.1.30:3000/profils/signin';
+  const urlJohan = 'http://192.168.1.27:3000/profils/signin';
+  const urlMael = 'http://192.168.1.40:3000/profils/signin';
 
   const handleConnection = () => {
-    fetch(url1, {
+    fetch(urlT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -105,7 +104,7 @@ export default function SignInScreen({ navigation }) {
           activeOpacity={0.8}
           onPress={() => handleConnection()}
           // onPress={() => navigation.navigate('TabNavigator', { screen: 'Swipe' })}
-          >
+        >
           <Text style={styles.buttonText}>Connexion</Text>
         </TouchableOpacity>
       </View>
@@ -158,22 +157,23 @@ const styles = StyleSheet.create({
   inputText: {
     fontSize: 18,
     paddingLeft: 10,
-    color: '#5a7869'
+    color: '#5a7869',
+    width: '90%',
   },
   signInButton: {
-    backgroundColor: '#8FD14F',
+    backgroundColor: '#5a7869',
+    borderColor: '#33464d',
+    width: '55%',
     paddingVertical: 10,
-    paddingHorizontal: 50,
-    borderRadius: 15,
-    marginTop: 10,
-    marginTop: 50,
-    borderWidth: 2,
-    borderColor: '#73A246'
+    alignItems: 'center',
+    borderRadius: 5,
+    borderWidth: 1.5,
+    marginTop: 80
   },
   buttonText: {
     color: '#fff',
-    fontSize: 22,
-    fontWeight: 'bold'
+    fontSize: 23,
+    fontFamily: 'Montserrat-Bold'
   },
   error: {
     color: '#e23636'
