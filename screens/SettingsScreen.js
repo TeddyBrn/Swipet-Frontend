@@ -6,7 +6,7 @@ import { logout } from '../reducers/users';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const SettingsScreen = ({ navigation }) => {
+export default function SettingsScreen({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
  console.log(`user.token => ${user.token}`)
@@ -21,7 +21,7 @@ const SettingsScreen = ({ navigation }) => {
         </View>
         <View style={{ width: 60 }}></View>
       </View>
-      <View style={styles.btn}>
+      <View style={styles.btnContainer}>
         <View style={styles.inputContainer}>
           <TouchableOpacity
             style={styles.button}
@@ -60,7 +60,7 @@ const SettingsScreen = ({ navigation }) => {
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.logoutButton} onPress={() =>  {dispatch(logout()); navigation.navigate('Home')} }>
-            <Text style={styles.logoutButtonText}>Déconnexion</Text>
+            <Text style={[styles.buttonText, styles.color]}>Déconnexion</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
     color: '#33464d'
   },
-  btn: {
+  btnContainer: {
     width: '100%',
     height: '85%',
     alignItems: 'center',
@@ -131,25 +131,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#5a7869',
     width: '50%'
   },
-  color: {
-    color: 'white'
-  },
   logoutButton: {
     width: '50%',
     backgroundColor: '#FF6666',
     paddingVertical: 10,
     alignItems: 'center',
     borderRadius: 8,
-    
   },
-  logoutButtonText: {
-    fontSize: 25,
-    fontFamily: 'Montserrat-Bold',
-    color: '#FFF'
-  }
+  color: {
+    color: 'white'
+  },
 });
 
-export default SettingsScreen;
+
 
 
 /* 
