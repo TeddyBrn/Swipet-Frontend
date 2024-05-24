@@ -5,21 +5,45 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
-  Button
+  ActivityIndicator
 } from 'react-native';
 import { Image } from 'expo-image';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLike } from '../reducers/users';
-import { profilData } from '../data/profils';
 import Swiper from 'react-native-deck-swiper';
+import { profilData } from '../data/profils';
 
 export default function ProfileCard({ navigation }) {
+  const [profilsData, setProfilsData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://192.168.1.30:3000/profils/petsitters');
+        const data = await response.json();
+        if (data.result) {
+          setProfilsData(data.data);
+        } else {
+          setError('Failed to fetch profiles');
+        }
+      } catch (err) {
+        setError('An error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
   console.log(`user.token => ${user.token}`);
-  const addAlike = () => dispatch(addLike(profilData[count]._id));
+
+  const addAlike = () => dispatch(addLike(profilsData[count]._id));
 
   const [count, setCount] = useState(0);
 
@@ -28,6 +52,7 @@ export default function ProfileCard({ navigation }) {
     addAlike();
   };
   console.log(`user.like => ${user.like}`);
+
   const handleDislike = () => {
     setCount(count + 1);
   };
@@ -45,6 +70,22 @@ export default function ProfileCard({ navigation }) {
       swiperRef.current.swipeRight();
     }
   };
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </SafeAreaView>
+    );
+  }
+
+  if (error) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text>{error}</Text>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -69,8 +110,8 @@ export default function ProfileCard({ navigation }) {
         </View>
         <View style={styles.main}>
           <Swiper
+            cards={profilsData} // Les données des profils à swiper
             ref={swiperRef}
-            cards={profilData} // Les données des profils à swiper
             renderCard={(card) => {
               return (
                 <View style={styles.profileContainer}>
@@ -123,20 +164,20 @@ export default function ProfileCard({ navigation }) {
             stackSize={4} // Nombre de cartes empilées en arrière-plan
           />
         </View>
-          <View style={styles.actionButtons}>
-            <TouchableOpacity
-              style={styles.buttonSwipe}
-              activeOpacity={0.7}
-              onPress={handleSwipeLeft}>
-              <Ionicons name="close-outline" size={65} color="#f74c4f" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonSwipe}
-              activeOpacity={0.7}
-              onPress={handleSwipeRight}>
-              <Ionicons name="heart" size={50} color="#89c1a5" />
-            </TouchableOpacity>
-          </View>
+        <View style={styles.actionButtons}>
+          <TouchableOpacity
+            style={styles.buttonSwipe}
+            activeOpacity={0.7}
+            onPress={handleSwipeLeft}>
+            <Ionicons name="close-outline" size={65} color="#f74c4f" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonSwipe}
+            activeOpacity={0.7}
+            onPress={handleSwipeRight}>
+            <Ionicons name="heart" size={50} color="#89c1a5" />
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -271,29 +312,3 @@ const styles = StyleSheet.create({
     elevation: 40
   }
 });
-
-/*
-const swiperRef = useRef(null);
-
-  const handleSwipeLeft = () => {
-    if (swiperRef.current) {
-      swiperRef.current.swipeLeft();
-    }
-  };
-
-  const handleSwipeRight = () => {
-    if (swiperRef.current) {
-      swiperRef.current.swipeRight();
-    }
-  };
-
-<Swiper ref={swiperRef}   />
-        
-
- <TouchableOpacity style={styles.buttonSwipe} activeOpacity={0.7} onPress={handleSwipeLeft}>
-          <Ionicons name="close-outline" size={65} color="#f74c4f" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonSwipe} activeOpacity={0.7} onPress={handleSwipeRight}>
-          <Ionicons name="heart" size={50} color="#00f99e" />
-        </TouchableOpacity>
-*/
