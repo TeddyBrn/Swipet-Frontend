@@ -19,21 +19,21 @@ export default function AddCard() {
     // % Supprimer les espaces existants
     const cleaned = ('' + number).replace(/\s+/g, '');
 
-    // Ajouter des espaces après chaque groupe de 4 chiffres
+    // % Ajouter des espaces après chaque groupe de 4 chiffres
     const formatted = cleaned.match(/.{1,4}/g)?.join('  ') || '';
 
     setCardNumber(formatted);
   };
 
-  // Formatage de la date d'expiration
+  //  Formatage de la date d'expiration
 
   const [expirationDate, setExpirationDate] = useState('');
 
   const formatExpirationDate = (input) => {
-    // Supprimer les caractères non numériques
+    // % Supprimer les caractères non numériques
     const cleaned = input.replace(/\D+/g, '');
 
-    // Ajouter la barre oblique après les deux premiers chiffres (MM/YY)
+    // % Ajouter la barre oblique après les deux premiers chiffres (MM/YY)
     let formatted = cleaned;
     if (cleaned.length >= 3) {
       formatted = `${cleaned.slice(0, 2)}/${cleaned.slice(2, 4)}`;
@@ -47,7 +47,7 @@ export default function AddCard() {
   const [cvc, setCvc] = useState('');
 
   const handleCvcChange = (input) => {
-    // Supprimer les caractères non numériques
+    // % Supprimer les caractères non numériques
     const cleaned = input.replace(/\D+/g, '');
     setCvc(cleaned);
   };

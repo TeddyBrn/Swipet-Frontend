@@ -13,21 +13,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AddCard from '../components/addCard';
 
 export default function PaymentScreen({ navigation }) {
-  const [lastname, setLastname] = useState('');
-  const [date, setDate] = useState('');
-  const [cvc, setCvc] = useState('');
-
-  const [cardNumber, setCardNumber] = useState('');
-
-  const formatCardNumber = (number) => {
-    // Supprimer les espaces existants
-    const cleaned = ('' + number).replace(/\s+/g, '');
-
-    // Ajouter des espaces après chaque groupe de 4 chiffres
-    const formatted = cleaned.match(/.{1,4}/g)?.join(' ') || '';
-
-    setCardNumber(formatted);
-  };
 
   return (
     <SafeAreaView style={styles.container}>
