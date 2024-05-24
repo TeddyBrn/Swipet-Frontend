@@ -11,6 +11,23 @@ import Slider from '@react-native-community/slider';
 import { Dropdown } from 'react-native-element-dropdown';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { profilData } from '../data/profils';
+
+
+// fonctionnalité de filtre en cours...
+export let newArray = (profilData, ageValue, averageNote) => {
+  let profilDataFilter = [];
+
+  for (let i = 0; i < profilData.length; i++) {
+    if (profilData[i].age <= ageValue && profilData[i].avis[0].note >= averageNote) {
+      profilDataFilter.push(profilData[i]);
+    }
+  }
+
+  return profilDataFilter;
+};
+
+
 
 const ageData = [
   { label: '18 ans', value: 1 },
@@ -36,7 +53,7 @@ const FiltersScreen = ({ navigation }) => {
   for (let i = 0; i < 5; i++) {
     let style = { cursor: 'pointer' };
     if (i < averageNote) {
-      style = { color: '#2196f3', cursor: 'pointer' };
+      style = { color: '#5a7869' };
     }
     stars.push(
       <Ionicons
@@ -49,17 +66,20 @@ const FiltersScreen = ({ navigation }) => {
       />
     );
   }
-
+  // const handleValidate = () => {
+  //   const filteredProfiles = newArray(profilData, ageValue, averageNote);
+  //   console.log(filteredProfiles); 
+  // };
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={styles.topContainer}>
-          
+
           <View style={styles.topMid}>
             <Text style={styles.topText}>Filtres</Text>
           </View>
-          
+
         </View>
 
         <Text style={styles.text}>Choisissez vos préférences</Text>
@@ -74,9 +94,9 @@ const FiltersScreen = ({ navigation }) => {
             step={2}
             value={kmValue}
             onValueChange={setKmValue}
-            minimumTrackTintColor="#2196f3"
+            minimumTrackTintColor="#5a7869"
             maximumTrackTintColor="#222222"
-            thumbTintColor="#2196f3"
+            thumbTintColor="#5a7869"
           />
           <Text style={styles.sliderValue}>Age minimum:</Text>
           <Dropdown
@@ -87,7 +107,7 @@ const FiltersScreen = ({ navigation }) => {
             value={ageValue}
             onChange={(item) => setAgeValue(item.value)}
             placeholder="rechercher un age minimum"
-            activeColor="#2196f3"
+            activeColor="#5a7869"
             selectedTextStyle={styles.selectedTextStyle}
           />
           <Text style={styles.sliderValue}>Note minimum:</Text>
@@ -99,15 +119,18 @@ const FiltersScreen = ({ navigation }) => {
             labelField="label"
             valueField="value"
             value={durationValue}
-            onChange={(item) => setAgeValue(item.value)}
+            onChange={(item) => setDurationValue(item.value)}
             placeholder="rechercher une durée"
-            activeColor="#2196f3"
+            activeColor="#5a7869"
             selectedTextStyle={styles.selectedTextStyle}
           />
         </View>
-        <TouchableOpacity style={styles.button} activeOpacity={0.8}>
-          <Text style={styles.buttonText}>Valider</Text>
-        </TouchableOpacity>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} activeOpacity={0.8} >
+            <Text style={styles.buttonText}>Valider</Text>
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -116,7 +139,8 @@ const FiltersScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+
   },
   topContainer: {
     width: '100%',
@@ -136,6 +160,7 @@ const styles = StyleSheet.create({
   },
   topMid: {
     alignItems: 'center'
+
   },
   topText: {
     fontSize: 25,
@@ -145,20 +170,22 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20
+    marginLeft: 20
   },
   text: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginTop: 20
+    marginTop: 20,
+    marginLeft: 45
   },
   button: {
-    backgroundColor: '#8FD14F',
-    width: '45%',
-    paddingVertical: 15,
+    backgroundColor: '#5a7869',
+    borderColor: "#33464d",
+    width: '55%',
+    paddingVertical: 10,
     alignItems: 'center',
-    borderRadius: 15,
-    marginTop: 100,
+    borderRadius: 5,
+    marginTop: 70,
     borderWidth: 1.5
   },
   optionsContainer: {
@@ -169,9 +196,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 30,
-    borderWidth: 1.5,
-    borderColor: 'black',
-    overflow: 'scroll'
+    borderWidth: 5,
+    borderRadius: 20,
+    borderColor: '#33464d',
+    overflow: 'scroll',
+    marginLeft: 20,
   },
   sliderValue: {
     fontSize: 20,
@@ -188,11 +217,16 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     fontSize: 16,
-    color: '#2196f3',
+    color: '#5a7869',
     fontWeight: 'bold'
   },
   stars: {
     marginBottom: 15
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+
   },
   buttonText: {
     fontSize: 18,
