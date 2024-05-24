@@ -98,29 +98,57 @@ export default function SignUpScreenUser({ navigation }) {
     console.warn(date);
     setBirthDate(date);
     hideDatePicker();
-    
+
   };
 
   const handleConnexion = () => {
-    fetch('http://192.168.1.30:3000/profils/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        firstname,
-        lastname,
-        email,
-        password,
-        city,
-        role,
-        birthDate
+
+    const formData = new FormData();
+
+    formData.append('photoFromFront', {
+      uri: image,
+      name: 'photo.jpg',
+      type: 'image/jpeg',
+    });
+    formData.append('lastname', lastname);
+    formData.append('firstname', firstname);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('city', city);
+    formData.append('role', role);
+    formData.append('birthDate', birthDate)
+
+    console.log(formData)
+
+    if (!'photoFrmoFront') {
+      fetch('http://192.168.233.47:3000/profils/signup', {
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({lastname, firstname, email, password, city, role, birthDate,})
       })
-    })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        data.result && dispatch(login({ token: data.token, email }));
+        data.result && dispatch(login({ token: data.newDoc.token, lastname, firstname, email, city, role, birthDate: data.newDoc.birthDate, photo: data.newDoc.photo }));
         navigation.navigate('SignUpAnimal');
       });
+
+    } else {
+
+      fetch('http://192.168.233.47:3000/profils/signup', {
+        method: 'POST',
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          data.result && dispatch(login({ token: data.newDoc.token, lastname, firstname, email, city, role, birthDate: data.newDoc.birthDate, photo: data.newDoc.photo }));
+          navigation.navigate('SignUpAnimal');
+        });
+    }
+
+
+
+
   };
 
   return (
@@ -166,7 +194,7 @@ export default function SignUpScreenUser({ navigation }) {
                 autoCapitalize="none"
               />
             </View>
-            
+
             <View style={styles.input}>
               <Ionicons name="person" size={20} color="#33464d" />
               <TextInput
@@ -250,8 +278,8 @@ export default function SignUpScreenUser({ navigation }) {
           <TouchableOpacity
             style={styles.signUpButton}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('SignUpAnimal')}
-            // onPress={() => handleConnexion()}
+            // onPress={() => navigation.navigate('SignUpAnimal')}
+            onPress={() => handleConnexion()}
           >
             <Text style={styles.buttonText}>Confirmer</Text>
           </TouchableOpacity>
@@ -273,11 +301,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     marginBottom: 15,
-    
+
   },
   topMid: {
     alignItems: 'center',
-    
+
   },
   topText: {
     fontSize: 25,
@@ -292,7 +320,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
     alignItems: 'center',
-    
+
   },
   imagePicker: {
     borderRadius: 50,
@@ -331,6 +359,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingLeft: 10,
     color: '#5a7869',
+    width:'90%'
+
   },
   titleCheckbox: {
     fontSize: 20,
@@ -364,17 +394,17 @@ const styles = StyleSheet.create({
     color: '#33464d'
   },
   signUpButton: {
-    backgroundColor: '#8FD14F',
+    backgroundColor: '#5a7869',
+    borderColor: "#33464d", 
+    width: '55%',
     paddingVertical: 10,
-    paddingHorizontal: 30,
-    borderRadius: 10,
-    marginTop: 20,
-    borderWidth: 2,
-    borderColor: '#73A246'
+    alignItems: 'center',
+    borderRadius: 5,
+    borderWidth: 1.5
   },
   buttonText: {
     color: '#fff',
-    fontSize: 19,
-    fontWeight: 'bold'
+    fontSize: 23,
+    fontFamily: 'Montserrat-Bold'
   }
 });
