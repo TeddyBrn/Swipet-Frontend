@@ -101,25 +101,47 @@ export default function SignUpScreenAnimal({ navigation }) {
   // };
 
   const handleConnexion = () => {
-    fetch(`http://192.168.1.30:3000/profils/signup/animal/${user.token}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name,
-        birthDate,
-        animalType,
-        gender,
-        bio,
-        detail
+
+    const formData = new FormData();
+
+    formData.append('photoUrl', {
+    uri: photo,
+    name: 'photo.jpg',
+    type: 'image/jpeg',
+    });
+    formData.append('name', name);
+    formData.append('animalType', animalType);
+    formData.append('gender', gender);
+    formData.append('bio', bio);
+    formData.append('detail', detail);
+    formData.append('birthDate', birthDate)
+
+    if (!'photoUrl') {
+      fetch('http://192.168.233.47:3000/profils/signup', {
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({name, animalType, gender, bio, detail, birthDate})
       })
-    })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        data.result &&
-          dispatch(addAnimal({ name, birthDate, animalType, gender, bio, detail }));
-        navigation.navigate('TabNavigator');
+        data.result && dispatch(login({ token: data.newDoc.token, lastname, firstname, email, city, role, birthDate: data.newDoc.birthDate, photo: data.newDoc.photo }));
+        navigation.navigate('SignUpAnimal');
       });
+
+    } else {
+
+
+  fetch(`http://192.168.233.47:3000/animals/addanimal/${user.token}`, {
+    method: 'POST',
+    body: formData,
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      data.result && dispatch(addAnimal({  data }));
+      navigation.navigate('TabNavigator');
+    });
+  }
   };
 
  
