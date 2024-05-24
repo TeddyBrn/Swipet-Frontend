@@ -1,4 +1,4 @@
-import React, { useState,  useRef } from 'react';
+import React, { useState,  useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -163,6 +163,8 @@ export default function ProfileCard({ navigation }) {
             cardIndex={count} // index du profil actuellement visible
             backgroundColor={'transparent'}
             stackSize={4} // Nombre de cartes empilées en arrière-plan
+            stackScale={3}
+            stackSeparation={16}
           />
         </View>
         <View style={styles.actionButtons}>
@@ -176,7 +178,7 @@ export default function ProfileCard({ navigation }) {
             style={styles.buttonSwipe}
             activeOpacity={0.7}
             onPress={handleSwipeRight}>
-            <Ionicons name="heart" size={50} color="#89c1a5" />
+            <Ionicons name="heart" size={50} color="#8ad1ad" />
           </TouchableOpacity>
         </View>
       </View>
@@ -203,7 +205,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
-      height: 18
+      height: 20
     },
     shadowOpacity: 0.25,
     shadowRadius: 20.0,
@@ -225,13 +227,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 10
   },
   main: {
-    height: height * 0.77,
+    height: height * 0.75,
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
+
   },
   profileContainer: {
     // Adapter la hauteur à un pourcentage de la hauteur de l'écran
-    height: height * 0.7,
+    height: height * 0.68,
     // Adapter la largeur à un pourcentage de la largeur de l'écran
     width: width * 0.9,
     flexDirection: 'column',
@@ -245,7 +249,8 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 20.0,
-    elevation: 10
+    elevation: 10,
+    marginTop: -45
   },
   profileImage: {
     // Adapter la hauteur et la largeur à un pourcentage de la hauteur de l'écran

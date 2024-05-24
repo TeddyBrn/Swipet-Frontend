@@ -136,7 +136,7 @@ export default function SignUpScreenUser({ navigation }) {
     const urlJohan = "http://192.168.1.27:3000/profils/signup";
     const urlMael = "http://192.168.1.40:3000/profils/signup";
     try {
-      fetch(urlMael, {
+      fetch(urlT, {
         method: "POST",
         body: formData,
       })
