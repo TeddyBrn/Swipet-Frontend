@@ -101,6 +101,8 @@ export default function SignUpScreenUser({ navigation }) {
   //   hideDatePicker();
   // };
 
+  
+
   const handleConnexion = () => {
     if (!image) {
       setFieldError(true);
@@ -123,32 +125,18 @@ export default function SignUpScreenUser({ navigation }) {
 
     console.log(formData._parts[0]);
 
-    // if (!'photoFrmoFront') {
-    //   fetch('http://192.168.233.47:3000/profils/signup', {
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({lastname, firstname, email, password, city, role, birthDate,})
-    //   })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     data.result && dispatch(login({ token: data.newDoc.token, lastname, firstname, email, city, role, birthDate: data.newDoc.birthDate, photo: data.newDoc.photo }));
-    //     navigation.navigate('SignUpAnimal');
-    //   });
-
-    // } else {
-
-    const urlT = "http://192.168.1.30:3000/profils/signup";
-    const urlJohan = "http://192.168.1.27:3000/profils/signup";
-    const urlMael = "http://192.168.1.40:3000/profils/signup";
-    try {
-      fetch(urlT, {
-        method: "POST",
-        body: formData,
+    if (!image) {
+      fetch('http://192.168.233.47:3000/profils/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({lastname, firstname, email, password, city, role, birthDate,})
       })
-        .then((response) => response.json())
-        .then((data) => {
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('reponse du back',data)
+        if (data.result === true) {
           console.log(data);
-          if (data.result) {
+          // data.result &&
             dispatch(
               login({
                 token: data.newDoc.token,
@@ -161,17 +149,43 @@ export default function SignUpScreenUser({ navigation }) {
                 photo: data.newDoc.photo,
               })
             );
+          navigation.navigate("SignUpAnimal");
+        } 
+      });
+
+    } else {
+      try {
+      fetch('http://192.168.233.47:3000/profils/signup', {
+        method: 'POST',
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('reponse du back avec image',data)
+          if (data.result) {
+            console.log(data);
+            // data.result &&
+              dispatch(
+                login({
+                  token: data.newDoc.token,
+                  lastname,
+                  firstname,
+                  email,
+                  city,
+                  role,
+                  birthDate: data.newDoc.birthDate,
+                  photo: data.newDoc.photo,
+                })
+              );
             navigation.navigate("SignUpAnimal");
-          } else if (!data.result) {
-            setFieldError(true);
-          }
+          } 
         });
     } catch (e) {
       console.error(e);
       return e;
     }
   };
-  // }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
