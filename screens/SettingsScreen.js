@@ -145,10 +145,3 @@ const styles = StyleSheet.create({
 
 
 
-
-/* 
-
-
-onPress={() => {  dispatch(logout()); }
-
-*/
