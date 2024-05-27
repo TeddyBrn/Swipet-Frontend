@@ -14,6 +14,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { addAnimal, login } from '../reducers/users';
+import { BACKEND_ADRESS } from '../data/urlData';
 
 export default function ProfilScreen({ navigation }) {
 
@@ -44,7 +45,7 @@ export default function ProfilScreen({ navigation }) {
 
   const handleChange = () => {
 
-    fetch(`${url.Teddy}/settings/editprofile/${user.token}`, {
+    fetch(`${BACKEND_ADRESS}/settings/editprofile/${user.token}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

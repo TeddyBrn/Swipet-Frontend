@@ -15,7 +15,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 import { addAnimal, login } from '../reducers/users';
-import { url } from '../data/urlData';
+import { BACKEND_ADRESS } from '../data/urlData';
 
 export default function ProfilAnimalScreen({ navigation }) {
 
@@ -36,7 +36,7 @@ export default function ProfilAnimalScreen({ navigation }) {
 
   const handleChange = () => {
 
-    fetch(`${url.Teddy}/settings/editanimal/${user.token}/${user.profilAnimal._id}`, {
+    fetch(`${BACKEND_ADRESS}/settings/editanimal/${user.token}/${user.profilAnimal._id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

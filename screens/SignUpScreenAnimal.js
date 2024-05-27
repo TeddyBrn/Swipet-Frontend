@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addAnimal, login } from '../reducers/users';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import * as ImagePicker from 'expo-image-picker';
-import { url } from '../data/urlData';
+import { BACKEND_ADRESS } from '../data/urlData';
 
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
@@ -120,7 +120,7 @@ export default function SignUpScreenAnimal({ navigation }) {
     formData.append('age', age);
 
     if (!photo) {
-      fetch(`${url.Teddy}/animals/addanimal/${user.token}`, {
+      fetch(`${BACKEND_ADRESS}/animals/addanimal/${user.token}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -149,7 +149,7 @@ export default function SignUpScreenAnimal({ navigation }) {
           navigation.navigate('TabNavigator');
         });
     } else {
-      fetch(`${url.Teddy}/animals/addanimal/${user.token}`, {
+      fetch(`${BACKEND_ADRESS}/animals/addanimal/${user.token}`, {
         method: 'POST',
         body: formData
       })

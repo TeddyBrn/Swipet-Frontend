@@ -13,7 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLike } from '../reducers/users';
 import Swiper from 'react-native-deck-swiper';
-import { url } from '../data/urlData';
+import { BACKEND_ADRESS } from '../data/urlData';
 
 export default function ProfileCard({ navigation }) {
   const [profilsData, setProfilsData] = useState(null);
@@ -25,7 +25,7 @@ export default function ProfileCard({ navigation }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${url.Teddy}/profils/swipe/${user.role}`);
+        const response = await fetch(`${BACKEND_ADRESS}/profils/swipe/${user.role}`);
         const data = await response.json();
         if (data.result) {
           setProfilsData(data.data);
