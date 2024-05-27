@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../reducers/users";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { calculAge } from "../modules/calculAge";
+import { url } from '../data/urlData';
 
 export default function SignUpScreenUser({ navigation }) {
   const dispatch = useDispatch();
@@ -126,7 +127,7 @@ export default function SignUpScreenUser({ navigation }) {
     console.log(formData._parts[0]);
 
     if (!image) {
-      fetch('http://192.168.1.40:3000/profils/signup', {
+      fetch(`${url.Mael}/profils/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({lastname, firstname, email, password, city, role, birthDate,})
@@ -155,7 +156,7 @@ export default function SignUpScreenUser({ navigation }) {
 
     } else {
       try {
-      fetch('http://192.168.1.40:3000/profils/signup', {
+      fetch(`${url.Mael}/profils/signup`, {
         method: 'POST',
         body: formData,
       })
@@ -173,7 +174,7 @@ export default function SignUpScreenUser({ navigation }) {
                   email,
                   city,
                   role,
-                  birthDate: data.newDoc.birthDate,
+                  age,
                   photo: data.newDoc.photo,
                 })
               );

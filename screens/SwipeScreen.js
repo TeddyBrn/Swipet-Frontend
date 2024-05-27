@@ -1,4 +1,4 @@
-import React, { useState,  useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -13,17 +13,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLike } from '../reducers/users';
 import Swiper from 'react-native-deck-swiper';
-import { profilData } from '../data/profils';
+import { url } from '../data/urlData';
 
 export default function ProfileCard({ navigation }) {
   const [profilsData, setProfilsData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.users.value);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://192.168.1.40:3000/profils/petsitters');
+        const response = await fetch(`${url.Mael}/profils/swipe/${user.role}`);
         const data = await response.json();
         if (data.result) {
           setProfilsData(data.data);
@@ -39,9 +41,9 @@ export default function ProfileCard({ navigation }) {
     fetchData();
   }, []);
 
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.users.value);
+  
   console.log(`user.token => ${user.token}`);
+  console.log(`user.token => ${user.role}`);
 
   const addAlike = () => dispatch(addLike(profilsData[count]._id));
 
@@ -123,9 +125,15 @@ export default function ProfileCard({ navigation }) {
                     <Text style={styles.profileName}>
                       {card.firstname} , {card.age} ans
                     </Text>
-                    <Text style={styles.profileCity}> {card.city}</Text>
+                    <Text style={styles.profileCity}>
+                      <Ionicons
+                        name="location-outline"
+                        size={22}
+                        color="#33464d"
+                      />{' '}
+                      {card.city}
+                    </Text>
                     <View style={styles.ratingContainer}>
-                      
                       <View style={styles.ratingContainer}>
                         <Text style={styles.profileNote}>
                           {card.avis[0].note}/5
@@ -227,15 +235,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 10
   },
   main: {
-    height: height * 0.75,
+    height: height * 0.76,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    flexDirection: 'column',
-
+    flexDirection: 'column'
   },
   profileContainer: {
     // Adapter la hauteur à un pourcentage de la hauteur de l'écran
-    height: height * 0.68,
+    height: height * 0.70,
     // Adapter la largeur à un pourcentage de la largeur de l'écran
     width: width * 0.9,
     flexDirection: 'column',
