@@ -91,7 +91,7 @@ export default function SignUpScreenUser({ navigation }) {
     formData.append("age", age);
 
     if (!image) {
-      fetch(`${url.Teddy}/profils/signup`, {
+      fetch(`${url.Mael}/profils/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lastname, firstname, email, password, city, role, age })
@@ -114,23 +114,27 @@ export default function SignUpScreenUser({ navigation }) {
         });
 
     } else {
-      fetch(`${url.Teddy}/profils/signup`, {
+      try {
+      fetch(`${url.Mael}/profils/signup`, {
         method: 'POST',
         body: formData,
       })
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {
-            dispatch(login({
-              token: data.newDoc.token,
-              lastname,
-              firstname,
-              email,
-              city,
-              role,
-              age,
-              photo: data.newDoc.photo,
-            }));
+            console.log(data);
+              dispatch(
+                login({
+                  token: data.newDoc.token,
+                  lastname,
+                  firstname,
+                  email,
+                  city,
+                  role,
+                  age,
+                  photo: data.newDoc.photo,
+                })
+              );
             navigation.navigate("SignUpAnimal");
           }
         })
@@ -251,38 +255,37 @@ export default function SignUpScreenUser({ navigation }) {
               )}
             </View>
 
-            <Text style={styles.titleCheckbox}>Vous souhaitez :</Text>
-            <View style={styles.checkboxContainer}>
-              <View style={styles.checkbox}>
-                <Text style={styles.label}>Garder</Text>
-                <Checkbox
-                  value={checkbox1}
-                  onValueChange={() => handleCheckbox1()}
-                  style={styles.check}
-                />
-              </View>
-              <View style={styles.checkbox}>
-                <View>
-                  <Text style={styles.label}>Faire</Text>
-                  <Text style={styles.label}>garder</Text>
-                </View>
-                <Checkbox
-                  value={checkbox2}
-                  onValueChange={() => handleCheckbox2()}
-                  style={styles.check}
-                />
-              </View>
+          <Text style={styles.titleCheckbox}>Vous souhaitez :</Text>
+          <View style={styles.checkboxContainer}>
+            <View style={styles.checkbox}>
+              <Text style={styles.label}>Garder</Text>
+              <Checkbox
+                value={checkbox1}
+                onValueChange={() => handleCheckbox1()}
+                style={styles.check}
+              />
             </View>
-            <TouchableOpacity
-              style={styles.signUpButton}
-              activeOpacity={0.8}
-              onPress={() => navigation.navigate('SignUpAnimal')}
-              // onPress={() => handleConnexion()}
-            >
-              <Text style={styles.buttonText}>Confirmer</Text>
-            </TouchableOpacity>
+            <View style={styles.checkbox}>
+              <View>
+                <Text style={styles.label}>Faire</Text>
+                <Text style={styles.label}>garder</Text>
+              </View>
+              <Checkbox
+                value={checkbox2}
+                onValueChange={() => handleCheckbox2()}
+                style={styles.check}
+              />
+            </View>
           </View>
-        </ScrollView>
+          <TouchableOpacity
+            style={styles.signUpButton}
+            activeOpacity={0.8}
+            // onPress={() => navigation.navigate('SignUpAnimal')}
+            onPress={() => handleConnexion()}
+          >
+            <Text style={styles.buttonText}>Confirmer</Text>
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Image,
   KeyboardAvoidingView,
@@ -7,31 +7,31 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Text
-} from 'react-native';
-import { NavigationProp, ParamListBase } from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useDispatch } from 'react-redux';
-import { login } from '../reducers/users';
-import { url } from '../data/urlData';
+  Text,
+} from "react-native";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { useDispatch } from "react-redux";
+import { login } from "../reducers/users";
+import { url } from "../data/urlData";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export default function SignInScreen({ navigation }) {
-  const [signInEmail, setSignInEmail] = useState('');
+  const [signInEmail, setSignInEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
-  const [signInPassword, setSignInPassword] = useState('');
+  const [signInPassword, setSignInPassword] = useState("");
 
   const dispatch = useDispatch();
 
   const handleConnection = () => {
-    fetch(`${url.Teddy}/profils/signin`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    fetch(`${url.Mael}/profils/signin`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: signInEmail,
-        password: signInPassword
-      })
+        password: signInPassword,
+      }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -43,10 +43,10 @@ export default function SignInScreen({ navigation }) {
                 email: signInEmail,
                 firstname: data.firstname,
                 lastname: data.lastname,
-                role: data.role
+                role: data.role,
               })
             );
-            navigation.navigate('TabNavigator', { screen: 'Swipe' });
+            navigation.navigate("TabNavigator", { screen: "Swipe" });
           } else {
             setEmailError(true);
           }
@@ -58,15 +58,16 @@ export default function SignInScreen({ navigation }) {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}>
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       <View style={styles.backContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="chevron-back" size={60} color="#33464d" />
         </TouchableOpacity>
       </View>
       <View style={styles.logoContainer}>
-        <Image source={require('../assets/logo.jpg')} style={styles.logo} />
+        <Image source={require("../assets/logo.jpg")} style={styles.logo} />
       </View>
       <View style={styles.inputContainer}>
         {emailError && (
@@ -114,69 +115,69 @@ export default function SignInScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff'
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ffffff",
   },
   backContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 40,
-    left: 20
+    left: 20,
   },
   backButton: {
     width: 60,
     height: 40,
-    resizeMode: 'contain'
+    resizeMode: "contain",
   },
   logoContainer: {
-    alignItems: 'center',
-    marginBottom: 70
+    alignItems: "center",
+    marginBottom: 70,
   },
   logo: {
     width: 280,
     height: 280,
-    resizeMode: 'contain'
+    resizeMode: "contain",
   },
   inputContainer: {
-    width: '80%',
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    width: "80%",
+    justifyContent: "space-around",
+    alignItems: "center",
   },
   input: {
     borderRadius: 10,
     borderBottomWidth: 1.5,
-    width: '80%',
+    width: "80%",
     padding: 10,
     marginVertical: 10,
     paddingLeft: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#33464d'
+    flexDirection: "row",
+    alignItems: "center",
+    borderColor: "#33464d",
   },
   inputText: {
     fontSize: 18,
     paddingLeft: 10,
-    color: '#5a7869',
-    width: '90%',
+    color: "#5a7869",
+    width: "90%",
   },
   signInButton: {
-    backgroundColor: '#5a7869',
-    borderColor: '#33464d',
-    width: '55%',
+    backgroundColor: "#5a7869",
+    borderColor: "#33464d",
+    width: "55%",
     paddingVertical: 10,
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 5,
     borderWidth: 1.5,
-    marginTop: 80
+    marginTop: 80,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 23,
-    fontFamily: 'Montserrat-Bold'
+    fontFamily: "Montserrat-Bold",
   },
   error: {
-    color: '#e23636'
-  }
+    color: "#e23636",
+  },
 });
 
 /*
