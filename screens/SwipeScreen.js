@@ -38,14 +38,16 @@ export default function ProfileCard({ navigation }) {
         setLoading(false);
       }
     };
+    console.log(`user.role => ${user.role}`);
     fetchData();
   }, []);
 
-  
-  console.log(`user.token => ${user.token}`);
-  console.log(`user.token => ${user.role}`);
+  console.log(`user.token => ${user[0]}`);
 
-  const addAlike = () => dispatch(addLike(profilsData[count]._id));
+  const addAlike = () => {
+    dispatch(addLike(profilsData[count]._id));
+    fetch();
+  };
 
   const [count, setCount] = useState(0);
 
@@ -140,23 +142,64 @@ export default function ProfileCard({ navigation }) {
                         </Text>
                         {Array(5)
                           .fill()
-                          .map((_, i) =>
-                            i < Math.round(card.avis[0].note) ? (
-                              <Ionicons
-                                key={i}
-                                name="star"
-                                size={23}
-                                color="#ffce0c"
-                              />
-                            ) : (
-                              <Ionicons
-                                key={i}
-                                name="star"
-                                size={23}
-                                color="#444"
-                              />
-                            )
-                          )}
+                          .map((_, i) => {
+                            const fullStars = Math.floor(card.avis[0].note); // Partie entière de la note
+                            const fractionalStar = card.avis[0].note % 1; // Fraction de la note
+
+                            if (i < fullStars) {
+                              // Étoiles entières
+                              return (
+                                <Ionicons
+                                  key={i}
+                                  name="star"
+                                  size={23}
+                                  color="#ffce0c"
+                                />
+                              );
+                            } else if (i === fullStars && fractionalStar > 0) {
+                              // Étoile partielle
+                              return (
+                                <View
+                                  key={i}
+                                  style={{
+                                    position: 'relative',
+                                    width: 23,
+                                    height: 23
+                                  }}>
+                                  <Ionicons
+                                    name="star"
+                                    size={23}
+                                    color="#444"
+                                  />
+                                  <View
+                                    style={{
+                                      position: 'absolute',
+                                      top: 0,
+                                      left: 0,
+                                      width: `${fractionalStar * 100}%`,
+                                      height: '100%',
+                                      overflow: 'hidden'
+                                    }}>
+                                    <Ionicons
+                                      name="star"
+                                      size={23}
+                                      color="#ffce0c"
+                                    />
+                                  </View>
+                                </View>
+                              );
+                            } else {
+                              // Étoiles vides
+                              return (
+                                <Ionicons
+                                  key={i}
+                                  name="star"
+                                  size={23}
+                                  color="#444"
+                                />
+                              );
+                            }
+                          })}
                       </View>
                     </View>
                     <Text style={styles.bioLabel}>Bio</Text>
@@ -242,7 +285,7 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     // Adapter la hauteur à un pourcentage de la hauteur de l'écran
-    height: height * 0.70,
+    height: height * 0.7,
     // Adapter la largeur à un pourcentage de la largeur de l'écran
     width: width * 0.9,
     flexDirection: 'column',
