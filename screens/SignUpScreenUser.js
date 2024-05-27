@@ -165,7 +165,6 @@ export default function SignUpScreenUser({ navigation }) {
           console.log('reponse du back avec image',data)
           if (data.result) {
             console.log(data);
-            // data.result &&
               dispatch(
                 login({
                   token: data.newDoc.token,

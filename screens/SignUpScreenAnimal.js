@@ -35,6 +35,8 @@ export default function SignUpScreenAnimal({ navigation }) {
   const [detail, setDetail] = useState("");
   const [gender, setGender] = useState("");
   const [animalType, setAnimalType] = useState("");
+  const [fieldError, setFieldError] = useState(false);
+  const [image, setImage] = useState("");
 
   const [bioFocused, setBioFocused] = useState(false);
   const [detailFocused, setDetailFocused] = useState(false);
@@ -104,10 +106,14 @@ export default function SignUpScreenAnimal({ navigation }) {
   // };
 
   const handleConnexion = () => {
+    if (!image) {
+      setFieldError(true);
+      return;
+    }
     const formData = new FormData();
 
     formData.append("photoUrl", {
-      uri: photo,
+      uri: image,
       name: "photo.jpg",
       type: "image/jpeg",
     });
@@ -118,7 +124,7 @@ export default function SignUpScreenAnimal({ navigation }) {
     formData.append("detail", detail);
     formData.append("age", age);
 
-    if (!photo) {
+    if (!image) {
       fetch(`${url.Mael}/animals/addanimal/${user.token}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -134,7 +140,7 @@ export default function SignUpScreenAnimal({ navigation }) {
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          data.result &&
+          if (data.result) {
             dispatch(
               addAnimal({
                 name,
@@ -146,7 +152,9 @@ export default function SignUpScreenAnimal({ navigation }) {
                 photo: data.newDoc.photo,
               })
             );
-          navigation.navigate("TabNavigator");
+
+            navigation.navigate("TabNavigator");
+          }
         });
     } else {
       fetch(`${url.Mael}/animals/addanimal/${user.token}`, {
@@ -318,12 +326,15 @@ export default function SignUpScreenAnimal({ navigation }) {
               showsVerticalScrollIndicator={false}
               dropdownStyle={styles.dropdownMenuStyle}
             />
+            {fieldError && (
+              <Text style={styles.error}>Missing or empty fields.</Text>
+            )}
           </View>
           <TouchableOpacity
             style={styles.signUpButton}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('TabNavigator')}
-            // onPress={() => handleConnexion()}
+            // onPress={() => navigation.navigate("TabNavigator")}
+            onPress={() => handleConnexion()}
           >
             <Text style={styles.buttonText}>Confirmer</Text>
           </TouchableOpacity>
@@ -466,5 +477,9 @@ const styles = StyleSheet.create({
     borderColor: "#33464d",
     borderWidth: 1,
     borderBottomWidth: 1.5,
+  },
+  error: {
+    color: "#e23636",
+    fontSize: 16,
   },
 });
