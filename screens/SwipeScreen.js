@@ -25,7 +25,7 @@ export default function ProfileCard({ navigation }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${url.Teddy}/profils/swipe/${user.role}`);
+        const response = await fetch(`${url.Johan}/profils/swipe/${user.role}`);
         const data = await response.json();
         if (data.result) {
           setProfilsData(data.data);
@@ -38,12 +38,13 @@ export default function ProfileCard({ navigation }) {
         setLoading(false);
       }
     };
+    console.log(`user.role => ${user.role}`);
     fetchData();
   }, []);
 
   
   console.log(`user.token => ${user.token}`);
-  console.log(`user.token => ${user.role}`);
+  
 
   const addAlike = () => dispatch(addLike(profilsData[count]._id));
 
@@ -138,25 +139,60 @@ export default function ProfileCard({ navigation }) {
                         <Text style={styles.profileNote}>
                           {card.avis[0].note}/5
                         </Text>
-                        {Array(5)
-                          .fill()
-                          .map((_, i) =>
-                            i < Math.round(card.avis[0].note) ? (
-                              <Ionicons
-                                key={i}
-                                name="star"
-                                size={23}
-                                color="#ffce0c"
-                              />
-                            ) : (
-                              <Ionicons
-                                key={i}
-                                name="star"
-                                size={23}
-                                color="#444"
-                              />
-                            )
-                          )}
+                        {Array(5).fill().map((_, i) => {
+  const fullStars = Math.floor(card.avis[0].note); // Partie entière de la note
+  const fractionalStar = card.avis[0].note % 1; // Fraction de la note
+
+  if (i < fullStars) {
+    // Étoiles entières
+    return (
+      <Ionicons
+        key={i}
+        name="star"
+        size={23}
+        color="#ffce0c"
+      />
+    );
+  } else if (i === fullStars && fractionalStar > 0) {
+    // Étoile partielle
+    return (
+      <View key={i} style={{ position: 'relative', width: 23, height: 23 }}>
+        <Ionicons
+          name="star"
+          size={23}
+          color="#444"
+        />
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: `${fractionalStar * 100}%`,
+            height: '100%',
+            overflow: 'hidden'
+          }}
+        >
+          <Ionicons
+            name="star"
+            size={23}
+            color="#ffce0c"
+          />
+        </View>
+      </View>
+    );
+  } else {
+    // Étoiles vides
+    return (
+      <Ionicons
+        key={i}
+        name="star"
+        size={23}
+        color="#444"
+      />
+    );
+  }
+})}
+
                       </View>
                     </View>
                     <Text style={styles.bioLabel}>Bio</Text>
