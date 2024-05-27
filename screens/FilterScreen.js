@@ -13,13 +13,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { profilData } from '../data/profils';
 
-
 // fonctionnalité de filtre en cours...
 export let newArray = (profilData, ageValue, averageNote) => {
   let profilDataFilter = [];
 
   for (let i = 0; i < profilData.length; i++) {
-    if (profilData[i].age <= ageValue && profilData[i].avis[0].note >= averageNote) {
+    if (
+      profilData[i].age <= ageValue &&
+      profilData[i].avis[0].note >= averageNote
+    ) {
       profilDataFilter.push(profilData[i]);
     }
   }
@@ -27,13 +29,16 @@ export let newArray = (profilData, ageValue, averageNote) => {
   return profilDataFilter;
 };
 
-
-
 const ageData = [
   { label: '18 ans', value: 1 },
   { label: '25 ans', value: 2 },
   { label: '35 ans', value: 3 },
-  { label: '45 ans', value: 4 }
+  { label: '45 ans', value: 4 },
+  { label: '55 ans', value: 4 },
+  { label: '65 ans', value: 4 },
+  { label: '75 ans', value: 4 },
+  { label: '85 ans', value: 4 },
+  { label: '95 ans', value: 4 }
 ];
 
 const durationData = [
@@ -45,7 +50,8 @@ const durationData = [
 
 const FiltersScreen = ({ navigation }) => {
   const [kmValue, setKmValue] = useState(2);
-  const [ageValue, setAgeValue] = useState(null);
+  const [ageMinValue, setAgeMinValue] = useState(null);
+  const [ageMaxValue, setAgeMaxValue] = useState(null);
   const [averageNote, setAverageNote] = useState(0);
   const [durationValue, setDurationValue] = useState(null);
 
@@ -59,7 +65,7 @@ const FiltersScreen = ({ navigation }) => {
       <Ionicons
         key={i}
         name="star"
-        size={26}
+        size={23}
         color={style.color}
         onPress={() => setAverageNote(i + 1)}
         style={style}
@@ -68,66 +74,99 @@ const FiltersScreen = ({ navigation }) => {
   }
   // const handleValidate = () => {
   //   const filteredProfiles = newArray(profilData, ageValue, averageNote);
-  //   console.log(filteredProfiles); 
+  //   console.log(filteredProfiles);
   // };
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={styles.topContainer}>
-
           <View style={styles.topMid}>
             <Text style={styles.topText}>Filtres</Text>
           </View>
-
+        </View>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Choisissez vos préférences</Text>
         </View>
 
-        <Text style={styles.text}>Choisissez vos préférences</Text>
-        <View style={styles.optionsContainer}>
-          <Text style={styles.sliderValue}>
-            Distance: moins de {kmValue} Km
-          </Text>
-          <Slider
-            style={styles.slider}
-            minimumValue={2}
-            maximumValue={30}
-            step={2}
-            value={kmValue}
-            onValueChange={setKmValue}
-            minimumTrackTintColor="#5a7869"
-            maximumTrackTintColor="#222222"
-            thumbTintColor="#5a7869"
-          />
-          <Text style={styles.sliderValue}>Age minimum:</Text>
-          <Dropdown
-            style={styles.dropdown}
-            data={ageData}
-            labelField="label"
-            valueField="value"
-            value={ageValue}
-            onChange={(item) => setAgeValue(item.value)}
-            placeholder="rechercher un age minimum"
-            activeColor="#5a7869"
-            selectedTextStyle={styles.selectedTextStyle}
-          />
-          <Text style={styles.sliderValue}>Note minimum:</Text>
-          <Text style={styles.stars}>{stars}</Text>
-          <Text style={styles.sliderValue}>Durée:</Text>
-          <Dropdown
-            style={styles.dropdown}
-            data={durationData}
-            labelField="label"
-            valueField="value"
-            value={durationValue}
-            onChange={(item) => setDurationValue(item.value)}
-            placeholder="rechercher une durée"
-            activeColor="#5a7869"
-            selectedTextStyle={styles.selectedTextStyle}
-          />
+        <View style={styles.filterContainer}>
+          <View style={[styles.individualContainer, { paddingLeft: 20 }]}>
+            <Text style={styles.titleFilter}>Distance</Text>
+            <Slider
+              style={styles.slider}
+              minimumValue={2}
+              maximumValue={30}
+              step={2}
+              value={kmValue}
+              onValueChange={setKmValue}
+              minimumTrackTintColor="#5a7869"
+              maximumTrackTintColor="#222222"
+              thumbTintColor="#5a7869"
+            />
+            <View style={styles.sliderValueContainer}>
+              <Text style={styles.sliderValue}>{kmValue} Km</Text>
+            </View>
+          </View>
+
+          <View
+            style={[
+              styles.individualContainer,
+              {
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                alignItems: 'space-around'
+              }
+            ]}>
+            <View style={styles.ageContainer}>
+              <Text style={styles.titleFilter}>Age </Text>
+              <Dropdown
+                style={styles.dropdown}
+                data={ageData}
+                labelField="label"
+                valueField="value"
+                value={ageMinValue}
+                onChange={(item) => setAgeMinValue(item.value)}
+                placeholder="Age Min"
+                selectedTextStyle={styles.selectedTextStyle}
+              />
+            </View>
+            <View style={styles.ageContainer}>
+              <Dropdown
+                style={styles.dropdown}
+                data={ageData}
+                labelField="label"
+                valueField="value"
+                value={ageMaxValue}
+                onChange={(item) => setAgeMaxValue(item.value)}
+                placeholder="Age Max"
+                selectedTextStyle={styles.selectedTextStyle}
+              />
+            </View>
+          </View>
+
+          <View style={[styles.individualContainer, { paddingLeft: 20 }]}>
+            <Text style={styles.titleFilter}>Note Minimum</Text>
+            <Text style={{ marginVertical: 10 }}>{stars}</Text>
+          </View>
+
+          <View style={[styles.individualContainer, { paddingLeft: 20 }]}>
+            <Text style={styles.titleFilter}>Durée</Text>
+            <Dropdown
+              style={styles.dropdown}
+              data={durationData}
+              labelField="label"
+              valueField="value"
+              value={durationValue}
+              onChange={(item) => setDurationValue(item.value)}
+              placeholder="Sélectionnez une durée"
+              activeColor="#5a7869"
+              selectedTextStyle={styles.selectedTextStyle}
+            />
+          </View>
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} activeOpacity={0.8} >
+          <TouchableOpacity style={styles.button} activeOpacity={0.8}>
             <Text style={styles.buttonText}>Valider</Text>
           </TouchableOpacity>
         </View>
@@ -139,15 +178,15 @@ const FiltersScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff'
+    backgroundColor: '#ffffff60'
 
   },
   topContainer: {
     width: '100%',
-    height: 60,
+    height: '7%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 15,
     backgroundColor: '#fff',
     shadowColor: '#000000',
     shadowOffset: {
@@ -160,77 +199,113 @@ const styles = StyleSheet.create({
   },
   topMid: {
     alignItems: 'center'
-
   },
   topText: {
     fontSize: 25,
     fontFamily: 'Montserrat-Bold',
     color: '#33464d'
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginLeft: 20
-  },
-  text: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginTop: 20,
-    marginLeft: 45
-  },
-  button: {
-    backgroundColor: '#5a7869',
-    borderColor: "#33464d",
-    width: '55%',
-    paddingVertical: 10,
-    alignItems: 'center',
-    borderRadius: 5,
-    marginTop: 70,
-    borderWidth: 1.5
-  },
-  optionsContainer: {
-    backgroundColor: 'white',
-    width: '90%',
-    height: '55%',
-    paddingVertical: 15,
-    alignItems: 'center',
+  titleContainer: {
+    width: '100%',
     justifyContent: 'center',
-    marginTop: 30,
-    borderWidth: 5,
-    borderRadius: 20,
-    borderColor: '#33464d',
+    alignItems: 'center',
+    height: '8%',
+    // backgroundColor: '#efefef60'
+  },
+  title: {
+    fontSize: 23,
+    fontFamily: 'Montserrat-Bold',
+    color: '#33464d'
+  },
+  titleFilter: {
+    fontSize: 18,
+    fontFamily: 'Montserrat-Bold',
+    color: '#33464d'
+  },
+  filterContainer: {
+    width: '100%',
+    height: '70%',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     overflow: 'scroll',
-    marginLeft: 20,
+    // backgroundColor: '#efefef60'
+  },
+  individualContainer: {
+    width: '85%',
+    borderColor: '#33464d',
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: '#fff',
+    shadowColor: '#ccc',
+    shadowOffset: {
+      width: 0,
+      height: 20
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 20.0,
+    elevation: 10
+  },
+  sliderValueContainer: {
+    width: '26%',
+    borderWidth: 2,
+    borderColor: '#eee',
+    borderRadius: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10
   },
   sliderValue: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10
+    fontSize: 16,
+    fontFamily: 'Montserrat-Bold',
+    color: '#33464d'
   },
   slider: {
-    width: '100%',
+    width: '90%',
     height: 40
+  },
+  ageContainer: {
+    width: '40%'
   },
   dropdown: {
     width: '90%',
-    marginBottom: 20
+    marginVertical: 8,
+    borderWidth: 2,
+    borderColor: '#eee',
+    borderRadius: 5,
+    paddingHorizontal: 10
   },
   selectedTextStyle: {
     fontSize: 16,
-    color: '#5a7869',
-    fontWeight: 'bold'
-  },
-  stars: {
-    marginBottom: 15
+    fontFamily: 'Montserrat-Medium',
+    color: '#33464d'
   },
   buttonContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    height: '10%',
+    // backgroundColor: '#efefef60'
 
   },
+  button: {
+    backgroundColor: '#5a7869',
+    borderColor: '#33464d',
+    width: '55%',
+    paddingVertical: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+    borderWidth: 1.5,
+    shadowColor: '#ccc',
+    shadowOffset: {
+      width: 0,
+      height: 20
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 20.0,
+    elevation: 20
+  },
   buttonText: {
-    fontSize: 18,
-    color: '#FFF'
+    color: '#fff',
+    fontSize: 21,
+    fontFamily: 'Montserrat-Bold'
   }
 });
 
