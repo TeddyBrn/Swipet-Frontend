@@ -23,7 +23,7 @@ export default function ProfileCard({ navigation }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://192.168.1.30:3000/profils/petsitters');
+        const response = await fetch('http://192.168.1.40:3000/profils/petsitters');
         const data = await response.json();
         if (data.result) {
           setProfilsData(data.data);

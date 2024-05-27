@@ -28,7 +28,7 @@ export default function SignInScreen({ navigation }) {
   const urlRyad = 'http://192.168.233.47:3000/profils/signin';
 
   const handleConnection = () => {
-    fetch(urlRyad, {
+    fetch(urlMael, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

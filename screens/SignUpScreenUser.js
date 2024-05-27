@@ -126,7 +126,7 @@ export default function SignUpScreenUser({ navigation }) {
     console.log(formData._parts[0]);
 
     if (!image) {
-      fetch('http://192.168.233.47:3000/profils/signup', {
+      fetch('http://192.168.1.40:3000/profils/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({lastname, firstname, email, password, city, role, birthDate,})
@@ -155,7 +155,7 @@ export default function SignUpScreenUser({ navigation }) {
 
     } else {
       try {
-      fetch('http://192.168.233.47:3000/profils/signup', {
+      fetch('http://192.168.1.40:3000/profils/signup', {
         method: 'POST',
         body: formData,
       })
@@ -322,8 +322,8 @@ export default function SignUpScreenUser({ navigation }) {
           <TouchableOpacity
             style={styles.signUpButton}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('SignUpAnimal')}
-            // onPress={() => handleConnexion()}
+            // onPress={() => navigation.navigate('SignUpAnimal')}
+            onPress={() => handleConnexion()}
           >
             <Text style={styles.buttonText}>Confirmer</Text>
           </TouchableOpacity>
