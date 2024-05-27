@@ -8,8 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
-  Button,
-  Pressable,
+  ScrollView,
 } from "react-native";
 import Checkbox from "expo-checkbox";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -17,8 +16,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as ImagePicker from "expo-image-picker";
 import { useDispatch } from "react-redux";
 import { login } from "../reducers/users";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { calculAge } from "../modules/calculAge";
 import { url } from '../data/urlData';
 
 export default function SignUpScreenUser({ navigation }) {
@@ -35,7 +32,6 @@ export default function SignUpScreenUser({ navigation }) {
   const [fieldError, setFieldError] = useState(false);
 
   // ImagePicker
-
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -44,15 +40,12 @@ export default function SignUpScreenUser({ navigation }) {
       quality: 1,
     });
 
-    console.log(result.assets[0].uri);
-
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
   };
 
   // CheckBox
-
   const [checkbox1, setCheckbox1] = useState(false);
   const [checkbox2, setCheckbox2] = useState(false);
 
@@ -78,39 +71,12 @@ export default function SignUpScreenUser({ navigation }) {
     }
   };
 
-  // if (checkbox1 === true && checkbox2 === false) {
-  //   setRole('garder');
-  // }
-  // if (checkbox2 === true && checkbox1 === false) {
-  //   setRole('faire garder');
-  // }
-
-  // DatePicker
-
-  // const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-  // const showDatePicker = () => {
-  //   setDatePickerVisibility(true);
-  // };
-  // const hideDatePicker = () => {
-  //   setDatePickerVisibility(false);
-  // };
-
-  // const handleConfirm = (date) => {
-  //   console.warn(date);
-  //   setBirthDate(date);
-  //   hideDatePicker();
-  // };
-
-  
-
   const handleConnexion = () => {
     if (!image) {
       setFieldError(true);
       return;
     }
     const formData = new FormData();
-
     formData.append("photoFromFront", {
       uri: image,
       name: "photo.jpg",
@@ -124,211 +90,199 @@ export default function SignUpScreenUser({ navigation }) {
     formData.append("role", role);
     formData.append("age", age);
 
-    console.log(formData._parts[0]);
-
     if (!image) {
       fetch(`${url.Teddy}/profils/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({lastname, firstname, email, password, city, role, birthDate,})
+        body: JSON.stringify({ lastname, firstname, email, password, city, role, age })
       })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('reponse du back',data)
-        if (data.result === true) {
-          console.log(data);
-          // data.result &&
-            dispatch(
-              login({
-                token: data.newDoc.token,
-                lastname,
-                firstname,
-                email,
-                city,
-                role,
-                age,
-                photo: data.newDoc.photo,
-              })
-            );
-          navigation.navigate("SignUpAnimal");
-        } 
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result === true) {
+            dispatch(login({
+              token: data.newDoc.token,
+              lastname,
+              firstname,
+              email,
+              city,
+              role,
+              age,
+              photo: data.newDoc.photo,
+            }));
+            navigation.navigate("SignUpAnimal");
+          }
+        });
 
     } else {
-      try {
       fetch(`${url.Teddy}/profils/signup`, {
         method: 'POST',
         body: formData,
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log('reponse du back avec image',data)
           if (data.result) {
-            console.log(data);
-            // data.result &&
-              dispatch(
-                login({
-                  token: data.newDoc.token,
-                  lastname,
-                  firstname,
-                  email,
-                  city,
-                  role,
-                  birthDate: data.newDoc.birthDate,
-                  photo: data.newDoc.photo,
-                })
-              );
+            dispatch(login({
+              token: data.newDoc.token,
+              lastname,
+              firstname,
+              email,
+              city,
+              role,
+              age,
+              photo: data.newDoc.photo,
+            }));
             navigation.navigate("SignUpAnimal");
-          } 
-        });
-    } catch (e) {
-      console.error(e);
-      return e;
+          }
+        })
+        .catch((e) => console.error(e));
     }
-  };
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+        style={{ flex: 1 }}
       >
-        <View style={styles.topContainer}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="chevron-back" size={60} color="#33464d" />
-          </TouchableOpacity>
-          <View style={styles.topMid}>
-            <Text style={styles.topText}>Profil</Text>
-            <Text style={styles.topText}>Utilisateur</Text>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <View style={styles.topContainer}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons name="chevron-back" size={60} color="#33464d" />
+            </TouchableOpacity>
+            <View style={styles.topMid}>
+              <Text style={styles.topText}>Profil</Text>
+              <Text style={styles.topText}>Utilisateur</Text>
+            </View>
+            <Image
+              source={require("../assets/miniLogo.png")}
+              style={styles.logo}
+            />
           </View>
-          <Image
-            source={require("../assets/miniLogo.png")}
-            style={styles.logo}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <TouchableOpacity
-            style={styles.imagePicker}
-            activeOpacity={0.8}
-            onPress={pickImage}
-          >
-            {image ? (
-              <Image source={{ uri: image }} style={styles.image} />
-            ) : (
-              <Image
-                source={require("../assets/add-image.png")}
-                style={{ width: 60, height: 60, color: "#33464d" }}
-              />
-            )}
-          </TouchableOpacity>
-          <View style={styles.inputContain}>
-            <View style={styles.input}>
-              <Ionicons name="person" size={20} color="#33464d" />
-              <TextInput
-                style={styles.inputText}
-                onChangeText={(value) => setLastname(value)}
-                value={lastname}
-                placeholder="Nom"
-                placeholderTextColor="#5a7869"
-                autoCapitalize="none"
-              />
-            </View>
-
-            <View style={styles.input}>
-              <Ionicons name="person" size={20} color="#33464d" />
-              <TextInput
-                style={styles.inputText}
-                onChangeText={(value) => setFirstname(value)}
-                value={firstname}
-                placeholder="Prénom"
-                placeholderTextColor="#5a7869"
-                autoCapitalize="none"
-              />
-            </View>
-
-            <View style={styles.input}>
-              <Ionicons name="calendar" size={20} color="#33464d" />
-              <TextInput
-                style={styles.inputText}
-                onChangeText={(value) => setAge(value)}
-                value={age}
-                placeholder="Age"
-                placeholderTextColor="#5a7869"
-                autoCapitalize="none"
-                keyboardType="numeric"
-                maxLength={2}
-              />
-            </View>
-            <View style={styles.input}>
-              <Ionicons name="mail" size={20} color="#33464d" />
-              <TextInput
-                style={styles.inputText}
-                onChangeText={(value) => setEmail(value)}
-                value={email}
-                placeholder="E-mail"
-                placeholderTextColor="#5a7869"
-                keyboardType="email-address"
-                autoCapitalize="none"
-              />
-            </View>
-            <View style={styles.input}>
-              <Ionicons name="lock-closed" size={20} color="#33464d" />
-              <TextInput
-                style={styles.inputText}
-                onChangeText={(value) => setPassword(value)}
-                value={password}
-                placeholder="Mot de passe"
-                placeholderTextColor="#5a7869"
-                secureTextEntry
-              />
-            </View>
-            <View style={styles.input}>
-              <Ionicons name="business" size={20} color="#33464d" />
-              <TextInput
-                style={styles.inputText}
-                onChangeText={(value) => setCity(value)}
-                value={city}
-                placeholder="Ville"
-                placeholderTextColor="#5a7869"
-                autoCapitalize="none"
-              />
-            </View>
-            {fieldError && (
-              <Text style={styles.error}>Missing or empty fields.</Text>
-            )}
-          </View>
-
-          <Text style={styles.titleCheckbox}>Vous souhaitez :</Text>
-          <View style={styles.checkboxContainer}>
-            <View style={styles.checkbox}>
-              <Text style={styles.label}>Garder</Text>
-              <Checkbox
-                value={checkbox1}
-                onValueChange={() => handleCheckbox1()}
-                style={styles.check}
-              />
-            </View>
-            <View style={styles.checkbox}>
-              <View>
-                <Text style={styles.label}>Faire</Text>
-                <Text style={styles.label}>garder</Text>
+          <View style={styles.inputContainer}>
+            <TouchableOpacity
+              style={styles.imagePicker}
+              activeOpacity={0.8}
+              onPress={pickImage}
+            >
+              {image ? (
+                <Image source={{ uri: image }} style={styles.image} />
+              ) : (
+                <Image
+                  source={require("../assets/add-image.png")}
+                  style={{ width: 60, height: 60, color: "#33464d" }}
+                />
+              )}
+            </TouchableOpacity>
+            <View style={styles.inputContain}>
+              <View style={styles.input}>
+                <Ionicons name="person" size={20} color="#33464d" />
+                <TextInput
+                  style={styles.inputText}
+                  onChangeText={(value) => setLastname(value)}
+                  value={lastname}
+                  placeholder="Nom"
+                  placeholderTextColor="#5a7869"
+                  autoCapitalize="none"
+                />
               </View>
-              <Checkbox
-                value={checkbox2}
-                onValueChange={() => handleCheckbox2()}
-                style={styles.check}
-              />
+
+              <View style={styles.input}>
+                <Ionicons name="person" size={20} color="#33464d" />
+                <TextInput
+                  style={styles.inputText}
+                  onChangeText={(value) => setFirstname(value)}
+                  value={firstname}
+                  placeholder="Prénom"
+                  placeholderTextColor="#5a7869"
+                  autoCapitalize="none"
+                />
+              </View>
+
+              <View style={styles.input}>
+                <Ionicons name="calendar" size={20} color="#33464d" />
+                <TextInput
+                  style={styles.inputText}
+                  onChangeText={(value) => setAge(value)}
+                  value={age}
+                  placeholder="Age"
+                  placeholderTextColor="#5a7869"
+                  autoCapitalize="none"
+                  keyboardType="numeric"
+                  maxLength={2}
+                />
+              </View>
+              <View style={styles.input}>
+                <Ionicons name="mail" size={20} color="#33464d" />
+                <TextInput
+                  style={styles.inputText}
+                  onChangeText={(value) => setEmail(value)}
+                  value={email}
+                  placeholder="E-mail"
+                  placeholderTextColor="#5a7869"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+              </View>
+              <View style={styles.input}>
+                <Ionicons name="lock-closed" size={20} color="#33464d" />
+                <TextInput
+                  style={styles.inputText}
+                  onChangeText={(value) => setPassword(value)}
+                  value={password}
+                  placeholder="Mot de passe"
+                  placeholderTextColor="#5a7869"
+                  secureTextEntry
+                />
+              </View>
+              <View style={styles.input}>
+                <Ionicons name="business" size={20} color="#33464d" />
+                <TextInput
+                  style={styles.inputText}
+                  onChangeText={(value) => setCity(value)}
+                  value={city}
+                  placeholder="Ville"
+                  placeholderTextColor="#5a7869"
+                  autoCapitalize="none"
+                />
+              </View>
+              {fieldError && (
+                <Text style={styles.error}>Missing or empty fields.</Text>
+              )}
             </View>
+
+            <Text style={styles.titleCheckbox}>Vous souhaitez :</Text>
+            <View style={styles.checkboxContainer}>
+              <View style={styles.checkbox}>
+                <Text style={styles.label}>Garder</Text>
+                <Checkbox
+                  value={checkbox1}
+                  onValueChange={() => handleCheckbox1()}
+                  style={styles.check}
+                />
+              </View>
+              <View style={styles.checkbox}>
+                <View>
+                  <Text style={styles.label}>Faire</Text>
+                  <Text style={styles.label}>garder</Text>
+                </View>
+                <Checkbox
+                  value={checkbox2}
+                  onValueChange={() => handleCheckbox2()}
+                  style={styles.check}
+                />
+              </View>
+            </View>
+            <TouchableOpacity
+              style={styles.signUpButton}
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate('SignUpAnimal')}
+              // onPress={() => handleConnexion()}
+            >
+              <Text style={styles.buttonText}>Confirmer</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.signUpButton}
-            activeOpacity={0.8}
-            onPress={() => navigation.navigate('SignUpAnimal')}
-            // onPress={() => handleConnexion()}
-          >
-            <Text style={styles.buttonText}>Confirmer</Text>
-          </TouchableOpacity>
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
