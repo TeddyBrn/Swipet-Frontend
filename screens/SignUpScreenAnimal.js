@@ -125,7 +125,7 @@ export default function SignUpScreenAnimal({ navigation }) {
     formData.append("age", age);
 
     if (!image) {
-      fetch(`${url.Mael}/animals/addanimal/${user.token}`, {
+      fetch(`${url.Teddy}/animals/addanimal/${user.token}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -157,7 +157,7 @@ export default function SignUpScreenAnimal({ navigation }) {
           }
         });
     } else {
-      fetch(`${url.Mael}/animals/addanimal/${user.token}`, {
+      fetch(`${url.Teddy}/animals/addanimal/${user.token}`, {
         method: "POST",
         body: formData,
       })
