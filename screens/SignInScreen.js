@@ -13,6 +13,7 @@ import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
 import { login } from '../reducers/users';
+import { url } from '../data/urlData';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -22,13 +23,9 @@ export default function SignInScreen({ navigation }) {
   const [signInPassword, setSignInPassword] = useState('');
 
   const dispatch = useDispatch();
-  const urlT = 'http://192.168.1.30:3000/profils/signin';
-  const urlJohan = 'http://192.168.1.27:3000/profils/signin';
-  const urlMael = 'http://192.168.1.40:3000/profils/signin';
-  const urlRyad = 'http://192.168.233.47:3000/profils/signin';
 
   const handleConnection = () => {
-    fetch(urlRyad, {
+    fetch(`${url.Teddy}/profils/signin`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -45,7 +42,8 @@ export default function SignInScreen({ navigation }) {
                 token: data.token,
                 email: signInEmail,
                 firstname: data.firstname,
-                lastname: data.lastname
+                lastname: data.lastname,
+                role: data.role
               })
             );
             navigation.navigate('TabNavigator', { screen: 'Swipe' });

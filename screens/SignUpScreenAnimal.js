@@ -19,11 +19,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addAnimal, login } from '../reducers/users';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import * as ImagePicker from 'expo-image-picker';
-
+import { url } from '../data/urlData';
 
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
 export default function SignUpScreenAnimal({ navigation }) {
+
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
   console.log(user);
@@ -35,6 +36,9 @@ export default function SignUpScreenAnimal({ navigation }) {
   const [detail, setDetail] = useState('');
   const [gender, setGender] = useState('');
   const [animalType, setAnimalType] = useState('');
+
+  const [bioFocused, setBioFocused] = useState(false);
+  const [detailFocused, setDetailFocused] = useState(false);
 
   const dataGender = ['Male', 'Female'];
   const dataAnimalType = ['Chien', 'Chat', 'Lapin'];
@@ -101,51 +105,62 @@ export default function SignUpScreenAnimal({ navigation }) {
   // };
 
   const handleConnexion = () => {
-
     const formData = new FormData();
 
     formData.append('photoUrl', {
-    uri: photo,
-    name: 'photo.jpg',
-    type: 'image/jpeg',
+      uri: photo,
+      name: 'photo.jpg',
+      type: 'image/jpeg'
     });
     formData.append('name', name);
     formData.append('animalType', animalType);
     formData.append('gender', gender);
     formData.append('bio', bio);
     formData.append('detail', detail);
-    formData.append('age', age)
+    formData.append('age', age);
 
     if (!photo) {
-      fetch(`http://192.168.233.47:3000/animals/addanimal/${user.token}`, {
+      fetch(`${url.Teddy}/animals/addanimal/${user.token}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({name, animalType, gender, bio, detail, birthDate})
+        body: JSON.stringify({
+          name,
+          animalType,
+          gender,
+          bio,
+          detail,
+          birthDate
+        })
       })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        data.result && dispatch(addAnimal({ token: data.newDoc.token, name, animalType, gender, bio, birthDate }));
-        navigation.navigate('TabNavigator');
-      });
-
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          data.result &&
+            dispatch(
+              addAnimal({
+                token: data.newDoc.token,
+                name,
+                animalType,
+                gender,
+                bio,
+                birthDate
+              })
+            );
+          navigation.navigate('TabNavigator');
+        });
     } else {
-
-
-  fetch(`http://192.168.1.30:3000/animals/addanimal/${user.token}`, {
-    method: 'POST',
-    body: formData,
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      data.result && dispatch(addAnimal({ token: data.newDoc.token}));
-      navigation.navigate('TabNavigator');
-    });
-  }
+      fetch(`${url.Teddy}/animals/addanimal/${user.token}`, {
+        method: 'POST',
+        body: formData
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          data.result && dispatch(addAnimal({ token: data.newDoc.token }));
+          navigation.navigate('TabNavigator');
+        });
+    }
   };
-
- 
 
   return (
     <SafeAreaView style={styles.container}>
@@ -165,7 +180,7 @@ export default function SignUpScreenAnimal({ navigation }) {
           />
         </View>
         <View style={styles.inputContainer}>
-        <TouchableOpacity
+          <TouchableOpacity
             style={styles.imagePicker}
             activeOpacity={0.8}
             onPress={pickImage}>
@@ -203,30 +218,46 @@ export default function SignUpScreenAnimal({ navigation }) {
                 maxLength={2}
               />
             </View>
-            <View style={styles.input}>
+            <View style={[styles.input, bioFocused && styles.inputBioFocused]}>
               <TextInput
-                style={styles.inputText}
+                style={[
+                  styles.inputText,
+                  { paddingLeft: 0 },
+                  { textAlignVertical: 'top' }
+                ]}
                 onChangeText={(value) => setBio(value)}
                 value={bio}
                 placeholder="Bio"
                 placeholderTextColor="#5a7869"
                 autoCapitalize="none"
+                multiline={true}
+                numberOfLines={2}
+                onFocus={() => setBioFocused(true)}
+                onBlur={() => setBioFocused(false)}
               />
             </View>
-            <View style={styles.input}>
+            <View style={[styles.input, detailFocused && styles.inputDetailFocused]}>
               <TextInput
-                style={styles.inputText}
+                style={[
+                  styles.inputText,
+                  { paddingLeft: 0 },
+                  { textAlignVertical: 'top' }
+                ]}
                 onChangeText={(value) => setDetail(value)}
                 value={detail}
                 placeholder="Detail sur la garde"
                 placeholderTextColor="#5a7869"
                 autoCapitalize="none"
+                multiline={true}
+                numberOfLines={2}
+                onFocus={() => setDetailFocused(true)}
+                onBlur={() => setDetailFocused(false)}
               />
             </View>
             <SelectDropdown
               data={dataGender}
               onSelect={(selectedItem) => {
-                setGender(selectedItem)
+                setGender(selectedItem);
                 console.log(selectedItem);
               }}
               renderButton={(selectedItem, isOpened) => {
@@ -256,7 +287,7 @@ export default function SignUpScreenAnimal({ navigation }) {
             <SelectDropdown
               data={dataAnimalType}
               onSelect={(selectedItem) => {
-                setAnimalType(selectedItem)
+                setAnimalType(selectedItem);
                 console.log(selectedItem);
               }}
               renderButton={(selectedItem, isOpened) => {
@@ -288,8 +319,7 @@ export default function SignUpScreenAnimal({ navigation }) {
             style={styles.signUpButton}
             activeOpacity={0.8}
             // onPress={() => navigation.navigate('TabNavigator')}
-            onPress={() => handleConnexion()}
-            >
+            onPress={() => handleConnexion()}>
             <Text style={styles.buttonText}>Confirmer</Text>
           </TouchableOpacity>
         </View>
@@ -309,17 +339,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginBottom: 30,
-    
+    marginBottom: 30
   },
   topMid: {
     alignItems: 'center'
   },
   topText: {
     fontSize: 25,
-    fontFamily: 'Montserrat-Bold' ,
+    fontFamily: 'Montserrat-Bold',
     color: '#33464d'
-   },
+  },
   logo: {
     width: 85,
     height: 85,
@@ -352,7 +381,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   input: {
-    borderRadius: 10,
+    borderRadius: 5,
     borderBottomWidth: 1.5,
     width: '80%',
     padding: 10,
@@ -366,7 +395,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingLeft: 10,
     color: '#5a7869',
-    width:'90%'
+    width: '90%'
   },
   dropdownButtonStyle: {
     width: '80%',
@@ -410,7 +439,7 @@ const styles = StyleSheet.create({
   },
   signUpButton: {
     backgroundColor: '#5a7869',
-    borderColor: "#33464d", 
+    borderColor: '#33464d',
     width: '55%',
     paddingVertical: 10,
     alignItems: 'center',
@@ -422,5 +451,15 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 23,
     fontFamily: 'Montserrat-Bold'
+  },
+  inputBioFocused: {
+    borderColor: '#33464d',
+    borderWidth: 1,
+    borderBottomWidth: 1.5,
+  },
+  inputDetailFocused: {
+    borderColor: '#33464d',
+    borderWidth: 1,
+    borderBottomWidth: 1.5,
   }
 });

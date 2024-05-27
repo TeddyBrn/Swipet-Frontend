@@ -44,7 +44,7 @@ export default function ProfilScreen({ navigation }) {
 
   const handleChange = () => {
 
-    fetch(`http://192.168.233.47:3000/settings/editprofile/${user.token}`, {
+    fetch(`${url.Teddy}/settings/editprofile/${user.token}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

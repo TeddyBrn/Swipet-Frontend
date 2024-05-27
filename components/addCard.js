@@ -172,9 +172,7 @@ const styles = StyleSheet.create({
     width: '90%'
   },
   halfInputText: {
-    fontSize: 18,
-    paddingLeft: 0,
-    color: '#5a7869',
+    fontSize: 18,    color: '#5a7869',
     fontFamily: 'Quicksand-Bold',
     letterSpacing: 1,
     width: '90%'
