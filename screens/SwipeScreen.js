@@ -5,13 +5,15 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
-  ActivityIndicator
+  ActivityIndicator,
+  Modal
 } from 'react-native';
 import { Image } from 'expo-image';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLike } from '../reducers/users';
+import { addMatch } from '../reducers/matchs';
 import Swiper from 'react-native-deck-swiper';
 import { BACKEND_ADRESS } from '../data/urlData';
 
@@ -19,8 +21,11 @@ export default function ProfileCard({ navigation }) {
   const [profilsData, setProfilsData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
+  console.log(user.token)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,7 +51,16 @@ export default function ProfileCard({ navigation }) {
 
   const addAlike = () => {
     dispatch(addLike(profilsData[count]._id));
-    fetch();
+    fetch(`${BACKEND_ADRESS}/matchs/like/${user.token}/${profilsData[count]._id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+          }).then(response => response.json())
+            .then(data => {
+              if (data.message === 'new match created!') {
+                dispatch(addMatch(user._id, profilsData[count]._id))
+              }
+              setIsModalVisible(true)         
+            });
   };
 
   const [count, setCount] = useState(0);
@@ -112,6 +126,12 @@ export default function ProfileCard({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
+        {/* {isModalVisible && <View style={styles.modal}>
+          <Modal>
+            <TouchableOpacity onPress={setIsModalVisible(false)}>X</TouchableOpacity>
+            <Text>Vous avez un nouveau match!</Text>
+          </Modal>
+        </View>} */}
         <View style={styles.main}>
           <Swiper
             cards={profilsData} // Les données des profils à swiper
@@ -366,5 +386,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 20.0,
     elevation: 40
-  }
+  },
+  // modal: {
+  //   height: 200,
+  //   width: 200,
+  // },
 });
