@@ -129,12 +129,20 @@ export default function ProfileCard({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-        {/* {isModalVisible && <View style={styles.modal}>
-          <Modal>
-            <TouchableOpacity onPress={setIsModalVisible(false)}>X</TouchableOpacity>
-            <Text>Vous avez un nouveau match!</Text>
-          </Modal>
-        </View>} */}
+        <Modal
+          visible={isModalVisible}
+          transparent={true}
+          animationType="slide"
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <TouchableOpacity onPress={() => setIsModalVisible(false)} style={styles.closeButton}>
+                <Text style={styles.closeButtonText}>Fermer</Text>
+              </TouchableOpacity>
+              <Text style={styles.modalText}>Vous avez un nouveau match!</Text>
+            </View>
+          </View>
+        </Modal>
         <View style={styles.main}>
           <Swiper
             cards={profilsData} // Les données des profils à swiper
@@ -392,10 +400,44 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.15,
     shadowRadius: 20.0,
-    elevation: 40
+    elevation: 40,
   },
-  // modal: {
-  //   height: 200,
-  //   width: 200,
-  // },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#e1ede7",
+    borderRadius: 10,
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+      height: height * 0.3,
+      width: width * 0.9,
+  },
+  closeButton: {
+    alignSelf: "flex-end",
+    // borderColor: "#000000",
+    // borderWidth: 1.5,
+    height: height * 0.1,
+    width: width * 0.4,
+    marginTop: -90,
+    
+  },
+  closeButtonText: {
+    fontSize: 20,
+    color: "#f74c4f",
+    borderBottomWidth: 1.5,
+    borderBottomColor: "#f74c4f",
+    alignSelf: "center",
+    
+  },
+  modalText: {
+    fontSize: 20,
+    color: "#333",
+
+  },
+
 });
