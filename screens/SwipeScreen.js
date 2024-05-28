@@ -59,8 +59,8 @@ export default function ProfileCard({ navigation }) {
             .then(data => {
               if (data.message === 'new match created!') {
                 dispatch(addMatch(user._id, profilsData[count]._id))
+                setIsModalVisible(true)         
               }
-              setIsModalVisible(true)         
             });
   };
 
