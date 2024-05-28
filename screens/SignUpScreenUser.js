@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Image,
   KeyboardAvoidingView,
@@ -8,27 +8,27 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
-  ScrollView,
-} from "react-native";
-import Checkbox from "expo-checkbox";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { SafeAreaView } from "react-native-safe-area-context";
-import * as ImagePicker from "expo-image-picker";
-import { useDispatch } from "react-redux";
-import { login } from "../reducers/users";
+  ScrollView
+} from 'react-native';
+import Checkbox from 'expo-checkbox';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import * as ImagePicker from 'expo-image-picker';
+import { useDispatch } from 'react-redux';
+import { login } from '../reducers/users';
 import { url } from '../data/urlData';
 
 export default function SignUpScreenUser({ navigation }) {
   const dispatch = useDispatch();
 
-  const [image, setImage] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [city, setCity] = useState("");
-  const [age, setAge] = useState("");
-  const [role, setRole] = useState("");
+  const [image, setImage] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [firstname, setFirstname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [city, setCity] = useState('');
+  const [age, setAge] = useState('');
+  const [role, setRole] = useState('');
   const [fieldError, setFieldError] = useState(false);
 
   // ImagePicker
@@ -37,7 +37,7 @@ export default function SignUpScreenUser({ navigation }) {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 1
     });
 
     if (!result.canceled) {
@@ -50,24 +50,24 @@ export default function SignUpScreenUser({ navigation }) {
   const [checkbox2, setCheckbox2] = useState(false);
 
   const handleCheckbox1 = () => {
-    if (checkbox2 === false) {
+    if (!checkbox2) {
       setCheckbox1(true);
-      setRole("garder");
+      setRole('garder');
     } else {
       setCheckbox2(false);
       setCheckbox1(true);
-      setRole("garder");
+      setRole('garder');
     }
   };
 
   const handleCheckbox2 = () => {
-    if (checkbox1 === false) {
+    if (!checkbox1) {
       setCheckbox2(true);
-      setRole("faire garder");
+      setRole('faire garder');
     } else {
       setCheckbox1(false);
       setCheckbox2(true);
-      setRole("faire garder");
+      setRole('faire garder');
     }
   };
 
@@ -77,52 +77,61 @@ export default function SignUpScreenUser({ navigation }) {
       return;
     }
     const formData = new FormData();
-    formData.append("photoFromFront", {
+    formData.append('photoFromFront', {
       uri: image,
-      name: "photo.jpg",
-      type: "image/jpeg",
+      name: 'photo.jpg',
+      type: 'image/jpeg'
     });
-    formData.append("lastname", lastname);
-    formData.append("firstname", firstname);
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("city", city);
-    formData.append("role", role);
-    formData.append("age", age);
+    formData.append('lastname', lastname);
+    formData.append('firstname', firstname);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('city', city);
+    formData.append('role', role);
+    formData.append('age', age);
 
     if (!image) {
-      fetch(`${url.Mael}/profils/signup`, {
+      fetch(`${url.Teddy}/profils/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lastname, firstname, email, password, city, role, age })
+        body: JSON.stringify({
+          lastname,
+          firstname,
+          email,
+          password,
+          city,
+          role,
+          age
+        })
       })
         .then((response) => response.json())
         .then((data) => {
           if (data.result === true) {
-            dispatch(login({
-              token: data.newDoc.token,
-              lastname,
-              firstname,
-              email,
-              city,
-              role,
-              age,
-              photo: data.newDoc.photo,
-            }));
-            navigation.navigate("SignUpAnimal");
+            dispatch(
+              login({
+                token: data.newDoc.token,
+                lastname,
+                firstname,
+                email,
+                city,
+                role,
+                age,
+                photo: data.newDoc.photo
+              })
+            );
+            navigation.navigate('SignUpAnimal');
           }
         });
-
     } else {
       try {
-      fetch(`${url.Mael}/profils/signup`, {
-        method: 'POST',
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.result) {
-            console.log(data);
+        fetch(`${url.Teddy}/profils/signup`, {
+          method: 'POST',
+          body: formData
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.result) {
+              console.log(data);
               dispatch(
                 login({
                   token: data.newDoc.token,
@@ -132,23 +141,26 @@ export default function SignUpScreenUser({ navigation }) {
                   city,
                   role,
                   age,
-                  photo: data.newDoc.photo,
+                  photo: data.newDoc.photo
                 })
               );
-            navigation.navigate("SignUpAnimal");
-          }
-        })
-        .catch((e) => console.error(e));
+              navigation.navigate('SignUpAnimal');
+            }
+          })
+          .catch((e) => console.error(e));
+      } catch (e) {
+        console.error(e);
+        return e;
+      }
     }
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
-        style={{ flex: 1 }}
-      >
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+        style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View style={styles.topContainer}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -159,22 +171,22 @@ export default function SignUpScreenUser({ navigation }) {
               <Text style={styles.topText}>Utilisateur</Text>
             </View>
             <Image
-              source={require("../assets/miniLogo.png")}
+              source={require('../assets/miniLogo.png')}
               style={styles.logo}
             />
           </View>
+
           <View style={styles.inputContainer}>
             <TouchableOpacity
               style={styles.imagePicker}
               activeOpacity={0.8}
-              onPress={pickImage}
-            >
+              onPress={pickImage}>
               {image ? (
                 <Image source={{ uri: image }} style={styles.image} />
               ) : (
                 <Image
-                  source={require("../assets/add-image.png")}
-                  style={{ width: 60, height: 60, color: "#33464d" }}
+                  source={require('../assets/add-image.png')}
+                  style={{ width: 60, height: 60, color: '#33464d' }}
                 />
               )}
             </TouchableOpacity>
@@ -255,37 +267,37 @@ export default function SignUpScreenUser({ navigation }) {
               )}
             </View>
 
-          <Text style={styles.titleCheckbox}>Vous souhaitez :</Text>
-          <View style={styles.checkboxContainer}>
-            <View style={styles.checkbox}>
-              <Text style={styles.label}>Garder</Text>
-              <Checkbox
-                value={checkbox1}
-                onValueChange={() => handleCheckbox1()}
-                style={styles.check}
-              />
-            </View>
-            <View style={styles.checkbox}>
-              <View>
-                <Text style={styles.label}>Faire</Text>
-                <Text style={styles.label}>garder</Text>
+            <Text style={styles.titleCheckbox}>Vous souhaitez :</Text>
+            <View style={styles.checkboxContainer}>
+              <View style={styles.checkbox}>
+                <Text style={styles.label}>Garder</Text>
+                <Checkbox
+                  value={checkbox1}
+                  onValueChange={() => handleCheckbox1()}
+                  style={styles.check}
+                />
               </View>
-              <Checkbox
-                value={checkbox2}
-                onValueChange={() => handleCheckbox2()}
-                style={styles.check}
-              />
+              <View style={styles.checkbox}>
+                <View>
+                  <Text style={styles.label}>Faire</Text>
+                  <Text style={styles.label}>garder</Text>
+                </View>
+                <Checkbox
+                  value={checkbox2}
+                  onValueChange={() => handleCheckbox2()}
+                  style={styles.check}
+                />
+              </View>
             </View>
+            <TouchableOpacity
+              style={styles.signUpButton}
+              activeOpacity={0.8}
+              // onPress={() => navigation.navigate('SignUpAnimal')}
+              onPress={() => handleConnexion()}>
+              <Text style={styles.buttonText}>Confirmer</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.signUpButton}
-            activeOpacity={0.8}
-            onPress={() => navigation.navigate('SignUpAnimal')}
-            // onPress={() => handleConnexion()}
-          >
-            <Text style={styles.buttonText}>Confirmer</Text>
-          </TouchableOpacity>
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -294,119 +306,119 @@ export default function SignUpScreenUser({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    backgroundColor: "#ffffff",
+    alignItems: 'center',
+    backgroundColor: '#ffffff'
   },
   topContainer: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-    marginBottom: 15,
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginBottom: 15
   },
   topMid: {
-    alignItems: "center",
+    alignItems: 'center'
   },
   topText: {
     fontSize: 25,
-    fontFamily: "Montserrat-Bold",
-    color: "#33464d",
+    fontFamily: 'Montserrat-Bold',
+    color: '#33464d'
   },
   logo: {
     width: 85,
     height: 85,
-    resizeMode: "contain",
+    resizeMode: 'contain'
   },
   inputContainer: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center'
   },
   imagePicker: {
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: "#33464d",
+    borderColor: '#33464d',
     width: 100,
     height: 100,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: -30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: -30
   },
   image: {
     borderRadius: 50,
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%'
   },
   inputContain: {
-    width: "95%",
+    width: '95%',
     padding: 10,
     paddingLeft: 20,
     marginTop: 20,
-    alignItems: "center",
+    alignItems: 'center'
   },
   input: {
     borderRadius: 10,
     borderBottomWidth: 1.5,
-    width: "80%",
+    width: '80%',
     padding: 10,
     marginVertical: 10,
     paddingLeft: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    borderColor: "#33464d",
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#33464d'
   },
   inputText: {
     fontSize: 18,
     paddingLeft: 10,
-    color: "#5a7869",
-    width: "90%",
+    color: '#5a7869',
+    width: '90%'
   },
   titleCheckbox: {
     fontSize: 20,
-    fontFamily: "Montserrat-Bold",
+    fontFamily: 'Montserrat-Bold',
     paddingVertical: 20,
-    color: "#33464d",
+    color: '#33464d'
   },
   checkboxContainer: {
-    display: "flex",
-    flexDirection: "row",
-    width: "80%",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingBottom: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    width: '80%',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingBottom: 30
   },
   checkbox: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
     width: 130,
     height: 60,
     borderRadius: 5,
     borderWidth: 1.5,
-    backgroundColor: "#fff",
-    borderColor: "#dfdfe1",
+    backgroundColor: '#fff',
+    borderColor: '#dfdfe1'
   },
   label: {
     fontSize: 18,
-    fontFamily: "Montserrat-Bold",
-    color: "#33464d",
+    fontFamily: 'Montserrat-Bold',
+    color: '#33464d'
   },
   signUpButton: {
-    backgroundColor: "#5a7869",
-    borderColor: "#33464d",
-    width: "55%",
+    backgroundColor: '#5a7869',
+    borderColor: '#33464d',
+    width: '55%',
     paddingVertical: 10,
-    alignItems: "center",
+    alignItems: 'center',
     borderRadius: 5,
-    borderWidth: 1.5,
+    borderWidth: 1.5
   },
   buttonText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 23,
-    fontFamily: "Montserrat-Bold",
+    fontFamily: 'Montserrat-Bold'
   },
   error: {
-    color: "#e23636",
-    fontSize: 16,
-  },
+    color: '#e23636',
+    fontSize: 16
+  }
 });

@@ -25,7 +25,7 @@ export default function SignInScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const handleConnection = () => {
-    fetch(`${url.Mael}/profils/signin`, {
+    fetch(`${url.Teddy}/profils/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

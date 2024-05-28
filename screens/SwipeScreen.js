@@ -25,7 +25,7 @@ export default function ProfileCard({ navigation }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${url.Mael}/profils/swipe/${user.role}`);
+        const response = await fetch(`${url.Teddy}/profils/swipe/${user.role}`);
         const data = await response.json();
         if (data.result) {
           setProfilsData(data.data);
