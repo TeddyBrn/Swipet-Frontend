@@ -1,376 +1,424 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  TouchableOpacity,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
-  Dimensions,
-  ActivityIndicator,
-} from "react-native";
-import { Image } from "expo-image";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch, useSelector } from "react-redux";
-import { addLike } from "../reducers/users";
-import Swiper from "react-native-deck-swiper";
-import { BACKEND_ADRESS } from "../data/urlData";
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  ScrollView
+} from 'react-native';
+import Checkbox from 'expo-checkbox';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import * as ImagePicker from 'expo-image-picker';
+import { useDispatch } from 'react-redux';
+import { login } from '../reducers/users';
+import { BACKEND_ADRESS } from '../data/urlData';
 
-export default function ProfileCard({ navigation }) {
-  const [profilsData, setProfilsData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+export default function SignUpScreenUser({ navigation }) {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.users.value);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const [image, setImage] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [firstname, setFirstname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [city, setCity] = useState('');
+  const [age, setAge] = useState('');
+  const [role, setRole] = useState('');
+  const [fieldError, setFieldError] = useState(false);
+
+  // ImagePicker
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  // CheckBox
+  const [checkbox1, setCheckbox1] = useState(false);
+  const [checkbox2, setCheckbox2] = useState(false);
+
+  const handleCheckbox1 = () => {
+    if (!checkbox2) {
+      setCheckbox1(true);
+      setRole('garder');
+    } else {
+      setCheckbox2(false);
+      setCheckbox1(true);
+      setRole('garder');
+    }
+  };
+
+  const handleCheckbox2 = () => {
+    if (!checkbox1) {
+      setCheckbox2(true);
+      setRole('faire garder');
+    } else {
+      setCheckbox1(false);
+      setCheckbox2(true);
+      setRole('faire garder');
+    }
+  };
+
+  const handleConnexion = () => {
+    if (!image) {
+      setFieldError(true);
+      return;
+    }
+    const formData = new FormData();
+    formData.append('photoFromFront', {
+      uri: image,
+      name: 'photo.jpg',
+      type: 'image/jpeg'
+    });
+    formData.append('lastname', lastname);
+    formData.append('firstname', firstname);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('city', city);
+    formData.append('role', role);
+    formData.append('age', age);
+
+    if (!image) {
+      fetch(`${BACKEND_ADRESS}/profils/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          lastname,
+          firstname,
+          email,
+          password,
+          city,
+          role,
+          age
+        })
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result === true) {
+            dispatch(
+              login({
+                token: data.newDoc.token,
+                lastname,
+                firstname,
+                email,
+                city,
+                role,
+                age,
+                photo: data.newDoc.photo
+              })
+            );
+            navigation.navigate('SignUpAnimal');
+          }
+        });
+    } else {
       try {
-        const response = await fetch(`${BACKEND_ADRESS}/profils/swipe/${user.role}`);
-        const data = await response.json();
-        if (data.result) {
-          setProfilsData(data.data);
-        } else {
-          setError("Failed to fetch profiles");
-        }
-      } catch (err) {
-        setError("An error occurred");
-      } finally {
-        setLoading(false);
+        fetch(`${BACKEND_ADRESS}/profils/signup`, {
+          method: 'POST',
+          body: formData
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.result) {
+              console.log(data);
+              dispatch(
+                login({
+                  token: data.newDoc.token,
+                  lastname,
+                  firstname,
+                  email,
+                  city,
+                  role,
+                  age,
+                  photo: data.newDoc.photo
+                })
+              );
+              navigation.navigate('SignUpAnimal');
+            }
+          })
+          .catch((e) => console.error(e));
+      } catch (e) {
+        console.error(e);
+        return e;
       }
-    };
-    console.log(`user.role => ${user.role}`);
-    fetchData();
-  }, []);
-
-  console.log(`user.token => ${user[0]}`);
-
-  const addAlike = () => {
-    dispatch(addLike(profilsData[count]._id));
-    fetch();
-  };
-
-  const [count, setCount] = useState(0);
-
-  const handleLike = () => {
-    setCount(count + 1);
-    addAlike();
-  };
-  console.log(`user.like => ${user.like}`);
-
-  const handleDislike = () => {
-    setCount(count + 1);
-  };
-
-  const swiperRef = useRef(null);
-
-  const handleSwipeLeft = () => {
-    if (swiperRef.current) {
-      swiperRef.current.swipeLeft();
     }
   };
-
-  const handleSwipeRight = () => {
-    if (swiperRef.current) {
-      swiperRef.current.swipeRight();
-    }
-  };
-
-  if (loading) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </SafeAreaView>
-    );
-  }
-
-  if (error) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <Text>{error}</Text>
-      </SafeAreaView>
-    );
-  }
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.i}>
-        <View style={styles.header}>
-          <Image
-            source={require("../assets/miniLogo.png")}
-            style={styles.logo}
-          />
-          <View style={styles.headerR}>
-            <TouchableOpacity
-              style={styles.iconButton}
-              onPress={() => navigation.navigate("Notifications")}
-            >
-              <Ionicons name="notifications" size={35} color="#33464d" />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+        style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <View style={styles.topContainer}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons name="chevron-back" size={60} color="#33464d" />
             </TouchableOpacity>
+            <View style={styles.topMid}>
+              <Text style={styles.topText}>Profil</Text>
+              <Text style={styles.topText}>Utilisateur</Text>
+            </View>
+            <Image
+              source={require('../assets/miniLogo.png')}
+              style={styles.logo}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
             <TouchableOpacity
-              style={styles.iconButton}
-              onPress={() => navigation.navigate("Settings")}
-            >
-              <Ionicons name="settings-outline" size={35} color="#33464d" />
+              style={styles.imagePicker}
+              activeOpacity={0.8}
+              onPress={pickImage}>
+              {image ? (
+                <Image source={{ uri: image }} style={styles.image} />
+              ) : (
+                <Image
+                  source={require('../assets/add-image.png')}
+                  style={{ width: 60, height: 60, color: '#33464d' }}
+                />
+              )}
+            </TouchableOpacity>
+            <View style={styles.inputContain}>
+              <View style={styles.input}>
+                <Ionicons name="person" size={20} color="#33464d" />
+                <TextInput
+                  style={styles.inputText}
+                  onChangeText={(value) => setLastname(value)}
+                  value={lastname}
+                  placeholder="Nom"
+                  placeholderTextColor="#5a7869"
+                  autoCapitalize="none"
+                />
+              </View>
+
+              <View style={styles.input}>
+                <Ionicons name="person" size={20} color="#33464d" />
+                <TextInput
+                  style={styles.inputText}
+                  onChangeText={(value) => setFirstname(value)}
+                  value={firstname}
+                  placeholder="Prénom"
+                  placeholderTextColor="#5a7869"
+                  autoCapitalize="none"
+                />
+              </View>
+
+              <View style={styles.input}>
+                <Ionicons name="calendar" size={20} color="#33464d" />
+                <TextInput
+                  style={styles.inputText}
+                  onChangeText={(value) => setAge(value)}
+                  value={age}
+                  placeholder="Age"
+                  placeholderTextColor="#5a7869"
+                  autoCapitalize="none"
+                  keyboardType="numeric"
+                  maxLength={2}
+                />
+              </View>
+              <View style={styles.input}>
+                <Ionicons name="mail" size={20} color="#33464d" />
+                <TextInput
+                  style={styles.inputText}
+                  onChangeText={(value) => setEmail(value)}
+                  value={email}
+                  placeholder="E-mail"
+                  placeholderTextColor="#5a7869"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+              </View>
+              <View style={styles.input}>
+                <Ionicons name="lock-closed" size={20} color="#33464d" />
+                <TextInput
+                  style={styles.inputText}
+                  onChangeText={(value) => setPassword(value)}
+                  value={password}
+                  placeholder="Mot de passe"
+                  placeholderTextColor="#5a7869"
+                  secureTextEntry
+                />
+              </View>
+              <View style={styles.input}>
+                <Ionicons name="business" size={20} color="#33464d" />
+                <TextInput
+                  style={styles.inputText}
+                  onChangeText={(value) => setCity(value)}
+                  value={city}
+                  placeholder="Ville"
+                  placeholderTextColor="#5a7869"
+                  autoCapitalize="none"
+                />
+              </View>
+              {fieldError && (
+                <Text style={styles.error}>Missing or empty fields.</Text>
+              )}
+            </View>
+
+            <Text style={styles.titleCheckbox}>Vous souhaitez :</Text>
+            <View style={styles.checkboxContainer}>
+              <View style={styles.checkbox}>
+                <Text style={styles.label}>Garder</Text>
+                <Checkbox
+                  value={checkbox1}
+                  onValueChange={() => handleCheckbox1()}
+                  style={styles.check}
+                />
+              </View>
+              <View style={styles.checkbox}>
+                <View>
+                  <Text style={styles.label}>Faire</Text>
+                  <Text style={styles.label}>garder</Text>
+                </View>
+                <Checkbox
+                  value={checkbox2}
+                  onValueChange={() => handleCheckbox2()}
+                  style={styles.check}
+                />
+              </View>
+            </View>
+            <TouchableOpacity
+              style={styles.signUpButton}
+              activeOpacity={0.8}
+              // onPress={() => navigation.navigate('SignUpAnimal')}
+              onPress={() => handleConnexion()}>
+              <Text style={styles.buttonText}>Confirmer</Text>
             </TouchableOpacity>
           </View>
-        </View>
-        <View style={styles.main}>
-          <Swiper
-            cards={profilsData} // Les données des profils à swiper
-            ref={swiperRef}
-            renderCard={(card) => {
-              return (
-                <View style={styles.profileContainer}>
-                  <Image
-                    style={styles.profileImage}
-                    source={{ uri: card.url }}
-                  />
-                  <View style={styles.infos}>
-                    <Text style={styles.profileName}>
-                      {card.firstname} , {card.age} ans
-                    </Text>
-                    <Text style={styles.profileCity}>
-                      <Ionicons
-                        name="location-outline"
-                        size={22}
-                        color="#33464d"
-                      />{" "}
-                      {card.city}
-                    </Text>
-                    <View style={styles.ratingContainer}>
-                      <View style={styles.ratingContainer}>
-                        <Text style={styles.profileNote}>
-                          {card.avis[0].note}/5
-                        </Text>
-                        {Array(5)
-                          .fill()
-                          .map((_, i) => {
-                            const fullStars = Math.floor(card.avis[0].note); // Partie entière de la note
-                            const fractionalStar = card.avis[0].note % 1; // Fraction de la note
-
-                            if (i < fullStars) {
-                              // Étoiles entières
-                              return (
-                                <Ionicons
-                                  key={i}
-                                  name="star"
-                                  size={23}
-                                  color="#ffce0c"
-                                />
-                              );
-                            } else if (i === fullStars && fractionalStar > 0) {
-                              // Étoile partielle
-                              return (
-                                <View
-                                  key={i}
-                                  style={{
-                                    position: "relative",
-                                    width: 23,
-                                    height: 23,
-                                  }}
-                                >
-                                  <Ionicons
-                                    name="star"
-                                    size={23}
-                                    color="#444"
-                                  />
-                                  <View
-                                    style={{
-                                      position: "absolute",
-                                      top: 0,
-                                      left: 0,
-                                      width: `${fractionalStar * 100}%`,
-                                      height: "100%",
-                                      overflow: "hidden",
-                                    }}
-                                  >
-                                    <Ionicons
-                                      name="star"
-                                      size={23}
-                                      color="#ffce0c"
-                                    />
-                                  </View>
-                                </View>
-                              );
-                            } else {
-                              // Étoiles vides
-                              return (
-                                <Ionicons
-                                  key={i}
-                                  name="star"
-                                  size={23}
-                                  color="#444"
-                                />
-                              );
-                            }
-                          })}
-                      </View>
-                    </View>
-                    <Text style={styles.bioLabel}>Bio</Text>
-                    <Text style={styles.bioText}>{card.bio}</Text>
-                  </View>
-                </View>
-              );
-            }}
-            verticalSwipe={false}
-            onSwipedLeft={handleDislike}
-            onSwipedRight={handleLike}
-            cardIndex={count} // index du profil actuellement visible
-            backgroundColor={"transparent"}
-            stackSize={4} // Nombre de cartes empilées en arrière-plan
-            stackScale={3}
-            stackSeparation={16}
-          />
-        </View>
-        <View style={styles.actionButtons}>
-          <TouchableOpacity
-            style={styles.buttonSwipe}
-            activeOpacity={0.7}
-            onPress={handleSwipeLeft}
-          >
-            <Ionicons name="close-outline" size={65} color="#f74c4f" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonSwipe}
-            activeOpacity={0.7}
-            onPress={handleSwipeRight}
-          >
-            <Ionicons name="heart" size={50} color="#8ad1ad" />
-          </TouchableOpacity>
-        </View>
-      </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
 
-// Récupère les dimensions de l'écran
-const { width, height } = Dimensions.get("window");
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#ffffff'
   },
-  i: {
-    flex: 1,
-    backgroundColor: "#fff",
+  topContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginBottom: 15
   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 20,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 20.0,
-    elevation: 20,
+  topMid: {
+    alignItems: 'center'
   },
-  headerR: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 10,
+  topText: {
+    fontSize: 25,
+    fontFamily: 'Montserrat-Bold',
+    color: '#33464d'
   },
   logo: {
-    width: 60,
-    height: 60,
-    contentFit: "contain", //"resizeMode" is deprecated, use "contentFit" instead
-    marginLeft: 20,
-    marginVertical: 5,
+    width: 85,
+    height: 85,
+    resizeMode: 'contain'
   },
-  iconButton: {
-    marginHorizontal: 10,
+  inputContainer: {
+    flex: 1,
+    alignItems: 'center'
   },
-  main: {
-    height: height * 0.76,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    flexDirection: "column",
-  },
-  profileContainer: {
-    // Adapter la hauteur à un pourcentage de la hauteur de l'écran
-    height: height * 0.7,
-    // Adapter la largeur à un pourcentage de la largeur de l'écran
-    width: width * 0.9,
-    flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: "#e1ede7",
-    borderRadius: 15,
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 18,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 20.0,
-    elevation: 10,
-    marginTop: -45,
-  },
-  profileImage: {
-    // Adapter la hauteur et la largeur à un pourcentage de la hauteur de l'écran
-    width: "100%",
-    height: height * 0.35,
-    borderTopEndRadius: 15,
-    borderTopStartRadius: 15,
-    borderRadius: 3,
-  },
-  infos: {
-    width: "90%",
-    marginTop: 5,
-  },
-  profileName: {
-    fontSize: 30,
-    fontFamily: "Quicksand-Bold",
-  },
-  profileCity: {
-    fontSize: 20,
-    fontFamily: "Quicksand-SemiBold",
-    color: "#666",
-  },
-  ratingContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  profileNote: {
-    fontSize: 20,
-    fontFamily: "Quicksand-SemiBold",
-    color: "#666",
-    paddingHorizontal: 10,
-  },
-  bioLabel: {
-    fontSize: 25,
-    color: "#222",
-    fontFamily: "Quicksand-Bold",
-    marginTop: 20,
-    marginBottom: 5,
-  },
-  bioText: {
-    fontSize: 20,
-    fontFamily: "Quicksand-SemiBold",
-    color: "#666",
-  },
-  actionButtons: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
-  },
-  buttonSwipe: {
-    backgroundColor: "#fff",
+  imagePicker: {
     borderRadius: 50,
-    height: 70,
-    width: 70,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 18,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 20.0,
-    elevation: 40,
+    borderWidth: 2,
+    borderColor: '#33464d',
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: -30
   },
+  image: {
+    borderRadius: 50,
+    width: '100%',
+    height: '100%'
+  },
+  inputContain: {
+    width: '95%',
+    padding: 10,
+    paddingLeft: 20,
+    marginTop: 20,
+    alignItems: 'center'
+  },
+  input: {
+    borderRadius: 10,
+    borderBottomWidth: 1.5,
+    width: '80%',
+    padding: 10,
+    marginVertical: 10,
+    paddingLeft: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#33464d'
+  },
+  inputText: {
+    fontSize: 18,
+    paddingLeft: 10,
+    color: '#5a7869',
+    width: '90%'
+  },
+  titleCheckbox: {
+    fontSize: 20,
+    fontFamily: 'Montserrat-Bold',
+    paddingVertical: 20,
+    color: '#33464d'
+  },
+  checkboxContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '80%',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingBottom: 30
+  },
+  checkbox: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: 130,
+    height: 60,
+    borderRadius: 5,
+    borderWidth: 1.5,
+    backgroundColor: '#fff',
+    borderColor: '#dfdfe1'
+  },
+  label: {
+    fontSize: 18,
+    fontFamily: 'Montserrat-Bold',
+    color: '#33464d'
+  },
+  signUpButton: {
+    backgroundColor: '#5a7869',
+    borderColor: '#33464d',
+    width: '55%',
+    paddingVertical: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+    borderWidth: 1.5
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 23,
+    fontFamily: 'Montserrat-Bold'
+  },
+  error: {
+    color: '#e23636',
+    fontSize: 16
+  }
 });
