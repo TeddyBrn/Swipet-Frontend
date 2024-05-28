@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -35,10 +35,10 @@ export default function ProfileCard({ navigation }) {
         if (data.result) {
           setProfilsData(data.data);
         } else {
-          setError('Failed to fetch profiles');
+          setError("Failed to fetch profiles");
         }
       } catch (err) {
-        setError('An error occurred');
+        setError("An error occurred");
       } finally {
         setLoading(false);
       }
@@ -110,18 +110,20 @@ export default function ProfileCard({ navigation }) {
       <View style={styles.i}>
         <View style={styles.header}>
           <Image
-            source={require('../assets/miniLogo.png')}
+            source={require("../assets/miniLogo.png")}
             style={styles.logo}
           />
           <View style={styles.headerR}>
             <TouchableOpacity
               style={styles.iconButton}
-              onPress={() => navigation.navigate('Notifications')}>
+              onPress={() => navigation.navigate("Notifications")}
+            >
               <Ionicons name="notifications" size={35} color="#33464d" />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.iconButton}
-              onPress={() => navigation.navigate('Settings')}>
+              onPress={() => navigation.navigate("Settings")}
+            >
               <Ionicons name="settings-outline" size={35} color="#33464d" />
             </TouchableOpacity>
           </View>
@@ -152,7 +154,7 @@ export default function ProfileCard({ navigation }) {
                         name="location-outline"
                         size={22}
                         color="#33464d"
-                      />{' '}
+                      />{" "}
                       {card.city}
                     </Text>
                     <View style={styles.ratingContainer}>
@@ -182,10 +184,11 @@ export default function ProfileCard({ navigation }) {
                                 <View
                                   key={i}
                                   style={{
-                                    position: 'relative',
+                                    position: "relative",
                                     width: 23,
-                                    height: 23
-                                  }}>
+                                    height: 23,
+                                  }}
+                                >
                                   <Ionicons
                                     name="star"
                                     size={23}
@@ -193,13 +196,14 @@ export default function ProfileCard({ navigation }) {
                                   />
                                   <View
                                     style={{
-                                      position: 'absolute',
+                                      position: "absolute",
                                       top: 0,
                                       left: 0,
                                       width: `${fractionalStar * 100}%`,
-                                      height: '100%',
-                                      overflow: 'hidden'
-                                    }}>
+                                      height: "100%",
+                                      overflow: "hidden",
+                                    }}
+                                  >
                                     <Ionicons
                                       name="star"
                                       size={23}
@@ -232,7 +236,7 @@ export default function ProfileCard({ navigation }) {
             onSwipedLeft={handleDislike}
             onSwipedRight={handleLike}
             cardIndex={count} // index du profil actuellement visible
-            backgroundColor={'transparent'}
+            backgroundColor={"transparent"}
             stackSize={4} // Nombre de cartes empilées en arrière-plan
             stackScale={3}
             stackSeparation={16}
@@ -242,13 +246,15 @@ export default function ProfileCard({ navigation }) {
           <TouchableOpacity
             style={styles.buttonSwipe}
             activeOpacity={0.7}
-            onPress={handleSwipeLeft}>
+            onPress={handleSwipeLeft}
+          >
             <Ionicons name="close-outline" size={65} color="#f74c4f" />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttonSwipe}
             activeOpacity={0.7}
-            onPress={handleSwipeRight}>
+            onPress={handleSwipeRight}
+          >
             <Ionicons name="heart" size={50} color="#8ad1ad" />
           </TouchableOpacity>
         </View>
@@ -258,137 +264,142 @@ export default function ProfileCard({ navigation }) {
 }
 
 // Récupère les dimensions de l'écran
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   i: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: "#fff",
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    shadowColor: '#000000',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    shadowColor: "#000000",
     shadowOffset: {
       width: 0,
-      height: 20
+      height: 20,
     },
     shadowOpacity: 0.25,
     shadowRadius: 20.0,
-    elevation: 20
+    elevation: 20,
   },
   headerR: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 10
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 10,
   },
   logo: {
     width: 60,
     height: 60,
-    contentFit: 'contain', //"resizeMode" is deprecated, use "contentFit" instead
+    contentFit: "contain", //"resizeMode" is deprecated, use "contentFit" instead
     marginLeft: 20,
-    marginVertical: 5
+    marginVertical: 5,
   },
   iconButton: {
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   main: {
     height: height * 0.76,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    flexDirection: 'column'
+    alignItems: "center",
+    justifyContent: "flex-start",
+    flexDirection: "column",
   },
   profileContainer: {
     // Adapter la hauteur à un pourcentage de la hauteur de l'écran
     height: height * 0.7,
     // Adapter la largeur à un pourcentage de la largeur de l'écran
     width: width * 0.9,
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: '#e1ede7',
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#e1ede7",
     borderRadius: 15,
-    shadowColor: '#000000',
+    shadowColor: "#000000",
     shadowOffset: {
       width: 0,
-      height: 18
+      height: 18,
     },
     shadowOpacity: 0.25,
     shadowRadius: 20.0,
     elevation: 10,
-    marginTop: -45
+    marginTop: -45,
   },
   profileImage: {
     // Adapter la hauteur et la largeur à un pourcentage de la hauteur de l'écran
-    width: '100%',
+    width: "100%",
     height: height * 0.35,
     borderTopEndRadius: 15,
     borderTopStartRadius: 15,
-    borderRadius: 3
+    borderRadius: 3,
   },
   infos: {
-    width: '90%',
-    marginTop: 5
+    width: "90%",
+    marginTop: 5,
   },
   profileName: {
     fontSize: 30,
-    fontFamily: 'Quicksand-Bold'
+    fontFamily: "Quicksand-Bold",
   },
   profileCity: {
     fontSize: 20,
-    fontFamily: 'Quicksand-SemiBold',
-    color: '#666'
+    fontFamily: "Quicksand-SemiBold",
+    color: "#666",
   },
   ratingContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   profileNote: {
     fontSize: 20,
-    fontFamily: 'Quicksand-SemiBold',
-    color: '#666',
-    paddingHorizontal: 10
+    fontFamily: "Quicksand-SemiBold",
+    color: "#666",
+    paddingHorizontal: 10,
   },
   bioLabel: {
     fontSize: 25,
-    color: '#222',
-    fontFamily: 'Quicksand-Bold',
+    color: "#222",
+    fontFamily: "Quicksand-Bold",
     marginTop: 20,
-    marginBottom: 5
+    marginBottom: 5,
   },
   bioText: {
     fontSize: 20,
-    fontFamily: 'Quicksand-SemiBold',
-    color: '#666'
+    fontFamily: "Quicksand-SemiBold",
+    color: "#666",
   },
   actionButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%'
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
   },
   buttonSwipe: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 50,
     height: 70,
     width: 70,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000000',
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000000",
     shadowOffset: {
       width: 0,
-      height: 18
+      height: 18,
     },
     shadowOpacity: 0.15,
     shadowRadius: 20.0,
+<<<<<<< HEAD
     elevation: 40
   },
   // modal: {
   //   height: 200,
   //   width: 200,
   // },
+=======
+    elevation: 40,
+  },
+>>>>>>> 18fc31611e4280bc78e888525da65b02d5d7c142
 });
