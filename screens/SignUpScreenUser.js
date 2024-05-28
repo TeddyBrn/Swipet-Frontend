@@ -421,8 +421,4 @@ const styles = StyleSheet.create({
     color: '#e23636',
     fontSize: 16
   }
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> 18fc31611e4280bc78e888525da65b02d5d7c142

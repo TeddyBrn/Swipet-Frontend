@@ -391,15 +391,10 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.15,
     shadowRadius: 20.0,
-<<<<<<< HEAD
     elevation: 40
   },
   // modal: {
   //   height: 200,
   //   width: 200,
   // },
-=======
-    elevation: 40,
-  },
->>>>>>> 18fc31611e4280bc78e888525da65b02d5d7c142
 });
