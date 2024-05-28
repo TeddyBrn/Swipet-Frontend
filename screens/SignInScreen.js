@@ -39,11 +39,12 @@ export default function SignInScreen({ navigation }) {
           if (data.result) {
             dispatch(
               login({
-                token: data.token,
+                token: data.data.token,
                 email: signInEmail,
-                firstname: data.firstname,
-                lastname: data.lastname,
-                role: data.role,
+                firstname: data.data.firstname,
+                lastname: data.data.lastname,
+                role: data.data.role,
+                city: data.data.city
               })
             );
             navigation.navigate("TabNavigator", { screen: "Swipe" });

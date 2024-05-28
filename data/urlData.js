@@ -5,4 +5,4 @@ export const url = {
   Ryad: 'http://192.168.233.47:3000'
 };
 
-export const BACKEND_ADRESS = url.Johan;
+export const BACKEND_ADRESS = url.Ryad;
