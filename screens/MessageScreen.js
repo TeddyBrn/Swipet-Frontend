@@ -4,12 +4,11 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   TextInput,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from "react-native";
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -19,19 +18,24 @@ import { profilData } from "../data/profils";
 
 
 export default function MessageScreen({navigation}) {
-
-  const [matchsData, setMatchsData] = useState(null);
+  const [matchsData, setMatchsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const user = useSelector((state) => state.users.value);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log('r')
         const response = await fetch(`${BACKEND_ADRESS}/matchs/${user.token}`);
         const data = await response.json();
-        if (data.result) {
-          setMatchsData(data.data);
+        console.log('b')
+        if (data.result) {  
+          setMatchsData([data.data]);
+          console.log('yes')
         } else {
+          console.log('no')
           setError("Failed to fetch matchs");
         }
       } catch (err) {
