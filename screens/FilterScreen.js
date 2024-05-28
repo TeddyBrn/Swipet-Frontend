@@ -73,8 +73,13 @@ const FiltersScreen = ({ navigation }) => {
     dispatch(addAgeMax(ageMaxValue));
     dispatch(addNoteMin(averageNote));
     dispatch(addTime(durationValue));
+    console.log(`handle validate click`);
   }
-  console.log(`filter => ${filter}`);
+
+  console.log(`filter distance => ${filter.distance}`);
+  console.log(`filter tranche d'age => ${filter.ageMin} - ${filter.ageMax}`);
+  console.log(`filter averageNote => ${filter.noteMin}`);
+  console.log(`filter durée => ${filter.time}`);
 
   const stars = [];
   for (let i = 0; i < 5; i++) {
