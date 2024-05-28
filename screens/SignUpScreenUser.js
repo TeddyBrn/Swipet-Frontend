@@ -16,7 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 import { useDispatch } from 'react-redux';
 import { login } from '../reducers/users';
-import { url } from '../data/urlData';
+import { BACKEND_ADRESS } from '../data/urlData';
 
 export default function SignUpScreenUser({ navigation }) {
   const dispatch = useDispatch();
@@ -91,7 +91,7 @@ export default function SignUpScreenUser({ navigation }) {
     formData.append('age', age);
 
     if (!image) {
-      fetch(`${url.Teddy}/profils/signup`, {
+      fetch(`${BACKEND_ADRESS}/profils/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -124,7 +124,7 @@ export default function SignUpScreenUser({ navigation }) {
         });
     } else {
       try {
-        fetch(`${url.Teddy}/profils/signup`, {
+        fetch(`${BACKEND_ADRESS}/profils/signup`, {
           method: 'POST',
           body: formData
         })
@@ -421,4 +421,8 @@ const styles = StyleSheet.create({
     color: '#e23636',
     fontSize: 16
   }
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 18fc31611e4280bc78e888525da65b02d5d7c142

@@ -8,18 +8,18 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
-  Pressable,
-} from "react-native";
-import Checkbox from "expo-checkbox";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { SafeAreaView } from "react-native-safe-area-context";
-import SelectDropdown from "react-native-select-dropdown";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { useDispatch, useSelector } from "react-redux";
-import { addAnimal, login } from "../reducers/users";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import * as ImagePicker from "expo-image-picker";
-import { url } from "../data/urlData";
+  Pressable
+} from 'react-native';
+import Checkbox from 'expo-checkbox';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import SelectDropdown from 'react-native-select-dropdown';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useDispatch, useSelector } from 'react-redux';
+import { addAnimal, login } from '../reducers/users';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import * as ImagePicker from 'expo-image-picker';
+import { BACKEND_ADRESS } from '../data/urlData';
 
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 
@@ -124,10 +124,10 @@ export default function SignUpScreenAnimal({ navigation }) {
     formData.append("detail", detail);
     formData.append("age", age);
 
-    if (!image) {
-      fetch(`${url.Teddy}/animals/addanimal/${user.token}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+    if (!photo) {
+      fetch(`${BACKEND_ADRESS}/animals/addanimal/${user.token}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name,
           animalType,
@@ -157,9 +157,9 @@ export default function SignUpScreenAnimal({ navigation }) {
           }
         });
     } else {
-      fetch(`${url.Teddy}/animals/addanimal/${user.token}`, {
-        method: "POST",
-        body: formData,
+      fetch(`${BACKEND_ADRESS}/animals/addanimal/${user.token}`, {
+        method: 'POST',
+        body: formData
       })
         .then((response) => response.json())
         .then((data) => {

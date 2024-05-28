@@ -29,7 +29,7 @@ import ProfileAnimalScreen from './screens/ProfilAnimalScreen';
 import HistoriqueScreen from './screens/HistoriqueScreen';
 import AvisScreen from './screens/AvisScreen';
 import PaymentScreen from './screens/PaymentScreen';
-import MyProfilScreen from './screens/MyProfilScreen';
+import MyProfil from './screens/MyProfil';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -120,7 +120,7 @@ export default function App() {
           <Stack.Screen name="Payment" component={PaymentScreen} />
           <Stack.Screen name="Historique" component={HistoriqueScreen} />
           <Stack.Screen name="Avis" component={AvisScreen} />
-          <Stack.Screen name="MyProfil" component={MyProfilScreen} />
+          <Stack.Screen name="MyProfil" component={MyProfil} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

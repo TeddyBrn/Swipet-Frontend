@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import Swiper from 'react-native-deck-swiper';
 import { url } from '../data/urlData';
 
-export default function ProfileCard({ navigation }) {
+export default function MyProfil({ navigation }) {
   const [card, setCard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

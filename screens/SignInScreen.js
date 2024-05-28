@@ -7,13 +7,13 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Text,
-} from "react-native";
-import { NavigationProp, ParamListBase } from "@react-navigation/native";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { useDispatch } from "react-redux";
-import { login } from "../reducers/users";
-import { url } from "../data/urlData";
+  Text
+} from 'react-native';
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useDispatch } from 'react-redux';
+import { login } from '../reducers/users';
+import { BACKEND_ADRESS } from '../data/urlData';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -25,9 +25,9 @@ export default function SignInScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const handleConnection = () => {
-    fetch(`${url.Teddy}/profils/signin`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    fetch(`${BACKEND_ADRESS}/profils/signin`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: signInEmail,
         password: signInPassword,
