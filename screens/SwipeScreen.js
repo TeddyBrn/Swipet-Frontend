@@ -48,6 +48,7 @@ export default function ProfileCard({ navigation }) {
   }, []);
 
   console.log(`user.token => ${user.token}`);
+  // console.log(`user.token => ${user}`);
 
   const addAlike = () => {
     dispatch(addLike(profilsData[count]._id));

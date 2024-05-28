@@ -55,7 +55,8 @@ export default function SettingsScreen({ navigation }) {
           </TouchableOpacity>
         </View>
         <View style={styles.littleBtnContainer}>
-          <TouchableOpacity style={[styles.button, styles.viewButton]}>
+          <TouchableOpacity style={[styles.button, styles.viewButton]}
+          onPress={() => navigation.navigate('MyProfil')}>
             <Text style={[styles.buttonText, styles.color]}>Voir Profil</Text>
           </TouchableOpacity>
 
