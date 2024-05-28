@@ -25,7 +25,7 @@ export default function ProfileCard({ navigation }) {
   
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
-  console.log(user.token)
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,7 +47,8 @@ export default function ProfileCard({ navigation }) {
     fetchData();
   }, []);
 
-  console.log(`user.token => ${user[0]}`);
+  console.log(`user.token => ${user.token}`);
+  // console.log(`user.token => ${user}`);
 
   const addAlike = () => {
     dispatch(addLike(profilsData[count]._id));
@@ -152,7 +153,7 @@ export default function ProfileCard({ navigation }) {
                     <Text style={styles.profileCity}>
                       <Ionicons
                         name="location-outline"
-                        size={22}
+                        size={18}
                         color="#33464d"
                       />{" "}
                       {card.city}
@@ -174,7 +175,7 @@ export default function ProfileCard({ navigation }) {
                                 <Ionicons
                                   key={i}
                                   name="star"
-                                  size={23}
+                                  size={18}
                                   color="#ffce0c"
                                 />
                               );
@@ -185,13 +186,13 @@ export default function ProfileCard({ navigation }) {
                                   key={i}
                                   style={{
                                     position: "relative",
-                                    width: 23,
-                                    height: 23,
+                                    width: 18,
+                                    height: 18,
                                   }}
                                 >
                                   <Ionicons
                                     name="star"
-                                    size={23}
+                                    size={18}
                                     color="#444"
                                   />
                                   <View
@@ -206,7 +207,7 @@ export default function ProfileCard({ navigation }) {
                                   >
                                     <Ionicons
                                       name="star"
-                                      size={23}
+                                      size={18}
                                       color="#ffce0c"
                                     />
                                   </View>
@@ -218,7 +219,7 @@ export default function ProfileCard({ navigation }) {
                                 <Ionicons
                                   key={i}
                                   name="star"
-                                  size={23}
+                                  size={18}
                                   color="#444"
                                 />
                               );
@@ -237,7 +238,7 @@ export default function ProfileCard({ navigation }) {
             onSwipedRight={handleLike}
             cardIndex={count} // index du profil actuellement visible
             backgroundColor={"transparent"}
-            stackSize={4} // Nombre de cartes empilées en arrière-plan
+            stackSize={3} // Nombre de cartes empilées en arrière-plan
             stackScale={3}
             stackSeparation={16}
           />
@@ -248,14 +249,14 @@ export default function ProfileCard({ navigation }) {
             activeOpacity={0.7}
             onPress={handleSwipeLeft}
           >
-            <Ionicons name="close-outline" size={65} color="#f74c4f" />
+            <Ionicons name="close-outline" size={55} color="#f74c4f" />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttonSwipe}
             activeOpacity={0.7}
             onPress={handleSwipeRight}
           >
-            <Ionicons name="heart" size={50} color="#8ad1ad" />
+            <Ionicons name="heart" size={40} color="#8ad1ad" />
           </TouchableOpacity>
         </View>
       </View>
@@ -304,14 +305,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   main: {
-    height: height * 0.76,
+    height: height * 0.71,
     alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "column",
   },
   profileContainer: {
     // Adapter la hauteur à un pourcentage de la hauteur de l'écran
-    height: height * 0.7,
+    height: height * 0.64,
     // Adapter la largeur à un pourcentage de la largeur de l'écran
     width: width * 0.9,
     flexDirection: "column",
@@ -331,7 +332,7 @@ const styles = StyleSheet.create({
   profileImage: {
     // Adapter la hauteur et la largeur à un pourcentage de la hauteur de l'écran
     width: "100%",
-    height: height * 0.35,
+    height: height * 0.30,
     borderTopEndRadius: 15,
     borderTopStartRadius: 15,
     borderRadius: 3,
@@ -341,11 +342,11 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   profileName: {
-    fontSize: 30,
+    fontSize: 26,
     fontFamily: "Quicksand-Bold",
   },
   profileCity: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: "Quicksand-SemiBold",
     color: "#666",
   },
@@ -355,20 +356,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   profileNote: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: "Quicksand-SemiBold",
     color: "#666",
     paddingHorizontal: 10,
   },
   bioLabel: {
-    fontSize: 25,
+    fontSize: 22,
     color: "#222",
     fontFamily: "Quicksand-Bold",
     marginTop: 20,
     marginBottom: 5,
   },
   bioText: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: "Quicksand-SemiBold",
     color: "#666",
   },
@@ -380,11 +381,11 @@ const styles = StyleSheet.create({
   buttonSwipe: {
     backgroundColor: "#fff",
     borderRadius: 50,
-    height: 70,
-    width: 70,
+    height: 60,
+    width: 60,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#000000",
+    shadowColor: "#333",
     shadowOffset: {
       width: 0,
       height: 18,
