@@ -293,7 +293,8 @@ export default function SignUpScreenUser({ navigation }) {
               style={styles.signUpButton}
               activeOpacity={0.8}
               // onPress={() => navigation.navigate('SignUpAnimal')}
-              onPress={() => handleConnexion()}>
+              onPress={() => handleConnexion()}
+              >
               <Text style={styles.buttonText}>Confirmer</Text>
             </TouchableOpacity>
           </View>
@@ -384,7 +385,7 @@ const styles = StyleSheet.create({
     width: '80%',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingBottom: 30
+    paddingBottom: 25
   },
   checkbox: {
     display: 'flex',
@@ -421,8 +422,4 @@ const styles = StyleSheet.create({
     color: '#e23636',
     fontSize: 16
   }
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> 18fc31611e4280bc78e888525da65b02d5d7c142
