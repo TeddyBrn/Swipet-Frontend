@@ -36,15 +36,16 @@ export default function SignInScreen({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         if (EMAIL_REGEX.test(signInEmail)) {
+          console.log(data)
           if (data.result) {
             dispatch(
               login({
-                token: data.data.token,
+                token: data.token,
                 email: signInEmail,
-                firstname: data.data.firstname,
-                lastname: data.data.lastname,
-                role: data.data.role,
-                city: data.data.city
+                firstname: data.firstname,
+                lastname: data.lastname,
+                role: data.role,
+                city: data.city
               })
             );
             navigation.navigate("TabNavigator", { screen: "Swipe" });

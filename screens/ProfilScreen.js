@@ -16,7 +16,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addAnimal, login } from '../reducers/users';
 import { BACKEND_ADRESS } from '../data/urlData';
 
-export default function ProfilScreen({ navigation }) {
+export default function ProfilScreen({ navigation, props }) {
+  console.log(props)
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);

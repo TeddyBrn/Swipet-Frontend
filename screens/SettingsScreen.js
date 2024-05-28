@@ -26,13 +26,13 @@ export default function SettingsScreen({ navigation }) {
           <TouchableOpacity
             style={styles.button}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('Profil')}>
+            onPress={() => navigation.navigate('Profil',)}>
             <Text style={styles.buttonText}>Profil</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('ProfilAnimal')}>
+            onPress={() => navigation.navigate('ProfilAnimal',{test:'bonjour'})}>
             <Text style={styles.buttonText}>Profil Animal</Text>
           </TouchableOpacity>
           <TouchableOpacity
