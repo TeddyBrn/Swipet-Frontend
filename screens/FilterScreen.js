@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   },
   filterContainer: {
     width: '100%',
-    height: '70%',
+    height: '74%',
     alignItems: 'center',
     justifyContent: 'space-around',
     overflow: 'scroll',
