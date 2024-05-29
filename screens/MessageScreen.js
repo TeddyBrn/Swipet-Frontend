@@ -4,11 +4,11 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
+  // Image,
   TextInput,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
+  // SafeAreaView,
   ScrollView
 } from "react-native";
 import { Image } from 'expo-image';

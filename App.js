@@ -15,6 +15,7 @@ const store = configureStore({
   reducer: { users }
 });
 
+import ProposalScreen from './screens/ProposalScreen'
 import HomeScreen from './screens/HomeScreen';
 import SignInScreen from './screens/SignInScreen';
 import SignUpScreenUser from './screens/SignUpScreenUser';
@@ -121,6 +122,7 @@ export default function App() {
           <Stack.Screen name="Historique" component={HistoriqueScreen} />
           <Stack.Screen name="Avis" component={AvisScreen} />
           <Stack.Screen name="MyProfil" component={MyProfilScreen} />
+          <Stack.Screen name="Proposal" component={ProposalScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
