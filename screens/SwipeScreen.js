@@ -58,7 +58,7 @@ export default function ProfileCard({ navigation }) {
     console.log(`chargement useEffect`);
     fetchData();
   }, [filter.noteMin,filter.ageMax,filter.ageMin]);
-  console.log('profilsdata' , profilsData)
+  // console.log('profilsdata' , profilsData)
 
 
 
