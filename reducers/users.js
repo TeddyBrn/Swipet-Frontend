@@ -9,6 +9,7 @@ const initialState = {
     city: null,
     role: null,
     age: null,
+    photo: null,
     profilAnimal: [],
     avis: [],
     historique: [],
@@ -29,6 +30,7 @@ const userSlice = createSlice({
       state.value.city = action.payload.city;
       state.value.role = action.payload.role;
       state.value.age = action.payload.age;
+      state.value.photo = action.payload.photo;
     },
     logout: (state) => {
       state.value.token = null;
