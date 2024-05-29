@@ -2,11 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   value: {
-    distance: null,
-    ageMin: null,
-    ageMax: null,
-    noteMin: null,
-    time: null,
+    distance: 2,
+    ageMin: 18,
+    ageMax: 95,
+    noteMin: 1,
+    time: 1,
   }
 };
 

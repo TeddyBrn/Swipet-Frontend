@@ -25,21 +25,9 @@ export default function ProfileCard({ navigation }) {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
-  // console.log(newMatch.url)
-  // console.log(newMatch.firstname)
-  // console.log(profilsData[count]._id)
-  // console.log(profilsData[count].firstname)
-  //   const filter = useSelector((state) => state.filters.value);
+  const filter = useSelector((state) => state.filters.value);
+  
 
-  //   const profilDataFilter = () => {
-  //     return profilsData.filter(profil =>
-  //       profil.age >= filter.ageMinValue &&
-  //       profil.age <= filter.ageMaxValue &&
-  //       profil.avis[0].note >= filter.noteMin
-  //     );
-  //   };
-  // profilDataFilter()
-  // console.log(` profilDataFilter => ${profilDataFilter}`)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,13 +47,23 @@ export default function ProfileCard({ navigation }) {
         setLoading(false);
       }
     };
-    console.log(`user.role => ${user.role}`);
     console.log(`chargement useEffect`);
     fetchData();
   }, []);
 
+  const profilDataFilter = (data) => {
+    
+    return data.filter(profil => 
+      profil.age >= filter.ageMinValue &&
+      profil.age <= filter.ageMaxValue &&
+      profil.avis[0].note >= filter.noteMin
+    );
+  };
+  const filteredData = profilsData ? profilDataFilter(profilsData) : [];
+ console.log(` filteredData => ${filteredData}`)
+
   console.log(`user.token => ${user.token}`);
-  // console.log(`user.token => ${user}`);
+  
 
   const addAlike = () => {
     dispatch(addLike(profilsData[count]._id));
