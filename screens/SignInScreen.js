@@ -45,7 +45,8 @@ export default function SignInScreen({ navigation }) {
                 firstname: data.data.firstname,
                 lastname: data.data.lastname,
                 role: data.data.role,
-                city: data.data.city
+                city: data.data.city,
+                photo: data.data.photo
               })
             );
             navigation.navigate("TabNavigator", { screen: "Swipe" });

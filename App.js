@@ -10,10 +10,11 @@ import { useCallback } from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import users from './reducers/users';
+import filters from './reducers/filters';
 import matchs from './reducers/matchs';
 
 const store = configureStore({
-  reducer: { users, matchs }
+  reducer: { users, filters, matchs }
 });
 
 import HomeScreen from './screens/HomeScreen';
