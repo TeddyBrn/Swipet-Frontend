@@ -17,6 +17,7 @@ import { addMatch } from '../reducers/matchs';
 import Swiper from 'react-native-deck-swiper';
 import { BACKEND_ADRESS } from '../data/urlData';
 
+
 export default function ProfileCard({ navigation }) {
   const [profilsData, setProfilsData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,7 +26,17 @@ export default function ProfileCard({ navigation }) {
   
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
-
+//   const filter = useSelector((state) => state.filters.value);
+  
+//   const profilDataFilter = () => {
+//     return profilsData.filter(profil => 
+//       profil.age >= filter.ageMinValue &&
+//       profil.age <= filter.ageMaxValue &&
+//       profil.avis[0].note >= filter.noteMin
+//     );
+//   };
+// profilDataFilter()
+// console.log(` profilDataFilter => ${profilDataFilter}`)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,6 +55,7 @@ export default function ProfileCard({ navigation }) {
       }
     };
     console.log(`user.role => ${user.role}`);
+    console.log(`chargement useEffect`);
     fetchData();
   }, []);
 

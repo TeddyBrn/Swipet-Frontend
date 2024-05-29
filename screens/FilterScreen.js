@@ -20,23 +20,10 @@ import { addNoteMin } from '../reducers/filters';
 
 
 import {  } from '../reducers/filters';
-import { profilData } from '../data/profils';
 
 
-// export let newArray = (profilData, ageValue, averageNote) => {
-//   let profilDataFilter = [];
 
-//   for (let i = 0; i < profilData.length; i++) {
-//     if (
-//       profilData[i].age <= ageValue &&
-//       profilData[i].avis[0].note >= averageNote
-//     ) {
-//       profilDataFilter.push(profilData[i]);
-//     }
-//   }
 
-//   return profilDataFilter;
-// };
 
 const ageData = [
   { label: '18 ans', value: 18 },
