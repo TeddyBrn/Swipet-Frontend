@@ -14,7 +14,7 @@ const matchSlice = createSlice({
   initialState,
   reducers: {
     addMatch: (state, action) => {
-      state.value.userId = action.payload.token;
+      state.value.userId = action.payload.userI;
       state.value.petsitterId = action.payload.email;
       matchId
     },

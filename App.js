@@ -66,6 +66,7 @@ const TabNavigator = () => {
       <Tab.Screen name="Filtres" component={FilterScreen} />
       <Tab.Screen name="Swipe" component={SwipeScreen} />
       <Tab.Screen name="Messages" component={MessageScreen} />
+      
     </Tab.Navigator>
   );
 };

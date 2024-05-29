@@ -13,45 +13,55 @@ import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
 import { profilData } from "../data/profils";
+import { BACKEND_ADRESS } from '../data/urlData';
 
 
 
 export default function DiscussionScreen({navigation, route}) {
 
-const matchId = route;
+const matchId = '66546234e2b20002e3e6d313';
 
-const [matchData, setMatchData] = useState(null);
+const [matchData, setMatchData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${BACKEND_ADRESS}/messages/${matchId}`);
-        const data = await response.json();
-        if (data) {
-          setMatchData(data.data);
-        } else {
-          setError("Failed to fetch matchs");
-        }
-      } catch (err) {
-        setError("An error occurred");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+    fetch(`${BACKEND_ADRESS}/messages/${matchId}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log('r',data)
+      setMatchData(data.match);
+    });
 
-  const messages = matchData.messages.map((data, i)=> {
-    <TouchableOpacity key={i} onPress={()=> deleteMessage()} style={styles.messageCard}>
-      <Image 
-        style={styles.messageImage}
-        source={{ uri: matchData.petsitterId.url }}
-      />
-      <View style={styles.message}>{data}</View>
-    </TouchableOpacity>
-  })
+    // const fetchData = async () => {
+    // //   try {
+    // //     const response = await fetch(`${BACKEND_ADRESS}/messages/${matchId}`);
+    // //     const data = await response.json();
+    // //     console.log('r', data)
+    // //     if (data) {
+    // //       setMatchData(data.data);
+    // //     } else {
+    // //       setError("Failed to fetch matchs");
+    // //     }
+    // //   } catch (err) {
+    // //     setError("An error occurred");
+    // //   } finally {
+    // //     setLoading(false);
+    // //   }
+    // // };
+    // // fetchData();
+  }, []);
+  console.log('data', matchData)
+
+  // const messages = matchData.messages.map((data, i)=> {
+  //   <TouchableOpacity key={i} onPress={()=> deleteMessage()} style={styles.messageCard}>
+  //    {matchData.petsitter_id.url && <Image 
+  //       style={styles.messageImage}
+  //       source={{ uri: matchData.petsitter_id.url }}
+  //     />}
+  //     <View style={styles.message}>{data}</View>
+  //   </TouchableOpacity>
+  // })
 
   const handleProposal = () => {
 

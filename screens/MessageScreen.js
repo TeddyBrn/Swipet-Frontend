@@ -27,31 +27,37 @@ export default function MessageScreen({navigation}) {
 
   const user = useSelector((state) => state.users.value);
 
-  useEffect(()=>{ (async () => {
+  useEffect(()=>{ 
+    fetch(`${BACKEND_ADRESS}/matchs/${user.token}`)
+    .then(response => response.json())
+    .then(data => {
+          setMatchsTab(data.matches.filter( match=> !match.messages.length))
+          setMessagesTab(data.matches.filter( match=> match.messages.length))
+          setMatchsData(data.matches);
+    }); 
+    // (async () => {
     // const fetchData = async () => {
-      try {
-        console.log('r',user.token)
-        const response = await fetch(`${BACKEND_ADRESS}/matchs/${user.token}`);
-        const data = await response.json();
-        console.log('c',data)
-        console.log('b')
-        if (true) {  
-          setMatchsTab(matchsData.filter( match=> !match.messages.length))
-          setMessagesTab(matchsData.filter( match=> match.messages.length))
-          setMatchsData(data);
-          console.log('yes')
-        } else {
-          console.log('no')
-          setError("Failed to fetch matchs");
-        }
-      } catch (err) {
-        setError("An error occurred");
-        console.log(err)
-      } finally {
-        setLoading(false);
-      }
-    // console.log(`user.token => ${user.token}`);
-  })()}, []);
+      // try {
+      //   // console.log('r',user.token)
+      //   const response = await fetch(`${BACKEND_ADRESS}/matchs/${user.token}`);
+      //   const data = await response.json();
+      //   // console.log('c',data)
+      //   // console.log('b')
+      //   if (true) {  
+      //     setMatchsTab(data.matches.filter( match=> !match.messages.length))
+      //     setMessagesTab(data.matches.filter( match=> match.messages.length))
+      //     setMatchsData(data);
+      //     // console.log('yes')
+      //   } else {
+      //     // console.log('no')
+      //     setError("Failed to fetch matchs");
+      //   }
+      // } catch (err) {
+      //   setError("An error occurred");
+        // console.log(err)
+      // } 
+  // })()
+}, []);
   
   // console.log('tableau', matchsData)
 
