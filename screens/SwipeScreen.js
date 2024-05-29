@@ -71,7 +71,7 @@ export default function ProfileCard({ navigation }) {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log('rrrrrrrrrr',data)
+        // console.log('rrrrrrrrrr',data)
         if (data.message === 'new match created!') {
           dispatch(addMatch({token: user.token, _id: profilsData[count]._id}));
           setIsModalVisible(true);
