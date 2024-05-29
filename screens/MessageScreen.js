@@ -4,65 +4,75 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  // Image,
   TextInput,
   KeyboardAvoidingView,
   Platform,
-  // SafeAreaView,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from "react-native";
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
 import { profilData } from "../data/profils";
+import { BACKEND_ADRESS } from '../data/urlData';
 
 
 
 export default function MessageScreen({navigation}) {
-
-  const [matchsData, setMatchsData] = useState(null);
+  const [matchsData, setMatchsData] = useState([]);
+  const [matchsTab, setMatchsTab] = useState([])
+  const [messagesTab, setMessagesTab] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const user = useSelector((state) => state.users.value);
+
+  useEffect(()=>{ (async () => {
+    // const fetchData = async () => {
       try {
+        console.log('r',user.token)
         const response = await fetch(`${BACKEND_ADRESS}/matchs/${user.token}`);
         const data = await response.json();
-        if (data.result) {
-          setMatchsData(data.data);
+        console.log('c',data)
+        console.log('b')
+        if (true) {  
+          setMatchsTab(matchsData.filter( match=> !match.messages.length))
+          setMessagesTab(matchsData.filter( match=> match.messages.length))
+          setMatchsData(data);
+          console.log('yes')
         } else {
+          console.log('no')
           setError("Failed to fetch matchs");
         }
       } catch (err) {
         setError("An error occurred");
+        console.log(err)
       } finally {
         setLoading(false);
       }
-    };
-    console.log(`user.token => ${user.token}`);
-    fetchData();
-  }, []);
+    // console.log(`user.token => ${user.token}`);
+  })()}, []);
   
-  console.log(matchsData)
+  // console.log('tableau', matchsData)
 
-  const messagesTab = []
-  const matchsTab = [] 
-  matchsData.map((data, i) => {
-    if(data.messages == []) {
-      matchs.push(data)
-    } else {
-      messages.push(data)
-    };
-  })
-  
-  const matchs = matchsTab.map((data,i) => {
 
+  // matchsData.map((data, i) => {
+  //   if(!data.messages.length) {
+  //     matchsTab.push(data)
+  //   } else {
+  //     messagesTab.push(data)
+  //   };
+  // })
+  console.log('matchsTab',matchsTab)
+  console.log('messagesTab', messagesTab)
+  // console.log('petsitter', matchsTab[0].petsitter_id.url)
+  const matchs = matchsTab.map((match,i) => {
+// console.log(match)
     <TouchableOpacity key={i} onPress={()=> pressAmatch()} style={styles.matchCard}>
-      <Image 
+      {match.petsitter_id.url && <Image 
         style={styles.matchImage}
-        source={{ uri: data.petsitterId.url }}
-      />
+        source={{ uri: match.petsitter_id.url }}
+      />}
     </TouchableOpacity>
   });
 
@@ -70,9 +80,9 @@ export default function MessageScreen({navigation}) {
     <TouchableOpacity key={i} onPress={()=> pressAmessage()} style={styles.messageCard}>
       <Image 
         style={styles.messageImage}
-        source={{ uri: data.petsitterId.url }}
+        // source={{ uri: data.petsitter_id.url }}
       />
-      <Text style={styles.matchName}>{data.petsitter_id.firstname}</Text>
+      {/* <Text style={styles.matchName}>{data.petsitter_id.firstname}</Text> */}
       <View style={styles.apreçuMessage}>{data.messages[0]}</View>
     </TouchableOpacity>
   })
@@ -180,5 +190,15 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: 100,
     color: '#502314'
-  }
+  },
+  matchImage: {
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#33464d',
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: -30
+  },
 });

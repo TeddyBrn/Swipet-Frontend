@@ -11,39 +11,35 @@ import Slider from '@react-native-community/slider';
 import { Dropdown } from 'react-native-element-dropdown';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { profilData } from '../data/profils';
+import { useDispatch, useSelector } from 'react-redux';
+import { addDistance } from '../reducers/filters';
+import { addAgeMin } from '../reducers/filters';
+import { addAgeMax } from '../reducers/filters';
+import { addTime } from '../reducers/filters';
+import { addNoteMin } from '../reducers/filters';
 
-// fonctionnalité de filtre en cours...
-export let newArray = (profilData, ageValue, averageNote) => {
-  let profilDataFilter = [];
 
-  for (let i = 0; i < profilData.length; i++) {
-    if (
-      profilData[i].age <= ageValue &&
-      profilData[i].avis[0].note >= averageNote
-    ) {
-      profilDataFilter.push(profilData[i]);
-    }
-  }
+import {  } from '../reducers/filters';
 
-  return profilDataFilter;
-};
+
+
+
 
 const ageData = [
-  { label: '18 ans', value: 1 },
-  { label: '25 ans', value: 2 },
-  { label: '35 ans', value: 3 },
-  { label: '45 ans', value: 4 },
-  { label: '55 ans', value: 4 },
-  { label: '65 ans', value: 4 },
-  { label: '75 ans', value: 4 },
-  { label: '85 ans', value: 4 },
-  { label: '95 ans', value: 4 }
+  { label: '18 ans', value: 18 },
+  { label: '25 ans', value: 25 },
+  { label: '35 ans', value: 35 },
+  { label: '45 ans', value: 45 },
+  { label: '55 ans', value: 55 },
+  { label: '65 ans', value: 65 },
+  { label: '75 ans', value: 75 },
+  { label: '85 ans', value: 85 },
+  { label: '95 ans', value: 95 }
 ];
 
 const durationData = [
   { label: "moins d'une semaine", value: 1 },
-  { label: 'une semaine à deux semaines', value: 2 },
+  { label: 'une à deux semaines', value: 2 },
   { label: 'deux à trois semaines', value: 3 },
   { label: 'plus de trois semaines', value: 4 }
 ];
@@ -54,6 +50,23 @@ const FiltersScreen = ({ navigation }) => {
   const [ageMaxValue, setAgeMaxValue] = useState(null);
   const [averageNote, setAverageNote] = useState(0);
   const [durationValue, setDurationValue] = useState(null);
+
+  const dispatch = useDispatch();
+  const filter = useSelector((state) => state.filters.value);
+
+  const handleValidate = () => {
+    dispatch(addDistance(kmValue));
+    dispatch(addAgeMin(ageMinValue));
+    dispatch(addAgeMax(ageMaxValue));
+    dispatch(addNoteMin(averageNote));
+    dispatch(addTime(durationValue));
+    console.log(`handle validate click`);
+  }
+
+  console.log(`filter distance => ${filter.distance}`);
+  console.log(`filter tranche d'age => ${filter.ageMin} - ${filter.ageMax}`);
+  console.log(`filter averageNote => ${filter.noteMin}`);
+  console.log(`filter durée => ${filter.time}`);
 
   const stars = [];
   for (let i = 0; i < 5; i++) {
@@ -72,10 +85,7 @@ const FiltersScreen = ({ navigation }) => {
       />
     );
   }
-  // const handleValidate = () => {
-  //   const filteredProfiles = newArray(profilData, ageValue, averageNote);
-  //   console.log(filteredProfiles);
-  // };
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -166,7 +176,11 @@ const FiltersScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} activeOpacity={0.8}>
+          <TouchableOpacity 
+          style={styles.button} 
+          activeOpacity={0.8}
+          onPress={() => handleValidate()}
+          >
             <Text style={styles.buttonText}>Valider</Text>
           </TouchableOpacity>
         </View>
