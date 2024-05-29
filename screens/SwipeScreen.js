@@ -37,7 +37,6 @@ export default function ProfileCard({ navigation }) {
         );
         const data = await response.json();
         if (data.result) {
-          // console.log(`data.data ${data.data}`)
           setProfilsData(data.data);
           const dataFiltered = data.data.filter(profil => 
             profil.age >= filter.ageMin &&
@@ -55,16 +54,12 @@ export default function ProfileCard({ navigation }) {
         setLoading(false);
       }
     };
-    console.log(`chargement useEffect`);
+    // console.log(`chargement useEffect`); 
     fetchData();
   }, [filter.noteMin,filter.ageMax,filter.ageMin]);
-  // console.log('profilsdata' , profilsData)
 
-
-
-  console.log(`user.token => ${user.token}`);
+  // console.log(`user.token => ${user.token}`); 
   
-
   const addAlike = () => {
     dispatch(addLike(profilsData[count]._id));
     fetch(
@@ -76,8 +71,9 @@ export default function ProfileCard({ navigation }) {
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log('rrrrrrrrrr',data)
         if (data.message === 'new match created!') {
-          dispatch(addMatch(user._id, profilsData[count]._id));
+          dispatch(addMatch({token: user.token, _id: profilsData[count]._id}));
           setIsModalVisible(true);
         }
       });
@@ -89,7 +85,7 @@ export default function ProfileCard({ navigation }) {
     setCount(count + 1);
     addAlike();
   };
-  console.log(`user.like => ${user.like}`);
+  // console.log(`user.like => ${user.like}`);
 
   const handleDislike = () => {
     setCount(count + 1);
@@ -154,14 +150,12 @@ export default function ProfileCard({ navigation }) {
             <View style={styles.modalContent}>
               <View style={styles.modalInfosContainer}>
                 <Text style={styles.modalTitle}>Nouveau match !</Text>
-                <Text style={styles.infosMatch}>{isModalVisible && `Vous et ${profilsData[count-1].firstname} avez un match`}
-                  
+                <Text style={styles.infosMatch}>{isModalVisible && `Vous et ${profilsData[count-1].firstname} avez un match`} 
                 </Text>
                 <View style={styles.imageContainer}>
                   <Image
                     style={styles.infosImage}
-                    source={{ uri: user.photo }}
-                    
+                    source={{ uri: user.photo }}   
                   />
                   {isModalVisible &&
                   <Image
@@ -174,13 +168,13 @@ export default function ProfileCard({ navigation }) {
                 <TouchableOpacity
                   onPress={() => {setIsModalVisible(false); navigation.navigate('TabNavigator', {screen: 'Messages'})}}
                   style={styles.button}>
-                  <Ionicons name="chatbubbles" size={35} color="#333" />
+                  <Ionicons name="chatbubbles" size={30} color="#333" />
                   <Text style={styles.buttonText}>Envoyer un message</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => setIsModalVisible(false)}
                   style={styles.button}>
-                  <Ionicons name="arrow-undo" size={35} color="#333" />
+                  <Ionicons name="arrow-undo" size={30} color="#333" />
                   <Text style={styles.buttonText}>Continuer à Swipe</Text>
                 </TouchableOpacity>
               </View>
@@ -495,11 +489,12 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: width * 0.7,
-    margin: -100
+    margin: -100,
+    alignItems: 'center',
   },
   button: {
     height: height * 0.07,
-    width: width * 0.7,
+    width: width * 0.65,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
@@ -509,7 +504,7 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: 'Montserrat-Bold',
     color: '#333'
   }
