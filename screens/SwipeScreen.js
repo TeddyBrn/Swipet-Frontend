@@ -18,7 +18,7 @@ import Swiper from 'react-native-deck-swiper';
 import { BACKEND_ADRESS } from '../data/urlData';
 
 export default function ProfileCard({ navigation }) {
-  const [profilsData, setProfilsData] = useState(null);
+  const [profilsData, setProfilsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -37,7 +37,15 @@ export default function ProfileCard({ navigation }) {
         );
         const data = await response.json();
         if (data.result) {
+          // console.log(`data.data ${data.data}`)
           setProfilsData(data.data);
+          const dataFiltered = data.data.filter(profil => 
+            profil.age >= filter.ageMin &&
+            profil.age <= filter.ageMax &&
+            profil.avis[0].note >= filter.noteMin
+           );
+           
+           setProfilsData(dataFiltered)
         } else {
           setError('Failed to fetch profiles');
         }
@@ -49,18 +57,10 @@ export default function ProfileCard({ navigation }) {
     };
     console.log(`chargement useEffect`);
     fetchData();
-  }, []);
+  }, [filter.noteMin,filter.ageMax,filter.ageMin]);
+  console.log('profilsdata' , profilsData)
 
-  const profilDataFilter = (data) => {
-    
-    return data.filter(profil => 
-      profil.age >= filter.ageMinValue &&
-      profil.age <= filter.ageMaxValue &&
-      profil.avis[0].note >= filter.noteMin
-    );
-  };
-  const filteredData = profilsData ? profilDataFilter(profilsData) : [];
- console.log(` filteredData => ${filteredData}`)
+
 
   console.log(`user.token => ${user.token}`);
   
@@ -188,10 +188,11 @@ export default function ProfileCard({ navigation }) {
           </View>
         </Modal>
         <View style={styles.main}>
-          <Swiper
+{      profilsData.length ?   <Swiper
             cards={profilsData} // Les données des profils à swiper
             ref={swiperRef}
             renderCard={(card) => {
+            
               return (
                 <View style={styles.profileContainer}>
                   <Image
@@ -291,7 +292,8 @@ export default function ProfileCard({ navigation }) {
             stackSize={3} // Nombre de cartes empilées en arrière-plan
             stackScale={3}
             stackSeparation={16}
-          />
+          /> : <Text>aucun profil trouvé</Text>}
+          
         </View>
         <View style={styles.actionButtons}>
           <TouchableOpacity
