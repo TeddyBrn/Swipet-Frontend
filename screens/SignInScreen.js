@@ -36,6 +36,7 @@ export default function SignInScreen({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         if (EMAIL_REGEX.test(signInEmail)) {
+          console.log(data)
           if (data.result) {
             dispatch(
               login({
