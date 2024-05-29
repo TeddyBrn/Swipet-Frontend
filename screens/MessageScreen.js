@@ -44,9 +44,9 @@ export default function MessageScreen({navigation}) {
       //   // console.log('c',data)
       //   // console.log('b')
       //   if (true) {  
-      //     setMatchsTab(data.matches.filter( match=> !match.messages.length))
-      //     setMessagesTab(data.matches.filter( match=> match.messages.length))
-      //     setMatchsData(data);
+          // setMatchsTab(data.matches.filter( match=> !match.messages.length))
+          // setMessagesTab(data.matches.filter( match=> match.messages.length))
+          // setMatchsData(data.matches);
       //     // console.log('yes')
       //   } else {
       //     // console.log('no')
