@@ -27,22 +27,17 @@ export default function MessageScreen({navigation}) {
 
   const user = useSelector((state) => state.users.value);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  useEffect(()=>{ (async () => {
+    // const fetchData = async () => {
       try {
         console.log('r',user.token)
         const response = await fetch(`${BACKEND_ADRESS}/matchs/${user.token}`);
         const data = await response.json();
-        // console.log('c',data)
+        console.log('c',data)
         console.log('b')
-        if (data) {  
-          matchsData.map((match, i) => {
-            if(!match.messages.length) {
-              matchsTab.push(match)
-            } else {
-              messagesTab.push(match)
-            };
-          })
+        if (true) {  
+          setMatchsTab(matchsData.filter( match=> !match.messages.length))
+          setMessagesTab(matchsData.filter( match=> match.messages.length))
           setMatchsData(data);
           console.log('yes')
         } else {
@@ -55,12 +50,10 @@ export default function MessageScreen({navigation}) {
       } finally {
         setLoading(false);
       }
-    };
-    console.log(`user.token => ${user.token}`);
-    fetchData();
-  }, []);
+    // console.log(`user.token => ${user.token}`);
+  })()}, []);
   
-  console.log('tableau', matchsData)
+  // console.log('tableau', matchsData)
 
 
   // matchsData.map((data, i) => {
@@ -76,10 +69,10 @@ export default function MessageScreen({navigation}) {
   const matchs = matchsTab.map((match,i) => {
 // console.log(match)
     <TouchableOpacity key={i} onPress={()=> pressAmatch()} style={styles.matchCard}>
-      <Image 
+      {match.petsitter_id.url && <Image 
         style={styles.matchImage}
-        // source={{ uri: match.petsitter_id.url }}
-      />
+        source={{ uri: match.petsitter_id.url }}
+      />}
     </TouchableOpacity>
   });
 
