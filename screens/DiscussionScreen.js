@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSelector, useDispatch } from 'react-redux';
 import { profilData } from "../data/profils";
 import { BACKEND_ADRESS } from '../data/urlData';
@@ -22,15 +23,18 @@ export default function DiscussionScreen({navigation, route}) {
 const matchId = '66546234e2b20002e3e6d313';
 
 const [matchData, setMatchData] = useState([]);
+const [messageData, setMessagesData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+  useEffect( async () => {
+    console.log('start useeffect')
     fetch(`${BACKEND_ADRESS}/messages/${matchId}`)
     .then(response => response.json())
     .then(data => {
       console.log('r',data)
       setMatchData(data.match);
+      setMessagesData(data.match[0].messages)
     });
 
     // const fetchData = async () => {
@@ -52,36 +56,38 @@ const [matchData, setMatchData] = useState([]);
     // // fetchData();
   }, []);
   console.log('data', matchData)
+  // matchData.length && console.log(matchData[0].petsitter_id)
 
-  // const messages = matchData.messages.map((data, i)=> {
-  //   <TouchableOpacity key={i} onPress={()=> deleteMessage()} style={styles.messageCard}>
-  //    {matchData.petsitter_id.url && <Image 
-  //       style={styles.messageImage}
-  //       source={{ uri: matchData.petsitter_id.url }}
-  //     />}
-  //     <View style={styles.message}>{data}</View>
-  //   </TouchableOpacity>
-  // })
+  const messages = messageData.map((data, i)=> {
+    <TouchableOpacity key={i} onPress={()=> deleteMessage()} style={styles.messageCard}>
+     {/* {matchData[0].petsitter_id.url && <Image 
+        style={styles.messageImage} */}
+        // source={{ uri: matchData[0].petsitter_id.url }}
+      {/* />} */}
+      <View style={styles.messageContent}>{data.content}</View>
+      <View style={styles.messageDate}>{data.created_at}</View>
+    </TouchableOpacity>
+  })
 
   const handleProposal = () => {
 
   }
 
-  if (loading) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </SafeAreaView>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <SafeAreaView style={styles.container}>
+  //       <ActivityIndicator size="large" color="#0000ff" />
+  //     </SafeAreaView>
+  //   );
+  // }
 
-  if (error) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <Text>{error}</Text>
-      </SafeAreaView>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <SafeAreaView style={styles.container}>
+  //       <Text>{error}</Text>
+  //     </SafeAreaView>
+  //   );
+  // }
 
 
     return (
@@ -93,11 +99,11 @@ const [matchData, setMatchData] = useState([]);
                     <Ionicons name="chevron-back" size={60} color="#33464d" />
                 </TouchableOpacity>
                 <View style={styles.topMid}>
-                    <Text style={styles.topText}>{matchData.petsitterId.firstname}</Text>
-                    <Image 
+                    {/* {matchData[0] && <Text style={styles.topText}>{matchData[0].petsitter_id.firstname}</Text>} */}
+                    {matchData[0].petsitter_id.url && <Image 
                         style={styles.messageImage}
-                        source={{ uri: matchData.petsitterId.url }}
-                    />
+                        // source={{ uri: matchData[0].petsitter_id.url }}
+                    />}
                 </View>
                 <TouchableOpacity
                     onPress={() => handleProposal()}
