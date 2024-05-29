@@ -90,7 +90,7 @@ const [matchData, setMatchData] = useState(null);
                     />
                 </View>
                 <TouchableOpacity
-                    onPress={() => ()}
+                    onPress={() => handleProposal()}
                     style={styles.proposal}>
                 </TouchableOpacity>
                 <View style={{ width: 80 }}></View>

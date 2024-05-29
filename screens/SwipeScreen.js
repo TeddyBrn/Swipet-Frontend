@@ -38,7 +38,8 @@ export default function ProfileCard({ navigation }) {
           setError("Failed to fetch profiles");
         }
       } catch (err) {
-        setError("An error occurred");
+        setError("An error occurred")
+        console.log(error);
       } finally {
         setLoading(false);
       }
@@ -59,8 +60,9 @@ export default function ProfileCard({ navigation }) {
             .then(data => {
               if (data.message === 'new match created!') {
                 dispatch(addMatch(user._id, profilsData[count]._id))
+                setIsModalVisible(true)
               }
-              setIsModalVisible(true)         
+               
             });
   };
 

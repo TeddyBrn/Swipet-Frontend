@@ -10,9 +10,10 @@ import { useCallback } from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import users from './reducers/users';
+import matchs from './reducers/matchs';
 
 const store = configureStore({
-  reducer: { users }
+  reducer: { users, matchs }
 });
 
 import HomeScreen from './screens/HomeScreen';
@@ -30,6 +31,7 @@ import HistoriqueScreen from './screens/HistoriqueScreen';
 import AvisScreen from './screens/AvisScreen';
 import PaymentScreen from './screens/PaymentScreen';
 import MyProfilScreen from './screens/MyProfilScreen';
+import DiscussionScreen from './screens/DiscussionScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -121,6 +123,7 @@ export default function App() {
           <Stack.Screen name="Historique" component={HistoriqueScreen} />
           <Stack.Screen name="Avis" component={AvisScreen} />
           <Stack.Screen name="MyProfil" component={MyProfilScreen} />
+          <Stack.Screen name="Discussion" component={DiscussionScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
