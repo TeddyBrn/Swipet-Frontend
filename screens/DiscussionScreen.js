@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
   TextInput,
   KeyboardAvoidingView,
   Platform,
@@ -27,43 +28,52 @@ const [messageData, setMessagesData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect( async () => {
-    console.log('start useeffect')
-    fetch(`${BACKEND_ADRESS}/messages/${matchId}`)
-    .then(response => response.json())
-    .then(data => {
-      console.log('r',data)
-      setMatchData(data.match);
-      setMessagesData(data.match[0].messages)
-    });
+  // useEffect( async () => {
+  //   console.log('start useeffect')
+  //  await fetch(`${BACKEND_ADRESS}/messages/${matchId}`)
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log('r',data)
+  //     setMatchData(data.match);
+  //     setMessagesData(data.match[0].messages)
+  //   });
+    // }, []);
 
-    // const fetchData = async () => {
-    // //   try {
-    // //     const response = await fetch(`${BACKEND_ADRESS}/messages/${matchId}`);
-    // //     const data = await response.json();
-    // //     console.log('r', data)
-    // //     if (data) {
-    // //       setMatchData(data.data);
-    // //     } else {
-    // //       setError("Failed to fetch matchs");
-    // //     }
-    // //   } catch (err) {
-    // //     setError("An error occurred");
-    // //   } finally {
-    // //     setLoading(false);
-    // //   }
-    // // };
-    // // fetchData();
-  }, []);
+    useEffect(() => {
+      (async () => {
+        // const fetchData = async () => {
+        try {
+          const response = await fetch(`${BACKEND_ADRESS}/messages/${matchId}`);
+          const data = await response.json();
+  
+          if (data.result) {
+              console.log('r',data)
+              setMatchData(data.match);
+              setMessagesData(data.match[0].messages)
+          } else {
+            setError('Failed to fetch matchs');
+          }
+        } catch (err) {
+          setError('An error occurred');
+          console.log(err);
+        } finally {
+          setLoading(false);
+        }
+      })();
+    }, []);
+
+
+
   console.log('data', matchData)
-  // matchData.length && console.log(matchData[0].petsitter_id)
+  console.log(messages)
+  matchData.length && console.log(matchData[0].petsitter_id)
 
   const messages = messageData.map((data, i)=> {
     <TouchableOpacity key={i} onPress={()=> deleteMessage()} style={styles.messageCard}>
-     {/* {matchData[0].petsitter_id.url && <Image 
-        style={styles.messageImage} */}
-        // source={{ uri: matchData[0].petsitter_id.url }}
-      {/* />} */}
+     {matchData[0].petsitter_id.url && <Image 
+        style={styles.messageImage}
+        source={{ uri: matchData[0].petsitter_id.url }}
+      />}
       <View style={styles.messageContent}>{data.content}</View>
       <View style={styles.messageDate}>{data.created_at}</View>
     </TouchableOpacity>
@@ -73,21 +83,21 @@ const [messageData, setMessagesData] = useState([]);
 
   }
 
-  // if (loading) {
-  //   return (
-  //     <SafeAreaView style={styles.container}>
-  //       <ActivityIndicator size="large" color="#0000ff" />
-  //     </SafeAreaView>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </SafeAreaView>
+    );
+  }
 
-  // if (error) {
-  //   return (
-  //     <SafeAreaView style={styles.container}>
-  //       <Text>{error}</Text>
-  //     </SafeAreaView>
-  //   );
-  // }
+  if (error) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text>{error}</Text>
+      </SafeAreaView>
+    );
+  }
 
 
     return (
@@ -99,10 +109,10 @@ const [messageData, setMessagesData] = useState([]);
                     <Ionicons name="chevron-back" size={60} color="#33464d" />
                 </TouchableOpacity>
                 <View style={styles.topMid}>
-                    {/* {matchData[0] && <Text style={styles.topText}>{matchData[0].petsitter_id.firstname}</Text>} */}
+                    {matchData[0] && <Text style={styles.topText}>{matchData[0].petsitter_id.firstname}</Text>}
                     {matchData[0].petsitter_id.url && <Image 
                         style={styles.messageImage}
-                        // source={{ uri: matchData[0].petsitter_id.url }}
+                        source={{ uri: matchData[0].petsitter_id.url }}
                     />}
                 </View>
                 <TouchableOpacity
