@@ -16,7 +16,7 @@ export default function HomeScreen({ navigation }) {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
-      <TouchableOpacity style={styles.logoContainer} onPress={() => navigation.navigate('TabNavigator', { screen: 'Swipe' })}>
+      <TouchableOpacity style={styles.logoContainer} >
         <Image source={require('../assets/logo.jpg')} style={styles.logo} />
       </TouchableOpacity>
       <Text style={styles.title}>Bienvenue sur Swipet</Text>
