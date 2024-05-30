@@ -48,15 +48,7 @@ export default function MessageScreen({ navigation }) {
     })();
   }, []);
 
-  console.log('tableau', matchsData);
 
-  matchsData.map((data, i) => {
-    if (!data.messages.length) {
-      matchsTab.push(data);
-    } else {
-      messagesTab.push(data);
-    }
-  });
   console.log('matchsTab', matchsTab);
   const matchs = matchsTab.map((match, i) => {
     return (
