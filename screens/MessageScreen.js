@@ -48,7 +48,7 @@ export default function MessageScreen({ navigation }) {
     })();
   }, []);
 
-  // console.log('tableau', matchsData);
+  console.log('tableau', matchsData);
 
   matchsData.map((data, i) => {
     if (!data.messages.length) {
@@ -57,9 +57,7 @@ export default function MessageScreen({ navigation }) {
       messagesTab.push(data);
     }
   });
-  console.log('matchsTab', matchsTab[0]);
-  // console.log('messagesTab', messagesTab);
-  // console.log('petsitter', matchsTab[0].petsitter_id.photo);
+  console.log('matchsTab', matchsTab);
   const matchs = matchsTab.map((match, i) => {
     return (
       <TouchableOpacity

@@ -100,10 +100,6 @@ export default function DiscussionScreen({ navigation, route }) {
     );
   }
 
-  console.log('data', matchData);
-
-  matchData.length && console.log(matchData[0].petsitter_id);
-
   const messages = messageData.map((data, i) => {
     const date = moment(data.created_at).fromNow();
     console.log(date);
