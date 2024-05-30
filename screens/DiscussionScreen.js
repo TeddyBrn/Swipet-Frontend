@@ -25,8 +25,8 @@ export default function DiscussionScreen({navigation, route}) {
 
 const dispatch = useDispatch();
 const user = useSelector((state) => state.users.value);
-const matchId = '66547d9317146ba1ac45ead2'
-// const matchId = route.params;
+// const matchId = '6655fe621b2c12e4dc4091e1'
+const matchId = route.params;
 console.log(route)
 console.log(matchId)
 
@@ -70,7 +70,40 @@ const [error, setError] = useState(null);
       })();
     }, []);
 
-
+  if (!messageData) {
+      return (
+        <SafeAreaView style={styles.container}>
+          <View style={styles.topContainer}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons name="chevron-back" size={60} color="#33464d" />
+            </TouchableOpacity>
+            <View style={styles.topMid}>
+              <Text style={styles.topText}>Messages</Text>
+            </View>
+            <View style={{ width: 60 }}></View>
+          </View>
+          <Text style={styles.text}>Vous n'avez pas encore de messages !</Text>
+          <View style={styles.newMessageContainer}>
+            <View style={styles.input}>
+              <Ionicons name="person" size={20} color="#33464d" />
+              <TextInput
+                  style={styles.inputText}
+                  onChangeText={(value) => setNewMessages(value)}
+                  value={newMessage}
+                  placeholder="Nouveau message"
+                  placeholderTextColor="#5a7869"
+                  autoCapitalize="none"
+              />
+            </View>
+                <TouchableOpacity
+                  onPress={() => handleNewMessage()}
+                  style={styles.newMessage}>
+                  <Text style={styles.buttonMessageText}>Envoyer</Text>
+                </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      );
+    }
 
   console.log('data', matchData)
 
@@ -82,10 +115,10 @@ const [error, setError] = useState(null);
     return (
       <View style={styles.messagesCard}>
         <TouchableOpacity key={i} onPress={()=> deleteMessage()} style={styles.messageCard}>
-        {/* {matchData[0].petsitter_id.url && <Image 
+        {matchData[0].petsitter_id.photo && <Image 
             style={styles.messageImage}
-            source={{ uri: matchData[0].petsitter_id.url }}
-          />} */}
+            source={{ uri: matchData[0].petsitter_id.photo }}
+          />}
           <View style={styles.messageContent}><Text>{data.content}</Text></View>
           <View style={styles.messageDate}><Text>{date}</Text></View>
         </TouchableOpacity>

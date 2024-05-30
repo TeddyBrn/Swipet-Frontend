@@ -64,6 +64,7 @@ export default function MessageScreen({ navigation }) {
   // console.log('petsitter', matchsTab[0].petsitter_id.url)
   const matchs = matchsTab.map((match, i) => {
     // console.log(match)
+    return(
     <TouchableOpacity key={i} onPress={() => navigation.navigate('Discussion', match._id)}>
       {match.petsitter_id.photo && (
         <Image
@@ -72,7 +73,8 @@ export default function MessageScreen({ navigation }) {
         />
       )}
         <Text>{match.petsitter_id.firstname}</Text>
-    </TouchableOpacity>;
+    </TouchableOpacity>
+    )
   });
 
   const messages = messagesTab.map((data, i) => {
