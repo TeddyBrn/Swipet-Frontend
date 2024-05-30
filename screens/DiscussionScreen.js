@@ -14,7 +14,6 @@ import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSelector, useDispatch } from 'react-redux';
-import { profilData } from "../data/profils";
 import moment from 'moment';
 import { addMessage } from '../reducers/matchs';
 import { BACKEND_ADRESS } from '../data/urlData';

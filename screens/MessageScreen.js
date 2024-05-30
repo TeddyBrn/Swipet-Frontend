@@ -145,19 +145,7 @@ export default function MessageScreen({ navigation }) {
           contentContainerStyle={{ flexGrow: 1 }}
           horizontal={true}
           style={{ height: '100%', width: '100%' }}>
-          <View style={styles.matchesPhotoContainer}>
-            <TouchableOpacity
-             
-              onPress={() => navigation.navigate('Discussion')}>
-              <Image
-                style={styles.matchImage}
-                source={require('../assets/miniLogo.png')}
-              />
-
-              <Text>Marie</Text>
-            </TouchableOpacity>
-            {matchs}
-          </View>
+          <View style={styles.matchesPhotoContainer}>{matchs}</View>
         </ScrollView>
       </View>
       <View style={styles.messagesContainer}>
@@ -239,6 +227,12 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     marginLeft: 15
+  },
+  matchImageText: {
+    fontSize: 16,
+    fontFamily: 'Montserrat-Bold',
+    color: '#33464d',
+    textAlign: 'center'
   },
   messagesContainer: {
     height: height * 0.65,
