@@ -14,7 +14,7 @@ import {
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
-import { profilData } from '../data/profils';
+
 import { BACKEND_ADRESS } from '../data/urlData';
 
 export default function MessageScreen({ navigation }) {
@@ -28,7 +28,6 @@ export default function MessageScreen({ navigation }) {
 
   useEffect(() => {
     (async () => {
-      // const fetchData = async () => {
       try {
         const response = await fetch(`${BACKEND_ADRESS}/matchs/${user.token}`);
         const data = await response.json();
@@ -46,40 +45,40 @@ export default function MessageScreen({ navigation }) {
       } finally {
         setLoading(false);
       }
-      // console.log(`user.token => ${user.token}`);
     })();
   }, []);
 
-  // console.log('tableau', matchsData)
+  // console.log('tableau', matchsData);
 
-  // matchsData.map((data, i) => {
-  //   if(!data.messages.length) {
-  //     matchsTab.push(data)
-  //   } else {
-  //     messagesTab.push(data)
-  //   };
-  // })
-  console.log('matchsTab', matchsTab);
-  console.log('messagesTab', messagesTab);
-  // console.log('petsitter', matchsTab[0].petsitter_id.url)
+  matchsData.map((data, i) => {
+    if (!data.messages.length) {
+      matchsTab.push(data);
+    } else {
+      messagesTab.push(data);
+    }
+  });
+  console.log('matchsTab', matchsTab[0]);
+  // console.log('messagesTab', messagesTab);
+  // console.log('petsitter', matchsTab[0].petsitter_id.photo);
   const matchs = matchsTab.map((match, i) => {
-    // console.log(match)
-    return(
-    <TouchableOpacity key={i} onPress={() => navigation.navigate('Discussion', match._id)}>
-      {match.petsitter_id.photo && (
-        <Image
-          style={styles.matchImage}
-          source={{ uri: match.petsitter_id.photo }}
-        />
-      )}
+    return (
+      <TouchableOpacity
+        key={i}
+        onPress={() => navigation.navigate('Discussion', match._id)}>
+        {match.petsitter_id.photo && (
+          <Image
+            style={styles.matchImage}
+            source={{ uri: match.petsitter_id.photo }}
+          />
+        )}
         <Text>{match.petsitter_id.firstname}</Text>
-    </TouchableOpacity>
-    )
+      </TouchableOpacity>
+    );
   });
 
   const messages = messagesTab.map((data, i) => {
-    return(
-      // <View style= {styles.messageCard}>
+    return (
+      <View style={styles.messageCard}>
         <TouchableOpacity
           key={i}
           onPress={() => navigation.navigate('Discussion', data._id)}
@@ -93,10 +92,10 @@ export default function MessageScreen({ navigation }) {
             <Text style={styles.matchMessage}>{data.messages[0].content}</Text>
           </View>
         </TouchableOpacity>
-      // </View>
-    )
+        //{' '}
+      </View>
+    );
   });
-
 
   if (loading) {
     return (
@@ -228,6 +227,12 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     marginLeft: 15
+  },
+  matchImageText: {
+    fontSize: 16,
+    fontFamily: 'Montserrat-Bold',
+    color: '#33464d',
+    textAlign: 'center'
   },
   messagesContainer: {
     height: height * 0.65,
