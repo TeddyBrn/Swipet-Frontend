@@ -14,6 +14,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 
 export default function Proposal({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -99,7 +101,8 @@ export default function Proposal({ navigation }) {
                   <Ionicons
                     name="checkmark-done-circle"
                     size={200}
-                    color="#8fd14f"></Ionicons>
+                    color="#8fd14f"/>
+                    {/* <MaterialIcons name="verified" color="#8fd14f" size={200} /> */}
                   <TouchableOpacity
                     onPress={() => {
                       setIsModalVisible(false);

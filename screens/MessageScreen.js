@@ -68,7 +68,7 @@ export default function MessageScreen({ navigation }) {
 
   const messages = messagesTab.map((data, i) => {
     return (
-      <View style={styles.messageCard}>
+      <View >
         <TouchableOpacity
           key={i}
           onPress={() => navigation.navigate('Discussion', data._id)}
@@ -82,7 +82,7 @@ export default function MessageScreen({ navigation }) {
             <Text style={styles.matchMessage}>{data.messages[0].content}</Text>
           </View>
         </TouchableOpacity>
-        //{' '}
+       
       </View>
     );
   });
@@ -186,14 +186,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
     color: '#33464d'
   },
-  text: {
+  text: { 
     fontSize: 26,
     fontWeight: '600',
     marginTop: 100,
     color: '#502314'
   },
   matchsContainer: {
-    height: height * 0.15,
+    height: height * 0.20,
     width: width * 0.85,
     paddingBottom: 10,
     borderBottomWidth: 3,
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
   },
   messageCard: {
     flexDirection: 'row',
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderColor: '#33333390',
     width: '100%',
     height: 100,
@@ -245,9 +245,9 @@ const styles = StyleSheet.create({
   },
   messageTextContainer: {
     width: '80%',
-    height: '100%',
+    height: '90%',
     paddingLeft: 10,
-    justifyContent: 'space-around'
+    justifyContent: 'center'
   },
   matchName: {
     fontSize: 20,

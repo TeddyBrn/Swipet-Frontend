@@ -17,6 +17,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 import { addMessage } from '../reducers/matchs';
 import { BACKEND_ADRESS } from '../data/urlData';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export default function DiscussionScreen({ navigation, route }) {
   const dispatch = useDispatch();
@@ -104,24 +105,11 @@ export default function DiscussionScreen({ navigation, route }) {
     const date = moment(data.created_at).fromNow();
     console.log(date);
     return (
-      <View style={styles.messagesCard}>
-        <TouchableOpacity
-          key={i}
-          onPress={() => deleteMessage()}
-          style={styles.messageCard}>
-          {matchData[0].petsitter_id.photo && (
-            <Image
-              style={styles.messageImage}
-              source={{ uri: matchData[0].petsitter_id.photo }}
-            />
-          )}
-          <View style={styles.messageContent}>
-            <Text>{data.content}</Text>
-          </View>
-          <View style={styles.messageDate}>
-            <Text>{date}</Text>
-          </View>
-        </TouchableOpacity>
+      <View style={[styles.messageWrapper]} key={i}>
+        <View style={[styles.message]}>
+          <Text style={styles.messageText}>{data.content}</Text>
+        </View>
+        <Text style={styles.timeText}>{date}</Text>
       </View>
     );
   });
@@ -178,12 +166,6 @@ export default function DiscussionScreen({ navigation, route }) {
               {matchData[0].petsitter_id.firstname}
             </Text>
           )}
-          {matchData[0].petsitter_id.url && (
-            <Image
-              style={styles.messageImage}
-              source={{ uri: matchData[0].petsitter_id.url }}
-            />
-          )}
         </View>
         <TouchableOpacity
           onPress={() => handleProposal()}
@@ -194,26 +176,22 @@ export default function DiscussionScreen({ navigation, route }) {
       <View style={styles.messagesContainer}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
-          style={{ height: '100%', width: '100%' }}>
+          style={{ height: '90%', width: '100%' }}>
           {messages}
         </ScrollView>
       </View>
-      <View style={styles.newMessageContainer}>
-        <View style={styles.input}>
-          <Ionicons name="person" size={20} color="#33464d" />
-          <TextInput
-            style={styles.inputText}
-            onChangeText={(value) => setNewMessages(value)}
-            value={newMessage}
-            placeholder="Nouveau message"
-            placeholderTextColor="#5a7869"
-            autoCapitalize="none"
-          />
-        </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={(value) => setNewMessages(value)}
+          value={newMessage}
+          style={styles.input}
+          autoFocus
+        />
         <TouchableOpacity
           onPress={() => handleNewMessage()}
-          style={styles.newMessage}>
-          <Text style={styles.buttonMessageText}>Envoyer</Text>
+          style={styles.sendButton}>
+          <MaterialIcons name="send" color="#ffffff" size={24} />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -262,59 +240,95 @@ const styles = StyleSheet.create({
   },
   proposalText: {
     fontFamily: 'Montserrat-Bold',
-
     color: '#fff'
   },
-  text: {
-    fontSize: 26,
-    fontWeight: '600',
-    marginTop: 100,
-    color: '#502314'
+  messagesContainer: {
+    height: '78%',
+    width: '90%'
   },
-  input: {
-    borderRadius: 5,
-    borderBottomWidth: 1.5,
-    width: '80%',
-    padding: 10,
-    marginVertical: 10,
-    paddingLeft: 20,
+  myMessagesCard: {
     flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#33464d'
+    height: 70
+    // alignItems: 'center',
+    // justifyContent: 'flex-end',
+    // width: '80%',
+    // backgroundColor: '#ffffff',
+    // padding: 20,
+    // marginTop: 20,
+    // borderRadius: 10
   },
-  newMessage: {
-    backgroundColor: '#5a7869',
-    borderColor: '#33464d',
-    width: '20%',
-    paddingVertical: 10,
-    alignItems: 'right',
-    borderRadius: 5,
-    borderWidth: 1.5
+  messageWrapper: {
+    alignItems: 'flex-end',
+    marginBottom: 20
   },
-  buttonMessageText: {
-    color: '#fff',
-    fontSize: 23,
-    fontFamily: 'Montserrat-Bold'
+  message: {
+    paddingVertical: 12,
+    paddingHorizontal: 18,
+    borderRadius: 25,
+    backgroundColor: '#a2d6bc',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    maxWidth: '65%'
   },
-  messagesCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '80%',
-    backgroundColor: '#ffffff',
-    padding: 20,
-    marginTop: 20,
-    borderRadius: 10
+  youMessage: {
+    alignSelf: 'flex-start',
+    alignItems: 'flex-start',
   },
-  messageContent: {},
-  messageDate: {},
-  newMessageContainer: {
+  youMessageBG: {
+    backgroundColor: '#eee'
+  },
+  messageText: {
+    color: '#506568',
+    fontFamily: 'Montserrat-SemiBold',
+    fontSize: 20,
+  },
+  timeText: {
+    color: '#506568',
+    fontSize: 12,
+    marginTop: 2
+  },
+
+  inputContainer: {
     width: '100%',
     flexDirection: 'row',
+    justifyContent: 'center',
+    justifySelf: 'flex-end',
+    alignContent: 'flex-start',
+    marginBottom: 30,
+    marginTop: 'auto',
+    background: 'transparent',
+    paddingLeft: 20,
+    paddingRight: 20
+  },
+  input: {
+    backgroundColor: '#f0f0f0',
+    width: '80%',
+    padding: 14,
+    borderRadius: 30,
+    fontSize: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 6.41,
+    elevation: 1.2
+  },
+  sendButton: {
+    borderRadius: 50,
+    padding: 16,
+    backgroundColor: '#5a7869',
+    marginLeft: 12,
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 15,
-    backgroundColor: '#fff',
-    shadowColor: '#000000'
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 6.41,
+    elevation: 1.2
   }
 });
