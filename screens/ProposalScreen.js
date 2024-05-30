@@ -4,9 +4,11 @@ import {
   TextInput,
   StyleSheet,
   Text,
+  Dimensions,
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  Modal,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -14,6 +16,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Proposal({ navigation }) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const user = useSelector((state) => state.users.value);
 
   const formatExpirationDate = (input) => {
@@ -30,7 +33,7 @@ export default function Proposal({ navigation }) {
   };
 
   const handlePress = () => {
-    
+    setIsModalVisible(true);
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -55,6 +58,22 @@ export default function Proposal({ navigation }) {
           <Text style={styles.titles}>PetSitter</Text>
           <Text style={styles.petsitterText}>PetSitter name</Text>
         </View>
+        <Modal
+          visible={isModalVisible}
+          transparent={true}
+          animationType="slide"
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>Proposition envoyée à Name !</Text>
+              <Ionicons name="checkmark-circle-outline" size={250} color="#8fd14f"></Ionicons>
+              <TouchableOpacity
+                  onPress={() => {setIsModalVisible(false); navigation.navigate('TabNavigator', {screen: 'Swipe'})}}
+                  style={styles.button}><Ionicons name="home" size={35} color="#333" />
+                  <Text style={styles.buttonText}>Retour à l'écran d'accueil</Text></TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
         <View style={styles.animal}>
           <Text style={styles.titles}>Animal à garder</Text>
           <Text style={styles.petsitterText}>Animaux</Text>
@@ -112,6 +131,8 @@ export default function Proposal({ navigation }) {
     </SafeAreaView>
   );
 }
+
+const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -204,4 +225,35 @@ const styles = StyleSheet.create({
     marginTop: 70,
     borderWidth: 1.5,
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 10,
+    alignItems: 'center',
+    // justifyContent: 'flex-start',
+    height: height * 0.6,
+    width: width * 0.9,
+    flexDirection: 'column'
+  },
+  modalInfosContainer: {
+    width: width * 0.9,
+    flexDirection: 'column',
+    alignItems: 'center',
+    height: height * 0.5
+  },
+  modalTitle: {
+    fontSize: 40,
+    color: '#72e2ba',
+    fontFamily: 'PoetsenOne-Regular',
+    paddingVertical: 20
+  },
+  modalText: {
+    fontSize: 36
+  }
 });
