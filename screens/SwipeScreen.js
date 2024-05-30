@@ -37,13 +37,14 @@ export default function ProfileCard({ navigation }) {
         const data = await response.json();
         if (data.result) {
           setProfilsData(data.data);
-          // // const dataFiltered = data.data.filter(profil => 
-          // //   profil.age >= filter.ageMin &&
-          // //   profil.age <= filter.ageMax &&
-          // //   profil.avis[0].note >= filter.noteMin
-          // //  );
-           
-          //  setProfilsData(dataFiltered)
+          // const dataFiltered = data.data.filter(
+          //   (profil) =>
+          //     profil.age >= filter.ageMin &&
+          //     profil.age <= filter.ageMax &&
+          //     profil.avis[0].note >= filter.noteMin
+          // );
+
+          // setProfilsData(dataFiltered);
         } else {
           setError('Failed to fetch profiles');
         }
@@ -53,10 +54,9 @@ export default function ProfileCard({ navigation }) {
         setLoading(false);
       }
     };
-    console.log(`chargement useEffect`);
-    console.log(`user.token => ${user.token}`);
+    // console.log(`user.token => ${user.token}`);
     fetchData();
-  }, [filter.noteMin,filter.ageMax,filter.ageMin]);
+  }, [filter.noteMin, filter.ageMax, filter.ageMin]);
 
   const addAlike = () => {
     dispatch(addLike(profilsData[count]._id));
@@ -69,9 +69,10 @@ export default function ProfileCard({ navigation }) {
     )
       .then((response) => response.json())
       .then((data) => {
-        // console.log('rrrrrrrrrr',data)
         if (data.message === 'new match created!') {
-          dispatch(addMatch({token: user.token, _id: profilsData[count]._id}));
+          dispatch(
+            addMatch({ token: user.token, _id: profilsData[count]._id })
+          );
           setIsModalVisible(true);
         }
       });
@@ -83,7 +84,6 @@ export default function ProfileCard({ navigation }) {
     setCount(count + 1);
     addAlike();
   };
-  // console.log(`user.like => ${user.like}`);
 
   const handleDislike = () => {
     setCount(count + 1);
@@ -148,23 +148,33 @@ export default function ProfileCard({ navigation }) {
             <View style={styles.modalContent}>
               <View style={styles.modalInfosContainer}>
                 <Text style={styles.modalTitle}>Nouveau match !</Text>
-                <Text style={styles.infosMatch}>{isModalVisible && `Vous et ${profilsData[count-1].firstname} avez un match`} 
+                <Text style={styles.infosMatch}>
+                  {isModalVisible &&
+                    `Vous et ${profilsData[count - 1].firstname} avez un match`}
                 </Text>
                 <View style={styles.imageContainer}>
                   <Image
                     style={styles.infosImage}
-                    source={{ uri: user.photo }}   
+                    source={{ uri: user.photo }}
                   />
-                  {isModalVisible &&
-                  <Image
-                    style={styles.infosImage}
-                    source={{ uri: profilsData[count-1].url }}
-                  />}
+                  {isModalVisible && (
+                    <Image
+                      style={styles.infosImage}
+                      source={{ uri: profilsData[count - 1].photo }}
+                    />
+                  )}
                 </View>
               </View>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
+<<<<<<< HEAD
                   onPress={() => {setIsModalVisible(false); navigation.navigate('TabNavigator', {screen: 'Discussion'})}}
+=======
+                  onPress={() => {
+                    setIsModalVisible(false);
+                    navigation.navigate('TabNavigator', { screen: 'Messages' });
+                  }}
+>>>>>>> 1ffbc5d12521a4ad6a12c2e519aa54760560957b
                   style={styles.button}>
                   <Ionicons name="chatbubbles" size={30} color="#333" />
                   <Text style={styles.buttonText}>Envoyer un message</Text>
@@ -185,13 +195,11 @@ export default function ProfileCard({ navigation }) {
               cards={profilsData} // Les données des profils à swiper
               ref={swiperRef}
               renderCard={(card) => {
-              
                 return (
                   <View style={styles.profileContainer}>
                     <Image
                       style={styles.profileImage}
-                      source={{ uri: card.url }}
-                    />
+                      source={{ uri: card.photo }}/>
                     <View style={styles.infos}>
                       <Text style={styles.profileName}>
                         {card.firstname} , {card.age} ans
@@ -204,7 +212,7 @@ export default function ProfileCard({ navigation }) {
                         />{' '}
                         {card.city}
                       </Text>
-                      <View style={styles.ratingContainer}>
+                      {/* <View style={styles.ratingContainer}>
                         <View style={styles.ratingContainer}>
                           <Text style={styles.profileNote}>
                             {card.avis[0].note}/5
@@ -225,7 +233,10 @@ export default function ProfileCard({ navigation }) {
                                     color="#ffce0c"
                                   />
                                 );
-                              } else if (i === fullStars && fractionalStar > 0) {
+                              } else if (
+                                i === fullStars &&
+                                fractionalStar > 0
+                              ) {
                                 // Étoile partielle
                                 return (
                                   <View
@@ -270,7 +281,7 @@ export default function ProfileCard({ navigation }) {
                               }
                             })}
                         </View>
-                      </View>
+                      </View> */}
                       <Text style={styles.bioLabel}>Bio</Text>
                       <Text style={styles.bioText}>{card.bio}</Text>
                     </View>
@@ -491,7 +502,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: width * 0.7,
     margin: -100,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   button: {
     height: height * 0.07,

@@ -21,8 +21,9 @@ import { BACKEND_ADRESS } from '../data/urlData';
 export default function SignUpScreenUser({ navigation }) {
   const dispatch = useDispatch();
 
-  const [image, setImage] = useState('');
-  const [lastname, setLastname] = useState('');
+  const [bioFocused, setBioFocused] = useState(false);
+  const [photo, setPhoto] = useState('');
+  const [bio, setBio] = useState('Ma bio');
   const [firstname, setFirstname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,7 +31,7 @@ export default function SignUpScreenUser({ navigation }) {
   const [age, setAge] = useState('');
   const [role, setRole] = useState('');
   const [fieldError, setFieldError] = useState(false);
-
+  
   // ImagePicker
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -41,7 +42,7 @@ export default function SignUpScreenUser({ navigation }) {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setPhoto(result.assets[0].uri);
     }
   };
 
@@ -72,17 +73,17 @@ export default function SignUpScreenUser({ navigation }) {
   };
 
   const handleConnexion = () => {
-    if (!image) {
+    if (!photo) {
       setFieldError(true);
       return;
     }
     const formData = new FormData();
     formData.append('photoFromFront', {
-      uri: image,
+      uri: photo,
       name: 'photo.jpg',
       type: 'image/jpeg'
     });
-    formData.append('lastname', lastname);
+    formData.append('bio', bio);
     formData.append('firstname', firstname);
     formData.append('email', email);
     formData.append('password', password);
@@ -90,12 +91,12 @@ export default function SignUpScreenUser({ navigation }) {
     formData.append('role', role);
     formData.append('age', age);
 
-    if (!image) {
+    if (!photo) {
       fetch(`${BACKEND_ADRESS}/profils/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          lastname,
+          bio,
           firstname,
           email,
           password,
@@ -110,7 +111,7 @@ export default function SignUpScreenUser({ navigation }) {
             dispatch(
               login({
                 token: data.newDoc.token,
-                lastname,
+                bio,
                 firstname,
                 email,
                 city,
@@ -135,7 +136,7 @@ export default function SignUpScreenUser({ navigation }) {
               dispatch(
                 login({
                   token: data.newDoc.token,
-                  lastname,
+                  bio,
                   firstname,
                   email,
                   city,
@@ -144,7 +145,7 @@ export default function SignUpScreenUser({ navigation }) {
                   photo: data.newDoc.photo
                 })
               );
-              navigation.navigate('SignUpAnimal');
+              role === 'garder' ? navigation.navigate('TabNavigator') : role === 'faire garder' && navigation.navigate('SignUpAnimal');
             }
           })
           .catch((e) => console.error(e));
@@ -181,27 +182,17 @@ export default function SignUpScreenUser({ navigation }) {
               style={styles.imagePicker}
               activeOpacity={0.8}
               onPress={pickImage}>
-              {image ? (
-                <Image source={{ uri: image }} style={styles.image} />
+              {photo ? (
+                <Image source={{ uri: photo }} style={styles.image} />
               ) : (
                 <Image
                   source={require('../assets/add-image.png')}
-                  style={{ width: 60, height: 60, color: '#33464d' }}
+                  style={{ width: 50, height: 50, color: '#33464d' }}
                 />
               )}
             </TouchableOpacity>
             <View style={styles.inputContain}>
-              <View style={styles.input}>
-                <Ionicons name="person" size={20} color="#33464d" />
-                <TextInput
-                  style={styles.inputText}
-                  onChangeText={(value) => setLastname(value)}
-                  value={lastname}
-                  placeholder="Nom"
-                  placeholderTextColor="#5a7869"
-                  autoCapitalize="none"
-                />
-              </View>
+              
 
               <View style={styles.input}>
                 <Ionicons name="person" size={20} color="#33464d" />
@@ -262,6 +253,25 @@ export default function SignUpScreenUser({ navigation }) {
                   autoCapitalize="none"
                 />
               </View>
+              <View
+                style={[styles.input, bioFocused && styles.inputBioFocused]}>
+                <TextInput
+                  style={[
+                    styles.inputText,
+                    { paddingLeft: 0 },
+                    { textAlignVertical: 'top' }
+                  ]}
+                  onChangeText={(value) => setBio(value)}
+                  value={bio}
+                  placeholder="Bio"
+                  placeholderTextColor="#5a7869"
+                  autoCapitalize="none"
+                  multiline={true}
+                  numberOfLines={2}
+                  onFocus={() => setBioFocused(true)}
+                  onBlur={() => setBioFocused(false)}
+                />
+              </View>
               {fieldError && (
                 <Text style={styles.error}>Missing or empty fields.</Text>
               )}
@@ -292,9 +302,7 @@ export default function SignUpScreenUser({ navigation }) {
             <TouchableOpacity
               style={styles.signUpButton}
               activeOpacity={0.8}
-              // onPress={() => navigation.navigate('SignUpAnimal')}
-              onPress={() => handleConnexion()}
-              >
+              onPress={() => handleConnexion()}>
               <Text style={styles.buttonText}>Confirmer</Text>
             </TouchableOpacity>
           </View>
@@ -338,8 +346,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 2,
     borderColor: '#33464d',
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: -30
@@ -353,15 +361,15 @@ const styles = StyleSheet.create({
     width: '95%',
     padding: 10,
     paddingLeft: 20,
-    marginTop: 20,
+    marginTop: 15,
     alignItems: 'center'
   },
   input: {
-    borderRadius: 10,
+    borderRadius: 5,
     borderBottomWidth: 1.5,
     width: '80%',
     padding: 10,
-    marginVertical: 10,
+    marginVertical: 8,
     paddingLeft: 20,
     flexDirection: 'row',
     alignItems: 'center',
@@ -376,7 +384,7 @@ const styles = StyleSheet.create({
   titleCheckbox: {
     fontSize: 20,
     fontFamily: 'Montserrat-Bold',
-    paddingVertical: 20,
+    paddingBottom: 15,
     color: '#33464d'
   },
   checkboxContainer: {
@@ -417,6 +425,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 23,
     fontFamily: 'Montserrat-Bold'
+  },
+  inputBioFocused: {
+    borderColor: '#33464d',
+    borderWidth: 1,
+    borderBottomWidth: 1.5
   },
   error: {
     color: '#e23636',

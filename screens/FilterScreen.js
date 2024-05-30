@@ -61,6 +61,7 @@ const FiltersScreen = ({ navigation }) => {
     dispatch(addNoteMin(averageNote));
     dispatch(addTime(durationValue));
     console.log(`handle validate click`);
+    navigation.navigate("Swipe")
   }
 
   console.log(`filter distance => ${filter.distance}`);

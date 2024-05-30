@@ -5,7 +5,7 @@ const initialState = {
     token: null,
     email: null,
     firstname: null,
-    lastname: null,
+    bio: null,
     city: null,
     role: null,
     age: null,
@@ -31,6 +31,7 @@ const userSlice = createSlice({
       state.value.role = action.payload.role;
       state.value.age = action.payload.age;
       state.value.photo = action.payload.photo;
+      state.value.bio = action.payload.bio;
     },
     logout: (state) => {
       state.value.token = null;
@@ -39,6 +40,9 @@ const userSlice = createSlice({
       state.value.lastname = null;
       state.value.city = null;
       state.value.role = null;
+      state.value.age = null;
+      state.value.photo = null;
+      state.value.bio = null;
       state.value.profilAnimal = [];
       state.value.avis = [];
       state.value.like = [];
