@@ -43,10 +43,11 @@ export default function SignInScreen({ navigation }) {
                 token: data.data.token,
                 email: signInEmail,
                 firstname: data.data.firstname,
-                lastname: data.data.lastname,
+                age: data.data.age,
                 role: data.data.role,
                 city: data.data.city,
-                photo: data.data.photo
+                photo: data.data.photo,
+                bio: data.data.bio,
               })
             );
             navigation.navigate("TabNavigator", { screen: "Swipe" });

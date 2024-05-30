@@ -36,13 +36,13 @@ export default function SignUpScreenAnimal({ navigation }) {
   const [gender, setGender] = useState('');
   const [animalType, setAnimalType] = useState('');
   const [fieldError, setFieldError] = useState(false);
-  const [image, setImage] = useState('');
+  const [photo, setPhoto] = useState('');
 
   const [bioFocused, setBioFocused] = useState(false);
   const [detailFocused, setDetailFocused] = useState(false);
 
   const dataGender = ['Male', 'Female'];
-  const dataAnimalType = ['Chien', 'Chat', 'Lapin'];
+  const dataAnimalType = ['Chien', 'Chat', 'Lapin','Hamster'];
 
   // ImagePicker
 
@@ -55,63 +55,19 @@ export default function SignUpScreenAnimal({ navigation }) {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setPhoto(result.assets[0].uri);
     }
   };
 
-  // DatePicker
-
-  // const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-  // const showDatePicker = () => {
-  //   setDatePickerVisibility(true);
-  // };
-
-  // const hideDatePicker = () => {
-  //   setDatePickerVisibility(false);
-  // };
-
-  // const handleConfirm = (date) => {
-  //   console.warn(date);
-  //   setBirthDate(date);
-  //   hideDatePicker();
-  // };
-
-  // const handleAddAnimal = () => {
-  //   fetch(`http://192.168.233.47:3000/profils/signup/animal/${user.token}`, {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify({ name, year, animalType, gender, bio, detail })
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       data.result &&
-  //         dispatch(
-  //           addAnimal({
-  //             token: data.token,
-  //             name,
-  //             age,
-  //             animalType,
-  //             gender,
-  //             bio,
-  //             detail
-  //           })
-  //         );
-  //       setName('');
-  //       setYear('');
-  //       setBio('');
-  //     });
-  // };
-
   const handleConnexion = () => {
-    if (!image) {
+    if (!photo) {
       setFieldError(true);
       return;
     }
     const formData = new FormData();
 
     formData.append('photoUrl', {
-      uri: image,
+      uri: photo,
       name: 'photo.jpg',
       type: 'image/jpeg'
     });
@@ -122,7 +78,7 @@ export default function SignUpScreenAnimal({ navigation }) {
     formData.append('detail', detail);
     formData.append('age', age);
 
-    if (!image) {
+    if (!photo) {
       fetch(`${BACKEND_ADRESS}/animals/addanimal/${user.token}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -191,8 +147,8 @@ export default function SignUpScreenAnimal({ navigation }) {
               style={styles.imagePicker}
               activeOpacity={0.8}
               onPress={pickImage}>
-              {image ? (
-                <Image source={{ uri: image }} style={styles.image} />
+              {photo ? (
+                <Image source={{ uri: photo }} style={styles.image} />
               ) : (
                 <Image
                   source={require('../assets/add-image.png')}
