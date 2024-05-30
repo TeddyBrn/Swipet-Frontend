@@ -65,10 +65,10 @@ export default function MessageScreen({ navigation }) {
   const matchs = matchsTab.map((match, i) => {
     // console.log(match)
     <TouchableOpacity key={i} onPress={() => navigation.navigate('Discussion', match._id)}>
-      {match.petsitter_id.url && (
+      {match.petsitter_id.photo && (
         <Image
           style={styles.matchImage}
-          source={{ uri: match.petsitter_id.url }}
+          source={{ uri: match.petsitter_id.photo }}
         />
       )}
         <Text>{match.petsitter_id.firstname}</Text>
@@ -84,7 +84,7 @@ export default function MessageScreen({ navigation }) {
           style={styles.messageCard}>
           <Image
             style={styles.messageImage}
-            // source={{ uri: data.petsitter_id.url }}
+            source={{ uri: data.petsitter_id.photo }}
           />
           <View style={styles.messageTextContainer}>
             <Text style={styles.matchName}>{data.petsitter_id.firstname}</Text>

@@ -167,14 +167,10 @@ export default function ProfileCard({ navigation }) {
               </View>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
-<<<<<<< HEAD
-                  onPress={() => {setIsModalVisible(false); navigation.navigate('TabNavigator', {screen: 'Discussion'})}}
-=======
                   onPress={() => {
                     setIsModalVisible(false);
                     navigation.navigate('TabNavigator', { screen: 'Messages' });
                   }}
->>>>>>> 1ffbc5d12521a4ad6a12c2e519aa54760560957b
                   style={styles.button}>
                   <Ionicons name="chatbubbles" size={30} color="#333" />
                   <Text style={styles.buttonText}>Envoyer un message</Text>

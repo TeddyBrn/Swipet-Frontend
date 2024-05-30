@@ -15,6 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSelector, useDispatch } from 'react-redux';
 import { profilData } from "../data/profils";
+import moment from 'moment';
 import { addMessage } from '../reducers/matchs';
 import { BACKEND_ADRESS } from '../data/urlData';
 
@@ -26,6 +27,7 @@ const dispatch = useDispatch();
 const user = useSelector((state) => state.users.value);
 const matchId = '66547d9317146ba1ac45ead2'
 // const matchId = route.params;
+console.log(route)
 console.log(matchId)
 
 const [matchData, setMatchData] = useState([]);
@@ -75,6 +77,8 @@ const [error, setError] = useState(null);
   matchData.length && console.log(matchData[0].petsitter_id)
 
   const messages = messageData.map((data, i)=> {
+    const date = moment(data.created_at).fromNow()
+    console.log(date)
     return (
       <View style={styles.messagesCard}>
         <TouchableOpacity key={i} onPress={()=> deleteMessage()} style={styles.messageCard}>
@@ -83,7 +87,7 @@ const [error, setError] = useState(null);
             source={{ uri: matchData[0].petsitter_id.url }}
           />} */}
           <View style={styles.messageContent}><Text>{data.content}</Text></View>
-          <View style={styles.messageDate}><Text>{data.created_at}</Text></View>
+          <View style={styles.messageDate}><Text>{date}</Text></View>
         </TouchableOpacity>
       </View>
     )
