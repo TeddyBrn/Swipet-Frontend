@@ -129,7 +129,7 @@ export default function DiscussionScreen({ navigation, route }) {
   console.log(messageData);
 
   const handleProposal = () => {
-    NavigationHelpersContext.navigate('Proposal', { matchId });
+    navigation.navigate('Proposal', { matchId });
   };
 
   const handleNewMessage = () => {
