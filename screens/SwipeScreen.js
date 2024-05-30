@@ -29,9 +29,10 @@ export default function ProfileCard({ navigation }) {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(user.role)
       try {
         const response = await fetch(
-          `${BACKEND_ADRESS}/profils/swipe/${user.role}`
+          `${BACKEND_ADRESS}/profils/swipe/${user.role}`          
         );
         const data = await response.json();
         if (data.result) {
@@ -129,7 +130,7 @@ export default function ProfileCard({ navigation }) {
           <View style={styles.headerR}>
             <TouchableOpacity
               style={styles.iconButton}
-              onPress={() => navigation.navigate('Notifications')}>
+              onPress={() => navigation.navigate('Discussion')}>
               <Ionicons name="notifications" size={35} color="#33464d" />
             </TouchableOpacity>
             <TouchableOpacity
