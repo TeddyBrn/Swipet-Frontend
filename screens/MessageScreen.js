@@ -59,38 +59,42 @@ export default function MessageScreen({ navigation }) {
   //     messagesTab.push(data)
   //   };
   // })
-  // console.log('matchsTab', matchsTab);
-  // console.log('messagesTab', messagesTab);
+  console.log('matchsTab', matchsTab);
+  console.log('messagesTab', messagesTab);
   // console.log('petsitter', matchsTab[0].petsitter_id.url)
   const matchs = matchsTab.map((match, i) => {
     // console.log(match)
-    <TouchableOpacity key={i} onPress={() => pressAmatch()}>
+    <TouchableOpacity key={i} onPress={() => navigation.navigate('Discussion', match._id)}>
       {match.petsitter_id.url && (
         <Image
           style={styles.matchImage}
           source={{ uri: match.petsitter_id.url }}
         />
       )}
+        <Text>{match.petsitter_id.firstname}</Text>
     </TouchableOpacity>;
   });
 
   const messages = messagesTab.map((data, i) => {
-    <TouchableOpacity
-      key={i}
-      onPress={() => pressAmessage()}
-      style={styles.messageCard}>
-      <Image
-        style={styles.messageImage}
-        // source={{ uri: data.petsitter_id.url }}
-      />
-      <View style={styles.messageTextContainer}>
-        <Text style={styles.matchName}>{data.petsitter_id.firstname}</Text>
-        <Text style={styles.matchMessage}>{data.messages[0]}</Text>
-      </View>
-    </TouchableOpacity>;
+    return(
+      // <View style= {styles.messageCard}>
+        <TouchableOpacity
+          key={i}
+          onPress={() => navigation.navigate('Discussion', data._id)}
+          style={styles.messageCard}>
+          <Image
+            style={styles.messageImage}
+            // source={{ uri: data.petsitter_id.url }}
+          />
+          <View style={styles.messageTextContainer}>
+            <Text style={styles.matchName}>{data.petsitter_id.firstname}</Text>
+            <Text style={styles.matchMessage}>{data.messages[0].content}</Text>
+          </View>
+        </TouchableOpacity>
+      // </View>
+    )
   });
 
-  const pressAmatch = () => {};
 
   if (loading) {
     return (
@@ -140,14 +144,14 @@ export default function MessageScreen({ navigation }) {
           contentContainerStyle={{ flexGrow: 1 }}
           horizontal={true}
           style={{ height: '100%', width: '100%' }}>
-          <View style={styles.matchesPhotoContainer}>{/* {matchs} */}</View>
+          <View style={styles.matchesPhotoContainer}>{matchs}</View>
         </ScrollView>
       </View>
       <View style={styles.messagesContainer}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
           style={{ height: '100%', width: '100%' }}>
-          {/* {messages} */}
+          {messages}
         </ScrollView>
       </View>
     </SafeAreaView>

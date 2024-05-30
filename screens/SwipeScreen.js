@@ -29,20 +29,21 @@ export default function ProfileCard({ navigation }) {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(user.role)
       try {
         const response = await fetch(
-          `${BACKEND_ADRESS}/profils/swipe/${user.role}`
+          `${BACKEND_ADRESS}/profils/swipe/${user.role}`          
         );
         const data = await response.json();
         if (data.result) {
           setProfilsData(data.data);
-          const dataFiltered = data.data.filter(profil => 
-            profil.age >= filter.ageMin &&
-            profil.age <= filter.ageMax &&
-            profil.avis[0].note >= filter.noteMin
-           );
+          // // const dataFiltered = data.data.filter(profil => 
+          // //   profil.age >= filter.ageMin &&
+          // //   profil.age <= filter.ageMax &&
+          // //   profil.avis[0].note >= filter.noteMin
+          // //  );
            
-           setProfilsData(dataFiltered)
+          //  setProfilsData(dataFiltered)
         } else {
           setError('Failed to fetch profiles');
         }

@@ -15,18 +15,24 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSelector, useDispatch } from 'react-redux';
 import { profilData } from "../data/profils";
+import { addMessage } from '../reducers/matchs';
 import { BACKEND_ADRESS } from '../data/urlData';
 
 
 
 export default function DiscussionScreen({navigation, route}) {
 
-const matchId = '66546234e2b20002e3e6d313';
+const dispatch = useDispatch();
+const user = useSelector((state) => state.users.value);
+const matchId = '66547d9317146ba1ac45ead2'
+// const matchId = route.params;
+console.log(matchId)
 
 const [matchData, setMatchData] = useState([]);
 const [messageData, setMessagesData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const [newMessage, setNewMessages] = useState('');
+const [loading, setLoading] = useState(true);
+const [error, setError] = useState(null);
 
   // useEffect( async () => {
   //   console.log('start useeffect')
@@ -65,24 +71,45 @@ const [messageData, setMessagesData] = useState([]);
 
 
   console.log('data', matchData)
-  console.log(messages)
+
   matchData.length && console.log(matchData[0].petsitter_id)
 
   const messages = messageData.map((data, i)=> {
-    <TouchableOpacity key={i} onPress={()=> deleteMessage()} style={styles.messageCard}>
-     {matchData[0].petsitter_id.url && <Image 
-        style={styles.messageImage}
-        source={{ uri: matchData[0].petsitter_id.url }}
-      />}
-      <View style={styles.messageContent}>{data.content}</View>
-      <View style={styles.messageDate}>{data.created_at}</View>
-    </TouchableOpacity>
+    return (
+      <View style={styles.messagesCard}>
+        <TouchableOpacity key={i} onPress={()=> deleteMessage()} style={styles.messageCard}>
+        {/* {matchData[0].petsitter_id.url && <Image 
+            style={styles.messageImage}
+            source={{ uri: matchData[0].petsitter_id.url }}
+          />} */}
+          <View style={styles.messageContent}><Text>{data.content}</Text></View>
+          <View style={styles.messageDate}><Text>{data.created_at}</Text></View>
+        </TouchableOpacity>
+      </View>
+    )
   })
 
-  const handleProposal = () => {
+  console.log(messageData)
 
+  const handleProposal = () => {
+    NavigationHelpersContext.navigate('Proposal', {matchId})
   }
 
+  const handleNewMessage = () => {
+    fetch(`${BACKEND_ADRESS}/messages/newMessage/${matchId}/${user.token}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        content: newMessage,
+      })
+    }).then((response) => response.json())
+    .then((data) => {
+      if(data.result) {
+        dispatch(addMessage(data.message))
+        setNewMessages('');
+      }
+    })
+  }
   if (loading) {
     return (
       <SafeAreaView style={styles.container}>
@@ -118,11 +145,34 @@ const [messageData, setMessagesData] = useState([]);
                 <TouchableOpacity
                     onPress={() => handleProposal()}
                     style={styles.proposal}>
+                    <Text style={styles.buttonProposalText}>Proposition</Text>
                 </TouchableOpacity>
                 <View style={{ width: 80 }}></View>
             </View>
         <View style={styles.messagesContainer}>
-              {messages}
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+            style={{ height: '100%', width: '100%' }}>
+          {messages}
+          </ScrollView>
+        </View>
+        <View style={styles.newMessageContainer}>
+            <View style={styles.input}>
+              <Ionicons name="person" size={20} color="#33464d" />
+              <TextInput
+                  style={styles.inputText}
+                  onChangeText={(value) => setNewMessages(value)}
+                  value={newMessage}
+                  placeholder="Nouveau message"
+                  placeholderTextColor="#5a7869"
+                  autoCapitalize="none"
+              />
+            </View>
+            <TouchableOpacity
+              onPress={() => handleNewMessage()}
+              style={styles.newMessage}>
+              <Text style={styles.buttonMessageText}>Envoyer</Text>
+            </TouchableOpacity>
         </View>
       </SafeAreaView>
       )
@@ -167,5 +217,55 @@ const [messageData, setMessagesData] = useState([]);
         fontWeight: '600',
         marginTop: 100,
         color: '#502314'
-      }
+      },
+      input: {
+        borderRadius: 5,
+        borderBottomWidth: 1.5,
+        width: '80%',
+        padding: 10,
+        marginVertical: 10,
+        paddingLeft: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderColor: '#33464d'
+      },
+      newMessage: {
+        backgroundColor: '#5a7869',
+        borderColor: '#33464d',
+        width: '20%',
+        paddingVertical: 10,
+        alignItems: 'right',
+        borderRadius: 5,
+        borderWidth: 1.5
+      },
+      buttonMessageText: {
+        color: '#fff',
+        fontSize: 23,
+        fontFamily: 'Montserrat-Bold'
+      },
+      messagesCard: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '80%',
+        backgroundColor: '#ffffff',
+        padding: 20,
+        marginTop: 20,
+        borderRadius: 10,
+      },
+      messageContent: {
+
+      },
+      messageDate: {
+
+      },
+      newMessageContainer:{
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 15,
+        backgroundColor: '#fff',
+        shadowColor: '#000000',
+      },
     });
