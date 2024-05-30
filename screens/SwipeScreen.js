@@ -29,21 +29,22 @@ export default function ProfileCard({ navigation }) {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(user.role)
       try {
         const response = await fetch(
-          `${BACKEND_ADRESS}/profils/swipe/${user.role}`
+          `${BACKEND_ADRESS}/profils/swipe/${user.role}`          
         );
         const data = await response.json();
         if (data.result) {
           setProfilsData(data.data);
-          // const dataFiltered = data.data.filter(
-          //   (profil) =>
-          //     profil.age >= filter.ageMin &&
-          //     profil.age <= filter.ageMax &&
-          //     profil.avis[0].note >= filter.noteMin
-          // );
+          const dataFiltered = data.data.filter(
+            (profil) =>
+              profil.age >= filter.ageMin &&
+              profil.age <= filter.ageMax &&
+              (!profil.avis[0] || profil.avis[0].note >= filter.noteMin)
+          );
 
-          // setProfilsData(dataFiltered);
+          setProfilsData(dataFiltered);
         } else {
           setError('Failed to fetch profiles');
         }
@@ -129,7 +130,7 @@ export default function ProfileCard({ navigation }) {
           <View style={styles.headerR}>
             <TouchableOpacity
               style={styles.iconButton}
-              onPress={() => navigation.navigate('Notifications')}>
+              onPress={() => navigation.navigate('Discussion')}>
               <Ionicons name="notifications" size={35} color="#33464d" />
             </TouchableOpacity>
             <TouchableOpacity
@@ -190,6 +191,7 @@ export default function ProfileCard({ navigation }) {
               cards={profilsData} // Les données des profils à swiper
               ref={swiperRef}
               renderCard={(card) => {
+                
                 return (
                   <View style={styles.profileContainer}>
                     <Image
@@ -207,7 +209,7 @@ export default function ProfileCard({ navigation }) {
                         />{' '}
                         {card.city}
                       </Text>
-                      {/* <View style={styles.ratingContainer}>
+                     { card.avis[0] && <View style={styles.ratingContainer}>
                         <View style={styles.ratingContainer}>
                           <Text style={styles.profileNote}>
                             {card.avis[0].note}/5
@@ -276,7 +278,7 @@ export default function ProfileCard({ navigation }) {
                               }
                             })}
                         </View>
-                      </View> */}
+                      </View>}
                       <Text style={styles.bioLabel}>Bio</Text>
                       <Text style={styles.bioText}>{card.bio}</Text>
                     </View>
