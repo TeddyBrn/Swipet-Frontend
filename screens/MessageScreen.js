@@ -71,7 +71,7 @@ export default function MessageScreen({ navigation }) {
             source={{ uri: match.petsitter_id.photo }}
           />
         )}
-        <Text>{match.petsitter_id.firstname}</Text>
+        <Text style= {styles.matchImageText}>{match.petsitter_id.firstname}</Text>
       </TouchableOpacity>
     );
   });
@@ -125,7 +125,7 @@ export default function MessageScreen({ navigation }) {
           </View>
           <View style={{ width: 60 }}></View>
         </View>
-        <Text style={styles.text}>Vous n'avez pas encore de matchs !</Text>
+        <Text style={styles.matchMessage}>Vous n'avez pas encore de matchs !</Text>
       </SafeAreaView>
     );
   }
