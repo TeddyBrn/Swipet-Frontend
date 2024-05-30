@@ -36,14 +36,14 @@ export default function ProfileCard({ navigation }) {
         const data = await response.json();
         if (data.result) {
           setProfilsData(data.data);
-          const dataFiltered = data.data.filter(
-            (profil) =>
-              profil.age >= filter.ageMin &&
-              profil.age <= filter.ageMax &&
-              profil.avis[0].note >= filter.noteMin
-          );
+          // const dataFiltered = data.data.filter(
+          //   (profil) =>
+          //     profil.age >= filter.ageMin &&
+          //     profil.age <= filter.ageMax &&
+          //     profil.avis[0].note >= filter.noteMin
+          // );
 
-          setProfilsData(dataFiltered);
+          // setProfilsData(dataFiltered);
         } else {
           setError('Failed to fetch profiles');
         }
@@ -194,8 +194,7 @@ export default function ProfileCard({ navigation }) {
                   <View style={styles.profileContainer}>
                     <Image
                       style={styles.profileImage}
-                      source={{ uri: card.photo }}
-                    />
+                      source={{ uri: card.photo }}/>
                     <View style={styles.infos}>
                       <Text style={styles.profileName}>
                         {card.firstname} , {card.age} ans
@@ -208,7 +207,7 @@ export default function ProfileCard({ navigation }) {
                         />{' '}
                         {card.city}
                       </Text>
-                      <View style={styles.ratingContainer}>
+                      {/* <View style={styles.ratingContainer}>
                         <View style={styles.ratingContainer}>
                           <Text style={styles.profileNote}>
                             {card.avis[0].note}/5
@@ -277,7 +276,7 @@ export default function ProfileCard({ navigation }) {
                               }
                             })}
                         </View>
-                      </View>
+                      </View> */}
                       <Text style={styles.bioLabel}>Bio</Text>
                       <Text style={styles.bioText}>{card.bio}</Text>
                     </View>
