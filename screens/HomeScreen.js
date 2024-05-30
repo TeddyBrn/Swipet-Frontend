@@ -8,16 +8,18 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
 export default function HomeScreen({ navigation }) {
-  
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
-      <TouchableOpacity style={styles.logoContainer} >
-        <Image source={require('../assets/logo.jpg')} style={styles.logo} />
+      <TouchableOpacity style={styles.logoContainer} onPress={() => navigation.navigate('Proposal')}>
+        <Image
+          source={require('../assets/logo.jpg')}
+          style={styles.logo}
+          
+        />
       </TouchableOpacity>
       <Text style={styles.title}>Bienvenue sur Swipet</Text>
       <TouchableOpacity
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#5a7869',
-    borderColor: "#33464d", 
+    borderColor: '#33464d',
     width: '55%',
     paddingVertical: 10,
     alignItems: 'center',
@@ -74,10 +76,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Bold'
   },
   signInButton: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#ffffff'
   },
   color: {
-    color: 'white',
+    color: 'white'
   }
 });
 
