@@ -130,7 +130,7 @@ export default function ProfileCard({ navigation }) {
           <View style={styles.headerR}>
             <TouchableOpacity
               style={styles.iconButton}
-              onPress={() => navigation.navigate('Discussion')}>
+              onPress={() => navigation.navigate('Notifications')}>
               <Ionicons name="notifications" size={35} color="#33464d" />
             </TouchableOpacity>
             <TouchableOpacity
