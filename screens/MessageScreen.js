@@ -52,36 +52,36 @@ export default function MessageScreen({ navigation }) {
 
   // console.log('tableau', matchsData)
 
-  // matchsData.map((data, i) => {
-  //   if(!data.messages.length) {
-  //     matchsTab.push(data)
-  //   } else {
-  //     messagesTab.push(data)
-  //   };
-  // })
+  matchsData.map((data, i) => {
+    if(!data.messages.length) {
+      matchsTab.push(data)
+    } else {
+      messagesTab.push(data)
+    };
+  })
   // console.log('matchsTab', matchsTab);
   // console.log('messagesTab', messagesTab);
-  // console.log('petsitter', matchsTab[0].petsitter_id.url)
+  // console.log('petsitter =>', matchsTab[0].petsitter_id.photo)
+  
   const matchs = matchsTab.map((match, i) => {
-    // console.log(match)
-    <TouchableOpacity key={i} onPress={() => pressAmatch()}>
-      {match.petsitter_id.url && (
+   return <TouchableOpacity key={i} onPress={() => pressAmatch()}>
+      {match.petsitter_id.photo && (
         <Image
           style={styles.matchImage}
-          source={{ uri: match.petsitter_id.url }}
+          source={{ uri: match.petsitter_id.photo }}
         />
       )}
     </TouchableOpacity>;
   });
 
   const messages = messagesTab.map((data, i) => {
-    <TouchableOpacity
+   return <TouchableOpacity
       key={i}
       onPress={() => pressAmessage()}
       style={styles.messageCard}>
       <Image
         style={styles.messageImage}
-        // source={{ uri: data.petsitter_id.url }}
+        source={{ uri: data.petsitter_id.photo }}
       />
       <View style={styles.messageTextContainer}>
         <Text style={styles.matchName}>{data.petsitter_id.firstname}</Text>
@@ -140,14 +140,16 @@ export default function MessageScreen({ navigation }) {
           contentContainerStyle={{ flexGrow: 1 }}
           horizontal={true}
           style={{ height: '100%', width: '100%' }}>
-          <View style={styles.matchesPhotoContainer}>{/* {matchs} */}</View>
+          <View style={styles.matchesPhotoContainer}>
+            {matchs}
+            </View>
         </ScrollView>
       </View>
       <View style={styles.messagesContainer}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
           style={{ height: '100%', width: '100%' }}>
-          {/* {messages} */}
+          {messages}
         </ScrollView>
       </View>
     </SafeAreaView>
