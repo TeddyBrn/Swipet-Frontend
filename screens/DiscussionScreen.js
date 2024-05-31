@@ -25,8 +25,6 @@ export default function DiscussionScreen({ navigation, route }) {
   const match = useSelector((state) => state.matchs.value);
 
   const matchId = route.params;
-  console.log(route);
-  console.log(matchId);
 
   const [matchData, setMatchData] = useState([]);
   const [messageData, setMessagesData] = useState([]);
@@ -53,7 +51,6 @@ export default function DiscussionScreen({ navigation, route }) {
         const data = await response.json();
 
         if (data.result) {
-          console.log('r', data);
           setMatchData(data.match);
           setMessagesData(data.match[0].messages);
           dispatch(addName({name:data.match[0].petsitter_id.firstname}))
@@ -67,7 +64,7 @@ export default function DiscussionScreen({ navigation, route }) {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [messageData]);
 
   if (!messageData) {
     return (
@@ -105,7 +102,7 @@ export default function DiscussionScreen({ navigation, route }) {
   
   const messages = messageData.map((data, i) => {
     const date = moment(data.created_at).fromNow();
-    console.log(date);
+   
     return (
       <View
         style={[
@@ -125,7 +122,7 @@ export default function DiscussionScreen({ navigation, route }) {
     );
   });
 
-  console.log(match.name);
+  
 
   const handleProposal = () => {
     navigation.navigate('Proposal', { matchId });

@@ -107,7 +107,7 @@ export default function Proposal({ navigation }) {
             <View style={styles.modalContainer}>
               <View style={styles.modalContent}>
                 <Text style={styles.modalTitle}>
-                  Proposition envoyée à Marie !
+                  Proposition envoyée à {match.name} !
                 </Text>
                 <Ionicons
                   name="checkmark-done-circle"

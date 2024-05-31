@@ -273,7 +273,7 @@ export default function SignUpScreenUser({ navigation }) {
                 />
               </View>
               {fieldError && (
-                <Text style={styles.error}>Missing or empty fields.</Text>
+                <Text style={styles.error}>Champ(s) manquant(s) ou vide(s).</Text>
               )}
             </View>
 

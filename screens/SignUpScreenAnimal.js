@@ -41,7 +41,7 @@ export default function SignUpScreenAnimal({ navigation }) {
   const [bioFocused, setBioFocused] = useState(false);
   const [detailFocused, setDetailFocused] = useState(false);
 
-  const dataGender = ['Male', 'Female'];
+  const dataGender = ['Mâle', 'Femelle'];
   const dataAnimalType = ['Chien', 'Chat', 'Lapin','Hamster'];
 
   // ImagePicker

@@ -89,7 +89,7 @@ const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   profileContainer: {
     // Adapter la hauteur à un pourcentage de la hauteur de l'écran
-    height: height * 0.7,
+    height: height * 0.78,
     // Adapter la largeur à un pourcentage de la largeur de l'écran
     width: width * 0.9,
     flexDirection: 'column',
