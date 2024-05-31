@@ -20,6 +20,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 export default function Proposal({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const user = useSelector((state) => state.users.value);
+  const match = useSelector((state) => state.matchs.value);
   const [infosFocused, setInfosFocused] = useState(false);
   const [infos, setInfos] = useState('');
   const [price, setPrice] = useState('');
@@ -62,6 +63,8 @@ export default function Proposal({ navigation }) {
     setEndDate(formatted);
   };
 
+  console.log(user.profilAnimal)
+
   const handlePress = () => {
     setIsModalVisible(true);
   };
@@ -87,7 +90,7 @@ export default function Proposal({ navigation }) {
           <View style={{ paddingLeft: 25 }}>
             <View style={{ marginBottom: 20 }}>
               <Text style={styles.titles}>PetSitter</Text>
-              <Text style={styles.text}>Marie</Text>
+              <Text style={styles.text}>{match.name}</Text>
             </View>
             <Modal
               visible={isModalVisible}
@@ -288,7 +291,7 @@ const styles = StyleSheet.create({
   },
   inputText: {
     fontSize: 18,
-    paddingLeft: 10,
+    paddingLeft: 10,   
     color: '#5a7869'
   },
   signUpButton: {
@@ -316,7 +319,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     alignItems: 'center',
-    // justifyContent: 'flex-start',
     height: height * 0.6,
     width: width * 0.9,
     flexDirection: 'column'

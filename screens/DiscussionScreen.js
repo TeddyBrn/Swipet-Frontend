@@ -15,14 +15,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-import { addMessage } from '../reducers/matchs';
+import { addMessage, addName } from '../reducers/matchs';
 import { BACKEND_ADRESS } from '../data/urlData';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export default function DiscussionScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value);
-  // const matchId = '6655fe621b2c12e4dc4091e1'
+  const match = useSelector((state) => state.matchs.value);
+
   const matchId = route.params;
   console.log(route);
   console.log(matchId);
@@ -55,6 +56,7 @@ export default function DiscussionScreen({ navigation, route }) {
           console.log('r', data);
           setMatchData(data.match);
           setMessagesData(data.match[0].messages);
+          dispatch(addName({name:matchData[0].petsitter_id.firstname}))
         } else {
           setError('Failed to fetch matchs');
         }
@@ -100,13 +102,22 @@ export default function DiscussionScreen({ navigation, route }) {
       </SafeAreaView>
     );
   }
-
+  
   const messages = messageData.map((data, i) => {
     const date = moment(data.created_at).fromNow();
     console.log(date);
     return (
-      <View style={[styles.messageWrapper]} key={i}>
-        <View style={[styles.message]}>
+      <View
+        style={[
+          styles.messageWrapper,
+          data.tokenAuthor !== user.token && styles.youMessage
+        ]}
+        key={i}>
+        <View
+          style={[
+            styles.message,
+            data.tokenAuthor !== user.token && styles.youMessageBG
+          ]}>
           <Text style={styles.messageText}>{data.content}</Text>
         </View>
         <Text style={styles.timeText}>{date}</Text>
@@ -114,7 +125,7 @@ export default function DiscussionScreen({ navigation, route }) {
     );
   });
 
-  console.log(messageData);
+  console.log(match.name);
 
   const handleProposal = () => {
     navigation.navigate('Proposal', { matchId });
@@ -132,6 +143,7 @@ export default function DiscussionScreen({ navigation, route }) {
       .then((data) => {
         if (data.result) {
           dispatch(addMessage(data.message));
+          
           setNewMessages('');
         }
       });
@@ -160,13 +172,14 @@ export default function DiscussionScreen({ navigation, route }) {
           style={styles.back}>
           <Ionicons name="chevron-back" size={60} color="#33464d" />
         </TouchableOpacity>
-        <View style={styles.topMid}>
-          {matchData[0] && (
+        {matchData[0] && (
+          <View style={styles.topMid}>
+            <Image source={{uri: matchData[0].petsitter_id.photo}} style={styles.topImage} />
             <Text style={styles.topText}>
               {matchData[0].petsitter_id.firstname}
             </Text>
-          )}
-        </View>
+          </View>
+        )}
         <TouchableOpacity
           onPress={() => handleProposal()}
           style={styles.proposal}>
@@ -225,13 +238,21 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   topMid: {
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   topText: {
     fontSize: 25,
     fontFamily: 'Montserrat-Bold',
     color: '#33464d'
   },
+  topImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 50,
+    marginRight: 10
+  },
+
   proposal: {
     borderRadius: 5,
     padding: 8,
@@ -245,17 +266,6 @@ const styles = StyleSheet.create({
   messagesContainer: {
     height: '78%',
     width: '90%'
-  },
-  myMessagesCard: {
-    flexDirection: 'row',
-    height: 70
-    // alignItems: 'center',
-    // justifyContent: 'flex-end',
-    // width: '80%',
-    // backgroundColor: '#ffffff',
-    // padding: 20,
-    // marginTop: 20,
-    // borderRadius: 10
   },
   messageWrapper: {
     alignItems: 'flex-end',
@@ -272,7 +282,7 @@ const styles = StyleSheet.create({
   },
   youMessage: {
     alignSelf: 'flex-start',
-    alignItems: 'flex-start',
+    alignItems: 'flex-start'
   },
   youMessageBG: {
     backgroundColor: '#eee'
@@ -280,7 +290,7 @@ const styles = StyleSheet.create({
   messageText: {
     color: '#506568',
     fontFamily: 'Montserrat-SemiBold',
-    fontSize: 20,
+    fontSize: 20
   },
   timeText: {
     color: '#506568',

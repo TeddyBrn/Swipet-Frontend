@@ -6,6 +6,7 @@ const initialState = {
     petsitterId: null,
     messages: [],
     proposal: [],
+    name: null
   }
 };
 
@@ -17,6 +18,9 @@ const matchSlice = createSlice({
       state.value.userId = action.payload.token;
       state.value.petsitterId = action.payload._id;
       // matchId
+    },
+    addName: (state, action) => {
+    state.value.name = action.payload.name
     },
     addMessage: (state, action) => {
     state.value.messages.push(action.payload)
@@ -33,5 +37,5 @@ const matchSlice = createSlice({
  }
 });
 
-export const { addMatch, addMessage, removeMessage, addProposal, removeProposal } = matchSlice.actions;
+export const { addMatch, addMessage, removeMessage, addProposal, removeProposal,addName } = matchSlice.actions;
 export default matchSlice.reducer;
