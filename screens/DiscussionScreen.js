@@ -47,7 +47,7 @@ export default function DiscussionScreen({ navigation, route }) {
 
   useEffect(() => {
     (async () => {
-      // const fetchData = async () => {
+    
       try {
         const response = await fetch(`${BACKEND_ADRESS}/messages/${matchId}`);
         const data = await response.json();
@@ -56,7 +56,7 @@ export default function DiscussionScreen({ navigation, route }) {
           console.log('r', data);
           setMatchData(data.match);
           setMessagesData(data.match[0].messages);
-          dispatch(addName({name:matchData[0].petsitter_id.firstname}))
+          dispatch(addName({name:data.match[0].petsitter_id.firstname}))
         } else {
           setError('Failed to fetch matchs');
         }
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     color: '#fff'
   },
   messagesContainer: {
-    height: '78%',
+    height: '75%',
     width: '90%'
   },
   messageWrapper: {

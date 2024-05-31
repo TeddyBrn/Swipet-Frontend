@@ -51,7 +51,7 @@ const userSlice = createSlice({
   ,
   addAnimal: (state, action) => {
     state.value.profilAnimal.push(action.payload)
-  }  ,
+  },
   addLike: (state, action) => {
     state.value.like.push(action.payload);
   }

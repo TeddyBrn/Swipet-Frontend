@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   TextInput,
@@ -15,7 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
+import { BACKEND_ADRESS } from '../data/urlData';
 
 export default function Proposal({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -24,9 +24,22 @@ export default function Proposal({ navigation }) {
   const [infosFocused, setInfosFocused] = useState(false);
   const [infos, setInfos] = useState('');
   const [price, setPrice] = useState('');
+  const [name, setName] = useState('');
 
   const [endDate, setEndDate] = useState('');
   const [startDate, setStartDate] = useState('');
+
+  useEffect(() => {
+    fetch(`${BACKEND_ADRESS}/profils/infos/${user.token}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.result) {
+          setName(data.data.name);
+        } else {
+          setError('Failed to fetch profiles');
+        }
+      });
+  }, []);
 
   const formatStartDate = (input) => {
     // Supprimer les caractères non numériques
@@ -63,7 +76,7 @@ export default function Proposal({ navigation }) {
     setEndDate(formatted);
   };
 
-  console.log(user.profilAnimal)
+  console.log(user.profilAnimal);
 
   const handlePress = () => {
     setIsModalVisible(true);
@@ -87,43 +100,44 @@ export default function Proposal({ navigation }) {
             </View>
             <View style={{ width: 80 }}></View>
           </View>
-          <View style={{ paddingLeft: 25 }}>
-            <View style={{ marginBottom: 20 }}>
-              <Text style={styles.titles}>PetSitter</Text>
-              <Text style={styles.text}>{match.name}</Text>
-            </View>
-            <Modal
-              visible={isModalVisible}
-              transparent={true}
-              animationType="fade">
-              <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                  <Text style={styles.modalTitle}>
-                    Proposition envoyée à Marie !
-                  </Text>
-                  <Ionicons
-                    name="checkmark-done-circle"
-                    size={200}
-                    color="#8fd14f"/>
-                    {/* <MaterialIcons name="verified" color="#8fd14f" size={200} /> */}
-                  <TouchableOpacity
-                    onPress={() => {
-                      setIsModalVisible(false);
-                      navigation.navigate('TabNavigator', { screen: 'Swipe' });
-                    }}
-                    style={styles.buttonModal}>
-                    <Ionicons name="home" size={35} color="#33464d" />
-                    <Text style={styles.modalText}>
-                      Retour à l'accueil
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+          <Modal
+            visible={isModalVisible}
+            transparent={true}
+            animationType="fade">
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitle}>
+                  Proposition envoyée à Marie !
+                </Text>
+                <Ionicons
+                  name="checkmark-done-circle"
+                  size={200}
+                  color="#8fd14f"
+                />
+                <TouchableOpacity
+                  onPress={() => {
+                    setIsModalVisible(false);
+                    navigation.navigate('TabNavigator', { screen: 'Swipe' });
+                  }}
+                  style={styles.buttonModal}>
+                  <Ionicons name="home" size={35} color="#33464d" />
+                  <Text style={styles.modalText}>Retour à l'accueil</Text>
+                </TouchableOpacity>
               </View>
-            </Modal>
-            <View style={{ marginBottom: 20 }}>
-              <Text style={styles.titles}>Animal à garder</Text>
-              <Text style={styles.text}>Rouky</Text>
             </View>
+          </Modal>
+          <View style={{ paddingLeft: 25 }}>
+            <View style={styles.topInfo}>
+              <View style={{ marginBottom: 20 }}>
+                <Text style={styles.titles}>PetSitter</Text>
+                <Text style={styles.text}>{match.name}</Text>
+              </View>
+              <View style={{ marginBottom: 20, marginLeft: 50 }}>
+                <Text style={styles.titles}>Animal à garder</Text>
+                <Text style={styles.text}>{name}</Text>
+              </View>
+            </View>
+
             <View style={styles.date}>
               <Text style={styles.titles}>Dates</Text>
               <View style={styles.dateContainer}>
@@ -175,7 +189,7 @@ export default function Proposal({ navigation }) {
               <View
                 style={[
                   styles.input,
-                  { marginBottom: 60 },
+                  { marginBottom: 27 },
                   infosFocused && styles.inputInfosFocused
                 ]}>
                 <TextInput
@@ -189,7 +203,7 @@ export default function Proposal({ navigation }) {
                   placeholderTextColor="#5a7869"
                   autoCapitalize="none"
                   multiline={true}
-                  numberOfLines={4}
+                  numberOfLines={3}
                   onFocus={() => setInfosFocused(true)}
                   onBlur={() => setInfosFocused(false)}
                 />
@@ -252,6 +266,9 @@ const styles = StyleSheet.create({
     color: '#33464d',
     marginBottom: 8
   },
+  topInfo: {
+    flexDirection: 'row',
+  },
   text: {
     fontSize: 18,
     fontFamily: 'Montserrat-SemiBold',
@@ -291,7 +308,7 @@ const styles = StyleSheet.create({
   },
   inputText: {
     fontSize: 18,
-    paddingLeft: 10,   
+    paddingLeft: 10,
     color: '#5a7869'
   },
   signUpButton: {

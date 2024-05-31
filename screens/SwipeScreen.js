@@ -190,10 +190,10 @@ export default function ProfileCard({ navigation }) {
             <Swiper
               cards={profilsData} // Les données des profils à swiper
               ref={swiperRef}
-              renderCard={(card) => {
+              renderCard={(card,i) => {
                 
                 return (
-                  <View style={styles.profileContainer}>
+                  <View style={styles.profileContainer} key={i}>
                     <Image
                       style={styles.profileImage}
                       source={{ uri: card.photo }}/>
