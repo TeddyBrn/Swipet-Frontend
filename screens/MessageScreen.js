@@ -79,7 +79,7 @@ export default function MessageScreen({ navigation }) {
           />
           <View style={styles.messageTextContainer}>
             <Text style={styles.matchName}>{data.petsitter_id.firstname}</Text>
-            <Text style={styles.matchMessage}>{data.messages[0].content}</Text>
+            <Text style={styles.matchMessage}>{data.messages[3].content}</Text>
           </View>
         </TouchableOpacity>
        
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#33333390',
     width: '100%',
-    height: 100,
+    height: 140,
     paddingHorizontal: 10,
     alignItems: 'center'
   },
